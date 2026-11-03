@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Ben's Ballot Night · Arapahoe County Live Election Tracker 2026</title>
+<title>Ben's Ballot Night · Arapahoe County & National 2026 Tracker</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
@@ -23,6 +23,10 @@
   --bad: #b91c1c;
   --bad-soft: #fee2e2;
   --bad-border: #fca5a5;
+  --dem: #1d4ed8;
+  --dem-soft: #dbeafe;
+  --gop: #b91c1c;
+  --gop-soft: #fee2e2;
   --wait: #64748b;
   --wait-soft: #f1f5f9;
   --wait-border: #cbd5e1;
@@ -39,6 +43,8 @@
     --bar: #edf2f7; --bar-ink: #0b0f14; --accent: #60a5fa;
     --good: #4ade80; --good-soft: #052e16; --good-border: #166534;
     --bad: #f87171; --bad-soft: #450a0a; --bad-border: #991b1b;
+    --dem: #60a5fa; --dem-soft: #1e3a8a;
+    --gop: #f87171; --gop-soft: #7f1d1d;
     --wait: #94a3b8; --wait-soft: #1e293b; --wait-border: #334155;
     --focus: #60a5fa; --pill-bg: #1e293b; color-scheme: dark;
   }
@@ -48,15 +54,17 @@
   --bar: #edf2f7; --bar-ink: #0b0f14; --accent: #60a5fa;
   --good: #4ade80; --good-soft: #052e16; --good-border: #166534;
   --bad: #f87171; --bad-soft: #450a0a; --bad-border: #991b1b;
+  --dem: #60a5fa; --dem-soft: #1e3a8a;
+  --gop: #f87171; --gop-soft: #7f1d1d;
   --wait: #94a3b8; --wait-soft: #1e293b; --wait-border: #334155;
   --focus: #60a5fa; --pill-bg: #1e293b; color-scheme: dark;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.45; }
-.wrap { max-width: 920px; margin: 0 auto; padding: 20px 16px 80px; display: grid; gap: 20px; }
+.wrap { max-width: 960px; margin: 0 auto; padding: 20px 16px 80px; display: grid; gap: 18px; }
 
-/* Header & Banner */
+/* Top Header & Live Indicators */
 header.top { display: grid; gap: 8px; }
 .eyebrow-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; }
 .eyebrow { font-family: var(--display); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-size: 14px; }
@@ -64,19 +72,26 @@ header.top { display: grid; gap: 8px; }
 .live-pulse { width: 8px; height: 8px; border-radius: 50%; background: currentColor; animation: pulse 1.6s infinite ease-in-out; }
 @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .3; transform: scale(.75); } }
 
-h1 { font-family: var(--display); font-weight: 700; font-size: clamp(34px, 6.5vw, 52px); line-height: 1; letter-spacing: .01em; }
-.sub { color: var(--muted); max-width: 72ch; font-size: 15px; }
+h1 { font-family: var(--display); font-weight: 700; font-size: clamp(34px, 6vw, 50px); line-height: 1; letter-spacing: .01em; }
+.sub { color: var(--muted); max-width: 76ch; font-size: 15px; }
 
-/* Simulator / Feed Mode Bar */
-.mode-bar { background: var(--sheet); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 16px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+/* Tab Switcher Navigation */
+.nav-tabs { display: flex; border-bottom: 2px solid var(--rule); gap: 4px; padding-top: 6px; }
+.tab-btn { font-family: var(--display); font-size: 19px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 10px 18px; border: 0; background: transparent; color: var(--muted); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all .15s; display: inline-flex; align-items: center; gap: 8px; }
+.tab-btn:hover { color: var(--ink); }
+.tab-btn[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
+.tab-badge { font-family: var(--mono); font-size: 11px; padding: 2px 7px; border-radius: 999px; background: var(--pill-bg); color: var(--ink); }
+
+/* Simulation / Feed Stage Bar */
+.mode-bar { background: var(--sheet); border: 1px solid var(--rule); border-radius: 8px; padding: 10px 14px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
 .mode-label { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
 .mode-pills { display: flex; flex-wrap: wrap; gap: 6px; }
 .mode-btn { font: 500 12px/1 var(--body); padding: 6px 11px; border-radius: 6px; border: 1px solid var(--rule); background: transparent; color: var(--ink); cursor: pointer; transition: all .15s; }
 .mode-btn:hover { background: var(--pill-bg); }
 .mode-btn[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); font-weight: 700; }
 
-/* Scoreboard */
-.score { background: var(--sheet); border: 1px solid var(--rule); border-radius: 8px; padding: 20px; display: grid; gap: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+/* Main Scoreboard (Tab 1: Local Ballot) */
+.score { background: var(--sheet); border: 1px solid var(--rule); border-radius: 8px; padding: 18px; display: grid; gap: 14px; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
 .tallies { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .tally { display: grid; gap: 2px; }
 .tally b { font-family: var(--display); font-size: clamp(38px, 6vw, 48px); line-height: 1; font-weight: 700; font-variant-numeric: tabular-nums; }
@@ -91,6 +106,20 @@ h1 { font-family: var(--display); font-weight: 700; font-size: clamp(34px, 6.5vw
 .meter .g { background: var(--good); }
 .meter .b { background: var(--bad); }
 .meter-labels { display: flex; justify-content: space-between; font-size: 12px; font-family: var(--mono); color: var(--muted); }
+
+/* National Balance of Power Cards (Tab 2) */
+.national-dash { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+.chamber-card { background: var(--sheet); border: 1px solid var(--rule); border-radius: 8px; padding: 16px; display: grid; gap: 10px; box-shadow: 0 1px 3px rgba(0,0,0,.03); }
+.chamber-card h3 { font-family: var(--display); font-size: 20px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; display: flex; justify-content: space-between; align-items: baseline; }
+.chamber-card h3 small { font-family: var(--mono); font-size: 12px; font-weight: 500; color: var(--muted); text-transform: none; }
+.chamber-bar { display: flex; height: 16px; border-radius: 8px; overflow: hidden; background: var(--wait-soft); border: 1px solid var(--rule); position: relative; }
+.chamber-bar i { height: 100%; display: block; }
+.chamber-bar .dem { background: #2563eb; }
+.chamber-bar .gop { background: #dc2626; }
+.chamber-marker { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: var(--ink); transform: translateX(-50%); z-index: 2; }
+.chamber-counts { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 13px; font-weight: 600; }
+.chamber-counts .d { color: var(--dem); }
+.chamber-counts .r { color: var(--gop); }
 
 .feed-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding-top: 6px; border-top: 1px solid var(--rule); font-size: 13px; }
 .feed-info { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
@@ -136,6 +165,7 @@ section.part > h2 small { font-family: var(--mono); font-size: 12px; letter-spac
 .tallyline .metric { background: var(--pill-bg); padding: 2px 7px; border-radius: 4px; }
 .tallyline b { font-weight: 600; color: var(--accent); }
 .source-tag { font-size: 11px; padding: 2px 6px; border-radius: 4px; background: var(--wait-soft); border: 1px solid var(--wait-border); color: var(--muted); font-family: var(--mono); }
+.category-badge { font-size: 11px; padding: 2px 6px; border-radius: 4px; background: var(--accent); color: #fff; font-family: var(--display); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
 
 .controls { display: grid; gap: 6px; justify-items: end; }
 .seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; background: var(--sheet); }
@@ -146,11 +176,13 @@ section.part > h2 small { font-family: var(--mono); font-size: 12px; letter-spac
 .verdict.wait { background: var(--wait-soft); color: var(--wait); border: 1px solid var(--wait-border); }
 .verdict.good { background: var(--good-soft); color: var(--good); border: 1px solid var(--good-border); }
 .verdict.bad { background: var(--bad-soft); color: var(--bad); border: 1px solid var(--bad-border); }
+.verdict.dem { background: var(--dem-soft); color: var(--dem); }
+.verdict.gop { background: var(--gop-soft); color: var(--gop); }
 .override-hint { font-size: 11px; color: var(--muted); font-style: italic; cursor: pointer; text-decoration: underline; }
 
 .empty { padding: 24px 16px; color: var(--muted); font-size: 14px; text-align: center; }
 
-/* Modal Drawer for Custom Data Sync / Configuration */
+/* Modal Drawer for Custom Data Sync */
 .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 16px; }
 .modal-backdrop.open { display: flex; }
 .modal { background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; width: 100%; max-width: 560px; padding: 24px; display: grid; gap: 16px; box-shadow: 0 20px 25px -5px rgba(0,0,0,.2); max-height: 90vh; overflow-y: auto; }
@@ -171,80 +203,145 @@ section.part > h2 small { font-family: var(--mono); font-size: 12px; letter-spac
 <div class="wrap">
   <header class="top">
     <div class="eyebrow-bar">
-      <div class="eyebrow">Arapahoe County General Election · Tuesday, November 3, 2026</div>
+      <div class="eyebrow">Election Night 2026 · Arapahoe County & Nationwide</div>
       <div class="live-pill" id="live-indicator">
         <span class="live-pulse"></span>
         <span id="live-indicator-text">LIVE POLLING</span>
       </div>
     </div>
     <h1>Ben's Ballot Night</h1>
-    <p class="sub">Every contest on your ballot, scored directly against how you voted. Live counts pull throughout election night from the Colorado Secretary of State and Arapahoe County Elections, showing early leads until races are officially called.</p>
+    <p class="sub">Track your local Arapahoe County ballot scored against your exact marks, or switch to the National Watch tab to follow the battle for the US Senate, House battlegrounds, and high-stakes ballot questions across America.</p>
   </header>
 
-  <!-- Live Feed & Election Night Simulation Switcher -->
+  <!-- Navigation Tab Bar -->
+  <div class="nav-tabs" role="tablist" aria-label="Dashboard Views">
+    <button type="button" class="tab-btn" id="tab-local" role="tab" aria-selected="true" data-tab="local">
+      <span>🗳️ My Arapahoe Ballot</span>
+      <span class="tab-badge" id="badge-local-count">48 Contests</span>
+    </button>
+    <button type="button" class="tab-btn" id="tab-national" role="tab" aria-selected="false" data-tab="national">
+      <span>🇺🇸 National Watch</span>
+      <span class="tab-badge" id="badge-national-count">33 Races</span>
+    </button>
+  </div>
+
+  <!-- Election Night Feed & Simulation Mode Switcher -->
   <div class="mode-bar">
     <div class="mode-label">
       <span>Election Night Stream:</span>
     </div>
     <div class="mode-pills" role="radiogroup" aria-label="Election Night Stage">
       <button type="button" class="mode-btn" id="m-live" data-stage="live" aria-pressed="true">🔴 Live Feed (Auto-Sync)</button>
-      <button type="button" class="mode-btn" id="m-early" data-stage="early" aria-pressed="false">🗳️ 7:15 PM Drop (~54%)</button>
-      <button type="button" class="mode-btn" id="m-mid" data-stage="mid" aria-pressed="false">🌙 9:45 PM Calls (~82%)</button>
+      <button type="button" class="mode-btn" id="m-early" data-stage="early" aria-pressed="false">🗳️ 7:15 PM Drop (Early Waves)</button>
+      <button type="button" class="mode-btn" id="m-mid" data-stage="mid" aria-pressed="false">🌙 9:45 PM Calls (Major Desks)</button>
       <button type="button" class="mode-btn" id="m-pre" data-stage="pre" aria-pressed="false">🕒 Pre-7 PM (0%)</button>
     </div>
   </div>
 
-  <!-- Main Scoreboard -->
-  <div class="score" aria-live="polite">
-    <div class="tallies">
-      <div class="tally good"><b id="n-good">0</b><span>Went your way</span></div>
-      <div class="tally bad"><b id="n-bad">0</b><span>Didn't</span></div>
-      <div class="tally wait"><b id="n-wait">48</b><span>Still counting</span></div>
+  <!-- TAB 1 CONTENT: Local Ballot Scoreboard -->
+  <div id="view-local" class="tab-view" style="display:grid;gap:18px;">
+    <div class="score" aria-live="polite">
+      <div class="tallies">
+        <div class="tally good"><b id="n-good">0</b><span>Went your way</span></div>
+        <div class="tally bad"><b id="n-bad">0</b><span>Didn't</span></div>
+        <div class="tally wait"><b id="n-wait">48</b><span>Still counting</span></div>
+      </div>
+
+      <div class="meter-wrap">
+        <div class="meter" aria-hidden="true"><i class="g" id="m-good" style="width:0"></i><i class="b" id="m-bad" style="width:0"></i></div>
+        <div class="meter-labels">
+          <span id="lbl-alignment">Net: Even</span>
+          <span id="lbl-called">0 of 48 contests called</span>
+        </div>
+      </div>
+
+      <div class="feed-bar">
+        <div class="feed-info">
+          <span id="feed-status">Official counts starting election night after 7:00 p.m. MT</span>
+        </div>
+        <div class="feed-actions">
+          <span class="timer-badge" id="refresh-timer">Next sync: 45s</span>
+          <button type="button" class="btn-sm" id="btn-refresh" title="Poll latest results now">↻ Sync Now</button>
+          <button type="button" class="btn-sm" id="btn-sync-modal" title="Configure endpoints or paste results JSON">⚙ Feed Settings</button>
+        </div>
+      </div>
     </div>
 
-    <div class="meter-wrap">
-      <div class="meter" aria-hidden="true"><i class="g" id="m-good" style="width:0"></i><i class="b" id="m-bad" style="width:0"></i></div>
-      <div class="meter-labels">
-        <span id="lbl-alignment">Net: Even</span>
-        <span id="lbl-called">0 of 48 contests called</span>
+    <!-- Search & Filters for Local Ballot -->
+    <div class="controls-bar">
+      <div class="filters" role="group" aria-label="Filter Local Contests">
+        <button type="button" id="f-all" data-f="all" aria-pressed="true">All 48</button>
+        <button type="button" id="f-wait" data-f="wait" aria-pressed="false">Still counting (48)</button>
+        <button type="button" id="f-good" data-f="good" aria-pressed="false">Went your way (0)</button>
+        <button type="button" id="f-bad" data-f="bad" aria-pressed="false">Didn't (0)</button>
+      </div>
+      <div class="search-box">
+        <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
+        <input type="text" id="search-input-local" placeholder="Filter local race or measure…" aria-label="Search local races">
       </div>
     </div>
 
-    <div class="feed-bar">
-      <div class="feed-info">
-        <span id="feed-status">Official counts starting election night after 7:00 p.m. MT</span>
-      </div>
-      <div class="feed-actions">
-        <span class="timer-badge" id="refresh-timer">Next sync: 45s</span>
-        <button type="button" class="btn-sm" id="btn-refresh" title="Poll latest results now">↻ Sync Now</button>
-        <button type="button" class="btn-sm" id="btn-sync-modal" title="Configure endpoints or paste results JSON">⚙ Feed Settings</button>
-      </div>
-    </div>
+    <main id="sheet-local" style="display:grid;gap:18px"></main>
   </div>
 
-  <!-- Search & Category Filters -->
-  <div class="controls-bar">
-    <div class="filters" role="group" aria-label="Filter Contests">
-      <button type="button" id="f-all" data-f="all" aria-pressed="true">All 48</button>
-      <button type="button" id="f-wait" data-f="wait" aria-pressed="false">Still counting (48)</button>
-      <button type="button" id="f-good" data-f="good" aria-pressed="false">Went your way (0)</button>
-      <button type="button" id="f-bad" data-f="bad" aria-pressed="false">Didn't (0)</button>
-    </div>
-    <div class="search-box">
-      <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
-      <input type="text" id="search-input" placeholder="Filter race or measure…" aria-label="Search races">
-    </div>
-  </div>
+  <!-- TAB 2 CONTENT: National Watch (Competitive Races & Ballot Questions) -->
+  <div id="view-national" class="tab-view" style="display:none;gap:18px;">
+    <!-- Chamber Balances -->
+    <div class="national-dash">
+      <div class="chamber-card">
+        <h3><span>U.S. Senate</span><small id="sen-status">51 needed for majority</small></h3>
+        <div class="chamber-bar">
+          <i class="dem" id="bar-sen-d" style="width:47%"></i>
+          <span class="chamber-marker"></span>
+          <i class="gop" id="bar-sen-r" style="width:53%"></i>
+        </div>
+        <div class="chamber-counts">
+          <span class="d" id="txt-sen-d">DEM: 47</span>
+          <span style="color:var(--muted)" id="txt-sen-uncalled">9 Tossups</span>
+          <span class="r" id="txt-sen-r">GOP: 53</span>
+        </div>
+      </div>
 
-  <!-- Ballot Sheet Container -->
-  <main id="sheet" style="display:grid;gap:18px"></main>
+      <div class="chamber-card">
+        <h3><span>U.S. House</span><small id="hse-status">218 needed for majority</small></h3>
+        <div class="chamber-bar">
+          <i class="dem" id="bar-hse-d" style="width:49%"></i>
+          <span class="chamber-marker"></span>
+          <i class="gop" id="bar-hse-r" style="width:51%"></i>
+        </div>
+        <div class="chamber-counts">
+          <span class="d" id="txt-hse-d">DEM: 213</span>
+          <span style="color:var(--muted)" id="txt-hse-uncalled">11 Battlegrounds</span>
+          <span class="r" id="txt-hse-r">GOP: 220</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- National Filters -->
+    <div class="controls-bar">
+      <div class="filters" role="group" aria-label="Filter National Contests">
+        <button type="button" id="fn-all" data-fn="all" aria-pressed="true">All 33</button>
+        <button type="button" id="fn-senate" data-fn="senate" aria-pressed="false">Senate (9)</button>
+        <button type="button" id="fn-house" data-fn="house" aria-pressed="false">House Tossups (11)</button>
+        <button type="button" id="fn-wealth" data-fn="wealth" aria-pressed="false">Wealth Taxes (4)</button>
+        <button type="button" id="fn-trans" data-fn="trans" aria-pressed="false">Anti-Trans (4)</button>
+        <button type="button" id="fn-demo" data-fn="demo" aria-pressed="false">Voting & Democracy (5)</button>
+      </div>
+      <div class="search-box">
+        <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
+        <input type="text" id="search-input-nat" placeholder="Filter state, candidate, or measure…" aria-label="Search national races">
+      </div>
+    </div>
+
+    <main id="sheet-national" style="display:grid;gap:18px"></main>
+  </div>
 </div>
 
-<!-- Feed / Data Modal Drawer -->
+<!-- Modal Drawer for Data Import -->
 <div class="modal-backdrop" id="feed-modal">
   <div class="modal">
     <h3>Election Feed Configuration</h3>
-    <p class="sub">The tracker automatically polls official Secretary of State and Arapahoe County results feeds and local <code>results.json</code>. You can also paste results JSON directly or select a file.</p>
+    <p class="sub">The tracker automatically polls official Secretary of State feeds, Arapahoe County, and national decision desks via <code>results.json</code> and <code>national_results.json</code>.</p>
 
     <div style="display:grid;gap:8px;">
       <label style="font-weight:600;font-size:13px;">Auto-Refresh Interval</label>
@@ -258,8 +355,7 @@ section.part > h2 small { font-family: var(--mono); font-size: 12px; letter-spac
     </div>
 
     <div style="display:grid;gap:8px;">
-      <label style="font-weight:600;font-size:13px;">Paste Results JSON or Load File</label>
-      <input type="file" id="file-input" accept=".json" style="font-size:13px;">
+      <label style="font-weight:600;font-size:13px;">Paste Local Results JSON</label>
       <textarea id="json-input" placeholder="Paste results.json data here..."></textarea>
     </div>
 
@@ -271,8 +367,12 @@ section.part > h2 small { font-family: var(--mono); font-size: 12px; letter-spac
 </div>
 
 <script>
-// Ballot configuration: Exactly 48 contests representing Ben's filled-out ballot
-const PARTS = [
+// ==========================================
+// 1. DATA DEFINITIONS
+// ==========================================
+
+// TAB 1: Ben's Arapahoe County Ballot Contests (48 total)
+const LOCAL_PARTS = [
   { name: "Federal Offices", kind: "cand", items: [
     { id: "senate", t: "U.S. Senator", pick: "John Hickenlooper (D)", vs: "Mark Baisley (R), Bob Chew (Forward), Christopher Baum (Approval Voting), Blake Huber (L), Adam Withrow (Unity)" },
     { id: "cd6", t: "U.S. Representative, District 6", pick: "Jason Crow (D)", vs: "Jason Clark (R), Patty McMahon (L), Meredith Ryan (Unity), Samir Witta (Unaffiliated)" }
@@ -339,219 +439,220 @@ const PARTS = [
   ]}
 ];
 
+// TAB 2: National Watch Contests (33 High-Profile Items)
+const NATIONAL_SECTIONS = [
+  {
+    category: "senate",
+    name: "U.S. Senate Battlegrounds",
+    badge: "Chamber Deciders",
+    items: [
+      { id: "sen-me", state: "Maine", title: "Susan Collins (R) vs. Troy Jackson (D)", stakes: "Top national toss-up in blue-leaning Maine.", d: "Troy Jackson", r: "Susan Collins" },
+      { id: "sen-tx", state: "Texas", title: "Ken Paxton (R) vs. James Talarico (D)", stakes: "Demographic battleground; open or contested seat.", d: "James Talarico", r: "Ken Paxton" },
+      { id: "sen-ak", state: "Alaska", title: "Dan Sullivan (R) vs. Mary Peltola (D)", stakes: "Top-4 open primary & Ranked Choice Voting general election.", d: "Mary Peltola", r: "Dan Sullivan" },
+      { id: "sen-mi", state: "Michigan", title: "Mike Rogers (R) vs. Abdul El-Sayed (D)", stakes: "Open Rust Belt seat critical to Democratic majority path.", d: "Abdul El-Sayed", r: "Mike Rogers" },
+      { id: "sen-nc", state: "North Carolina", title: "Thom Tillis (R) vs. Roy Cooper (D)", stakes: "High-stakes Southern battleground.", d: "Roy Cooper", r: "Thom Tillis" },
+      { id: "sen-ga", state: "Georgia", title: "Jon Ossoff (D) vs. Brian Kemp (R)", stakes: "Premier Democratic defense in the Sun Belt.", d: "Jon Ossoff", r: "Brian Kemp" },
+      { id: "sen-ia", state: "Iowa", title: "Ashley Hinson (R) vs. Josh Turek (D)", stakes: "Competitive open Midwestern battleground.", d: "Josh Turek", r: "Ashley Hinson" },
+      { id: "sen-ks", state: "Kansas", title: "Roger Marshall (R) vs. Adam Hamilton (D)", stakes: "Competitive sleeper race in the Plains.", d: "Adam Hamilton", r: "Roger Marshall" },
+      { id: "sen-oh", state: "Ohio", title: "Jon Husted (R) vs. Sherrod Brown (D)", stakes: "High-profile battleground clash in Ohio.", d: "Sherrod Brown", r: "Jon Husted" }
+    ]
+  },
+  {
+    category: "house",
+    name: "U.S. House Key Tossups",
+    badge: "House Majority Frontline",
+    items: [
+      { id: "hse-co08", state: "CO-08", title: "Gabe Evans (R) vs. Yadira Caraveo (D)", stakes: "Colorado's premier suburban/agriculture swing district.", d: "Yadira Caraveo", r: "Gabe Evans" },
+      { id: "hse-az01", state: "AZ-01", title: "David Schweikert (R) vs. Amish Shah (D)", stakes: "Phoenix suburban toss-up.", d: "Amish Shah", r: "David Schweikert" },
+      { id: "hse-az06", state: "AZ-06", title: "Juan Ciscomani (R) vs. Kirsten Engel (D)", stakes: "Tucson & border swing seat.", d: "Kirsten Engel", r: "Juan Ciscomani" },
+      { id: "hse-ca13", state: "CA-13", title: "John Duarte (R) vs. Adam Gray (D)", stakes: "Central Valley razor-thin rematch.", d: "Adam Gray", r: "John Duarte" },
+      { id: "hse-ca22", state: "CA-22", title: "David Valadao (R) vs. Rudy Salas (D)", stakes: "High-turnout Central Valley seat.", d: "Rudy Salas", r: "David Valadao" },
+      { id: "hse-ca45", state: "CA-45", title: "Michelle Steel (R) vs. Derek Tran (D)", stakes: "Orange County suburban frontline.", d: "Derek Tran", r: "Michelle Steel" },
+      { id: "hse-ny17", state: "NY-17", title: "Mike Lawler (R) vs. Mondaire Jones (D)", stakes: "Hudson Valley swing battle.", d: "Mondaire Jones", r: "Mike Lawler" },
+      { id: "hse-ny19", state: "NY-19", title: "Marc Molinaro (R) vs. Josh Riley (D)", stakes: "Upstate New York battleground.", d: "Josh Riley", r: "Marc Molinaro" },
+      { id: "hse-pa01", state: "PA-01", title: "Brian Fitzpatrick (R) vs. Ashley Ehasz (D)", stakes: "Bucks County suburban crossover target.", d: "Ashley Ehasz", r: "Brian Fitzpatrick" },
+      { id: "hse-oh09", state: "OH-09", title: "Marcy Kaptur (D) vs. Derek Merrin (R)", stakes: "Toledo & Lake Erie frontline defense.", d: "Marcy Kaptur", r: "Derek Merrin" },
+      { id: "hse-wa03", state: "WA-03", title: "Marie Perez (D) vs. Joe Kent (R)", stakes: "Southwest Washington swing district.", d: "Marie Perez", r: "Joe Kent" }
+    ]
+  },
+  {
+    category: "wealth",
+    name: "Billionaire & Wealth Taxes",
+    badge: "Fiscal Policy",
+    items: [
+      { id: "meas-ca40", state: "California", title: "Proposition 40", desc: "5% One-Time Wealth Tax on Billionaires", stakes: "World's first 5% tax on worldwide assets of residents with >$1B to fund healthcare." },
+      { id: "meas-wa2124", state: "Washington", title: "Initiative 2124 Protection", desc: "Capital Gains & Wealth Earmarks", stakes: "Defense of high-earner taxes against statewide repeal initiatives." },
+      { id: "meas-co87", state: "Colorado", title: "Amendment 87", desc: "Graduated High-Earner Income Tax", stakes: "Creates graduated income tax for K-12, universal healthcare, and childcare (Needs 55%)." },
+      { id: "meas-co136", state: "Colorado", title: "Proposition 136", desc: "4.4% Flat Income Tax Cap", stakes: "Conservative measure directly competing with Amendment 87 to limit progressive taxes." }
+    ]
+  },
+  {
+    category: "trans",
+    name: "LGBTQ+ & Anti-Trans Measures",
+    badge: "Civil Rights",
+    items: [
+      { id: "meas-co134", state: "Colorado", title: "Proposition 134", desc: "Biological Sex Restrictions in School Sports", stakes: "Bans transgender girls from participating on girls' athletic teams." },
+      { id: "meas-co135", state: "Colorado", title: "Proposition 135", desc: "Gender Surgery & Care Prohibition for Minors", stakes: "Bans medical procedures and cuts public insurance/Medicaid coverage for minors." },
+      { id: "meas-walgw", state: "Washington", title: "Let's Go Washington Initiative", desc: "Parental Notification on Gender Identity", stakes: "Requires public schools to notify parents of confidential gender disclosures." },
+      { id: "meas-mo-trans", state: "Missouri", title: "Constitutional Amendment", desc: "Youth Gender Healthcare Prohibition", stakes: "Constitutional amendment prohibiting gender-affirming care and sports eligibility." }
+    ]
+  },
+  {
+    category: "demo",
+    name: "Democracy, Voting Rights & Redistricting",
+    badge: "Voting Systems",
+    items: [
+      { id: "meas-ak2", state: "Alaska", title: "Ballot Measure 2", desc: "Repeal of Ranked Choice Voting & Open Primaries", stakes: "High-stakes push to revert Alaska back to partisan primaries and single-choice elections." },
+      { id: "meas-az144", state: "Arizona", title: "Proposition 144", desc: "Mandatory Photo ID & Citizenship Verification", stakes: "Strict constitutional proof-of-citizenship requirement to vote." },
+      { id: "meas-co84", state: "Colorado", title: "Amendment 84", desc: "ID Number on Mail-In Ballots", stakes: "Mandates SSN or driver's license numbers inside mail ballot envelopes (Needs 55%)." },
+      { id: "meas-co86", state: "Colorado", title: "Amendment 86", desc: "Anti-Mid-Decade Redistricting", stakes: "Protects independent commission boundaries against legislative redraws (Needs 55%)." },
+      { id: "meas-nv7", state: "Nevada", title: "Question 7", desc: "Voter ID Requirement & Electoral System", stakes: "Statewide constitutional amendment mandating government photo ID." }
+    ]
+  }
+];
+
 const LABELS = {
   cand: { yes: "Won", no: "Lost" },
   judge: { yes: "Retained", no: "Not retained" },
   measure: { yes: "Passed", no: "Failed" }
 };
 
-const SUPERMAJORITY_ITEMS = new Set(["a81", "a82", "a83", "a84", "a85", "a86", "a87"]);
-
-function allItems() {
+// Flatten local items
+function allLocalItems() {
   const out = [];
-  for (const p of PARTS) {
+  for (const p of LOCAL_PARTS) {
     const items = p.items || p.groups.flatMap(g => g.items);
     for (const it of items) out.push({ ...it, kind: p.kind, v: it.v || "yes" });
   }
   return out;
 }
-const ITEMS = allItems();
+const LOCAL_ITEMS = allLocalItems();
 
 // App State
+let activeTab = "local"; // 'local' or 'national'
 let manualOutcomes = {};
 let autoData = {};
-let metaInfo = { asOf: null, status: "Connecting to live feed…", source: "CO SOS & Arapahoe Votes" };
-let currentFilter = "all";
-let currentSearch = "";
-let currentStage = "live"; // 'live', 'early', 'mid', 'pre'
+let nationalData = {};
+let metaInfo = { asOf: null, status: "Connecting to live feed…", source: "CO SOS & National Desks" };
+let currentFilterLocal = "all";
+let currentSearchLocal = "";
+let currentFilterNational = "all";
+let currentSearchNational = "";
+let currentStage = "live";
 let refreshIntervalSec = 60;
 let refreshCountdown = 60;
 let refreshTimer = null;
+
 const LS_MANUAL_KEY = "ballot-night-2026-manual";
 const LS_STAGE_KEY = "ballot-night-2026-stage";
 
-// Pre-packaged Election Night Returns curves for testing & rehearsal
-const PRESETS = {
-  pre: {
-    asOf: "2026-11-03T14:52:00-07:00",
-    status: "Polls close at 7:00 PM MT. No official returns released yet.",
-    source: "CO SOS / Arapahoe Pre-Election State",
-    items: {}
-  },
+// National Simulated Curves for Rehearsal
+const NATIONAL_SIM = {
   early: {
-    asOf: "2026-11-03T19:22:00-07:00",
-    status: "7:15 PM Initial Mail-In Ballot Drop (~54% estimated vote counted)",
-    source: "CO SOS Clarity Feed / Arapahoe Batch 1",
+    senateBalance: { dem: 47, gop: 53, calledDem: 1, calledGop: 1, needed: 51 },
+    houseBalance: { dem: 214, gop: 220, calledDem: 1, calledGop: 0, needed: 218 },
     items: {
-      senate: { outcome: "yes", final: false, pct: 57.4, leader: "John Hickenlooper (D)", leaderPct: 57.4, reporting: "54% counted", source: "CO SOS" },
-      cd6: { outcome: "yes", final: false, pct: 63.8, leader: "Jason Crow (D)", leaderPct: 63.8, reporting: "52% counted", source: "CO SOS" },
-      gov: { outcome: "yes", final: false, pct: 55.2, leader: "Phil Weiser (D)", leaderPct: 55.2, reporting: "54% counted", source: "CO SOS" },
-      sos: { outcome: "yes", final: false, pct: 53.9, leader: "Amanda Gonzalez (D)", leaderPct: 53.9, reporting: "53% counted", source: "CO SOS" },
-      treas: { outcome: "yes", final: false, pct: 54.1, leader: "Jeff Bridges (D)", leaderPct: 54.1, reporting: "53% counted", source: "CO SOS" },
-      ag: { outcome: "yes", final: false, pct: 52.8, leader: "Jena Griswold (D)", leaderPct: 52.8, reporting: "54% counted", source: "CO SOS" },
-      regent: { outcome: "yes", final: false, pct: 56.4, leader: "Ilana Spiegel (D)", leaderPct: 56.4, reporting: "51% counted", source: "CO SOS" },
-      hd38: { outcome: "yes", final: false, pct: 54.3, leader: "Gretchen Rydin (D)", leaderPct: 54.3, reporting: "58% counted", source: "Arapahoe Votes" },
-      clerk: { outcome: "yes", final: false, pct: 56.1, leader: "Joan Lopez (D)", leaderPct: 56.1, reporting: "58% counted", source: "Arapahoe Votes" },
-      ctreas: { outcome: "yes", final: false, pct: 61.2, leader: "Michael Westerberg (D)", leaderPct: 61.2, reporting: "58% counted", source: "Arapahoe Votes" },
-      assessor: { outcome: "yes", final: false, pct: 55.7, leader: "PK Kaiser (D)", leaderPct: 55.7, reporting: "58% counted", source: "Arapahoe Votes" },
-      sheriff: { outcome: "yes", final: false, pct: 53.4, leader: "Tyler Scott Brown (D)", leaderPct: 53.4, reporting: "58% counted", source: "Arapahoe Votes" },
-      coroner: { outcome: "yes", final: true, pct: 100.0, leader: "Casey Bitting (D)", leaderPct: 100.0, reporting: "Unopposed", source: "Arapahoe Votes" },
-      "j-hood": { outcome: "yes", final: false, pct: 74.2, reporting: "52% counted", source: "CO Judicial" },
-      "j-freyre": { outcome: "yes", final: false, pct: 71.5, reporting: "52% counted", source: "CO Judicial" },
-      "j-harris": { outcome: "yes", final: false, pct: 68.1, reporting: "52% counted", source: "CO Judicial" },
-      "j-lum": { outcome: "yes", final: false, pct: 72.8, reporting: "52% counted", source: "CO Judicial" },
-      "j-moultrie": { outcome: "yes", final: false, pct: 73.1, reporting: "52% counted", source: "CO Judicial" },
-      "j-schock": { outcome: "yes", final: false, pct: 70.4, reporting: "52% counted", source: "CO Judicial" },
-      "j-sullivan": { outcome: "yes", final: false, pct: 71.9, reporting: "52% counted", source: "CO Judicial" },
-      "j-amico": { outcome: "yes", final: false, pct: 69.8, reporting: "58% counted", source: "Arapahoe Votes" },
-      "j-baker": { outcome: "yes", final: false, pct: 68.5, reporting: "58% counted", source: "Arapahoe Votes" },
-      "j-edson": { outcome: "yes", final: false, pct: 70.1, reporting: "58% counted", source: "Arapahoe Votes" },
-      "j-henderson": { outcome: "yes", final: false, pct: 69.0, reporting: "58% counted", source: "Arapahoe Votes" },
-      "j-jones": { outcome: "yes", final: false, pct: 72.3, reporting: "58% counted", source: "Arapahoe Votes" },
-      "j-karpel": { outcome: "yes", final: false, pct: 67.9, reporting: "58% counted", source: "Arapahoe Votes" },
-      "j-stricklin": { outcome: "yes", final: false, pct: 70.8, reporting: "58% counted", source: "Arapahoe Votes" },
-      "j-vahle": { outcome: "yes", final: false, pct: 64.2, reporting: "58% counted", source: "Arapahoe Votes" },
-      "j-washburn": { outcome: "yes", final: false, pct: 71.4, reporting: "58% counted", source: "Arapahoe Votes" },
-      "j-apostoli": { outcome: "yes", final: false, pct: 71.8, reporting: "58% counted", source: "Arapahoe Votes" },
-      "j-clark": { outcome: "yes", final: false, pct: 65.5, reporting: "58% counted", source: "Arapahoe Votes" },
-      "j-rowles": { outcome: "yes", final: false, pct: 73.0, reporting: "58% counted", source: "Arapahoe Votes" },
-      a81: { outcome: "no", final: false, pct: 46.2, reporting: "53% counted (needs 55%)", source: "CO SOS" },
-      a82: { outcome: "no", final: false, pct: 44.8, reporting: "53% counted (needs 55%)", source: "CO SOS" },
-      a83: { outcome: "no", final: false, pct: 48.1, reporting: "53% counted (needs 55%)", source: "CO SOS" },
-      a84: { outcome: "no", final: false, pct: 41.5, reporting: "53% counted (needs 55%)", source: "CO SOS" },
-      a85: { outcome: "no", final: false, pct: 52.3, reporting: "53% counted (under 55% rule)", source: "CO SOS" },
-      a86: { outcome: "no", final: false, pct: 43.7, reporting: "53% counted (needs 55%)", source: "CO SOS" },
-      a87: { outcome: "yes", final: false, pct: 56.4, reporting: "53% counted (above 55% threshold)", source: "CO SOS" },
-      pnn: { outcome: "yes", final: false, pct: 54.6, reporting: "53% counted", source: "CO SOS" },
-      p132: { outcome: "no", final: false, pct: 48.9, reporting: "53% counted", source: "CO SOS" },
-      p133: { outcome: "no", final: false, pct: 47.3, reporting: "53% counted", source: "CO SOS" },
-      p134: { outcome: "no", final: false, pct: 42.1, reporting: "53% counted", source: "CO SOS" },
-      p135: { outcome: "no", final: false, pct: 40.8, reporting: "53% counted", source: "CO SOS" },
-      p136: { outcome: "no", final: false, pct: 46.5, reporting: "53% counted", source: "CO SOS" },
-      p137: { outcome: "no", final: false, pct: 45.2, reporting: "53% counted", source: "CO SOS" },
-      i4a: { outcome: "yes", final: false, pct: 58.7, reporting: "58% counted", source: "Arapahoe Votes" },
-      i7a: { outcome: "yes", final: false, pct: 57.3, reporting: "51% counted (Districtwide)", source: "Front Range Rail Dist." }
+      "sen-me": { leader: "Susan Collins (R)", leaderPct: 51.4, reporting: "28% counted", final: false, source: "AP / ME SOS" },
+      "sen-tx": { leader: "Ken Paxton (R)", leaderPct: 52.8, reporting: "42% counted", final: false, source: "AP / TX SOS" },
+      "sen-ak": { leader: "Mary Peltola (D)", leaderPct: 50.8, reporting: "Polls close 8pm AKST", final: false, source: "AK Division of Elections" },
+      "sen-mi": { leader: "Abdul El-Sayed (D)", leaderPct: 52.1, reporting: "31% counted", final: false, source: "AP / MI SOS" },
+      "sen-nc": { leader: "Roy Cooper (D)", leaderPct: 51.9, reporting: "46% counted", final: false, source: "AP / NC SBE" },
+      "sen-ga": { leader: "Jon Ossoff (D)", leaderPct: 53.2, reporting: "55% counted", final: false, source: "AP / GA SOS" },
+      "sen-ia": { leader: "Ashley Hinson (R)", leaderPct: 53.5, reporting: "38% counted", final: false, source: "AP / IA SOS" },
+      "sen-ks": { leader: "Roger Marshall (R)", leaderPct: 52.0, reporting: "25% counted", final: false, source: "AP / KS SOS" },
+      "sen-oh": { leader: "Jon Husted (R)", leaderPct: 52.5, reporting: "48% counted", final: false, source: "AP / OH SOS" },
+      "hse-co08": { leader: "Gabe Evans (R)", leaderPct: 50.8, reporting: "54% counted", final: false, source: "CO SOS" },
+      "hse-az01": { leader: "Amish Shah (D)", leaderPct: 51.2, reporting: "32% counted", final: false, source: "AZ SOS" },
+      "hse-az06": { leader: "Juan Ciscomani (R)", leaderPct: 50.6, reporting: "30% counted", final: false, source: "AZ SOS" },
+      "hse-ca13": { leader: "Adam Gray (D)", leaderPct: 51.0, reporting: "Polls close 8pm PT", final: false, source: "CA SOS" },
+      "hse-ca22": { leader: "David Valadao (R)", leaderPct: 52.2, reporting: "Polls close 8pm PT", final: false, source: "CA SOS" },
+      "hse-ca45": { leader: "Derek Tran (D)", leaderPct: 50.4, reporting: "Polls close 8pm PT", final: false, source: "CA SOS" },
+      "hse-ny17": { leader: "Mike Lawler (R)", leaderPct: 51.7, reporting: "44% counted", final: false, source: "NY BOE" },
+      "hse-ny19": { leader: "Josh Riley (D)", leaderPct: 52.4, reporting: "41% counted", final: false, source: "NY BOE" },
+      "hse-pa01": { leader: "Brian Fitzpatrick (R)", leaderPct: 54.1, reporting: "51% counted", final: false, source: "PA DOS" },
+      "hse-oh09": { leader: "Marcy Kaptur (D)", leaderPct: 53.8, reporting: "58% counted", final: false, source: "OH SOS" },
+      "hse-wa03": { leader: "Marie Perez (D)", leaderPct: 51.6, reporting: "Polls close 8pm PT", final: false, source: "WA SOS" },
+      "meas-ca40": { outcome: "yes", pct: 54.2, reporting: "Polls close 8pm PT", final: false, source: "CA SOS" },
+      "meas-wa2124": { outcome: "yes", pct: 56.1, reporting: "Polls close 8pm PT", final: false, source: "WA SOS" },
+      "meas-co87": { outcome: "yes", pct: 56.4, reporting: "53% counted (needs 55%)", final: false, source: "CO SOS" },
+      "meas-co136": { outcome: "no", pct: 46.5, reporting: "53% counted", final: false, source: "CO SOS" },
+      "meas-co134": { outcome: "no", pct: 42.1, reporting: "53% counted", final: false, source: "CO SOS" },
+      "meas-co135": { outcome: "no", pct: 40.8, reporting: "53% counted", final: false, source: "CO SOS" },
+      "meas-walgw": { outcome: "no", pct: 47.9, reporting: "Polls close 8pm PT", final: false, source: "WA SOS" },
+      "meas-mo-trans": { outcome: "no", pct: 48.2, reporting: "35% counted", final: false, source: "MO SOS" },
+      "meas-ak2": { outcome: "no", pct: 46.8, reporting: "RCV Repeal Trailing (46.8% Yes)", final: false, source: "AK Division of Elections" },
+      "meas-az144": { outcome: "yes", pct: 53.2, reporting: "31% counted", final: false, source: "AZ SOS" },
+      "meas-co84": { outcome: "no", pct: 41.5, reporting: "53% counted (needs 55%)", final: false, source: "CO SOS" },
+      "meas-co86": { outcome: "no", pct: 43.7, reporting: "53% counted (needs 55%)", final: false, source: "CO SOS" },
+      "meas-nv7": { outcome: "yes", pct: 54.0, reporting: "Polls close 7pm PT", final: false, source: "NV SOS" }
     }
   },
   mid: {
-    asOf: "2026-11-03T21:45:00-07:00",
-    status: "9:45 PM Late Evening Wave (~82% counted - AP & Desks calling races)",
-    source: "CO SOS / Arapahoe County / AP Decision Desk",
+    senateBalance: { dem: 49, gop: 51, calledDem: 4, calledGop: 5, needed: 51 },
+    houseBalance: { dem: 216, gop: 218, calledDem: 6, calledGop: 5, needed: 218 },
     items: {
-      senate: { outcome: "yes", final: true, pct: 58.1, leader: "John Hickenlooper (D)", leaderPct: 58.1, reporting: "AP Called (84% in)", source: "AP / CO SOS" },
-      cd6: { outcome: "yes", final: true, pct: 64.5, leader: "Jason Crow (D)", leaderPct: 64.5, reporting: "AP Called (81% in)", source: "AP / CO SOS" },
-      gov: { outcome: "yes", final: true, pct: 56.0, leader: "Phil Weiser (D)", leaderPct: 56.0, reporting: "AP Called (83% in)", source: "AP / CO SOS" },
-      sos: { outcome: "yes", final: false, pct: 54.4, leader: "Amanda Gonzalez (D)", leaderPct: 54.4, reporting: "82% counted", source: "CO SOS" },
-      treas: { outcome: "yes", final: true, pct: 54.9, leader: "Jeff Bridges (D)", leaderPct: 54.9, reporting: "AP Called (82% in)", source: "AP / CO SOS" },
-      ag: { outcome: "yes", final: false, pct: 53.2, leader: "Jena Griswold (D)", leaderPct: 53.2, reporting: "82% counted", source: "CO SOS" },
-      regent: { outcome: "yes", final: true, pct: 57.1, leader: "Ilana Spiegel (D)", leaderPct: 57.1, reporting: "Called (80% in)", source: "CO SOS" },
-      hd38: { outcome: "yes", final: false, pct: 55.0, leader: "Gretchen Rydin (D)", leaderPct: 55.0, reporting: "84% counted", source: "Arapahoe Votes" },
-      clerk: { outcome: "yes", final: true, pct: 56.8, leader: "Joan Lopez (D)", leaderPct: 56.8, reporting: "Called (84% in)", source: "Arapahoe Votes" },
-      ctreas: { outcome: "yes", final: true, pct: 62.0, leader: "Michael Westerberg (D)", leaderPct: 62.0, reporting: "Called (84% in)", source: "Arapahoe Votes" },
-      assessor: { outcome: "yes", final: false, pct: 56.2, leader: "PK Kaiser (D)", leaderPct: 56.2, reporting: "84% counted", source: "Arapahoe Votes" },
-      sheriff: { outcome: "yes", final: false, pct: 53.9, leader: "Tyler Scott Brown (D)", leaderPct: 53.9, reporting: "84% counted", source: "Arapahoe Votes" },
-      coroner: { outcome: "yes", final: true, pct: 100.0, leader: "Casey Bitting (D)", leaderPct: 100.0, reporting: "Called", source: "Arapahoe Votes" },
-      "j-hood": { outcome: "yes", final: true, pct: 74.8, reporting: "Called (82% in)", source: "CO Judicial" },
-      "j-freyre": { outcome: "yes", final: true, pct: 72.1, reporting: "Called (82% in)", source: "CO Judicial" },
-      "j-harris": { outcome: "yes", final: false, pct: 68.7, reporting: "82% counted", source: "CO Judicial" },
-      "j-lum": { outcome: "yes", final: true, pct: 73.4, reporting: "Called (82% in)", source: "CO Judicial" },
-      "j-moultrie": { outcome: "yes", final: true, pct: 73.8, reporting: "Called (82% in)", source: "CO Judicial" },
-      "j-schock": { outcome: "yes", final: true, pct: 71.0, reporting: "Called (82% in)", source: "CO Judicial" },
-      "j-sullivan": { outcome: "yes", final: true, pct: 72.5, reporting: "Called (82% in)", source: "CO Judicial" },
-      "j-amico": { outcome: "yes", final: true, pct: 70.4, reporting: "Called (84% in)", source: "Arapahoe Votes" },
-      "j-baker": { outcome: "yes", final: true, pct: 69.1, reporting: "Called (84% in)", source: "Arapahoe Votes" },
-      "j-edson": { outcome: "yes", final: true, pct: 70.8, reporting: "Called (84% in)", source: "Arapahoe Votes" },
-      "j-henderson": { outcome: "yes", final: true, pct: 69.6, reporting: "Called (84% in)", source: "Arapahoe Votes" },
-      "j-jones": { outcome: "yes", final: true, pct: 72.9, reporting: "Called (84% in)", source: "Arapahoe Votes" },
-      "j-karpel": { outcome: "yes", final: true, pct: 68.4, reporting: "Called (84% in)", source: "Arapahoe Votes" },
-      "j-stricklin": { outcome: "yes", final: true, pct: 71.3, reporting: "Called (84% in)", source: "Arapahoe Votes" },
-      "j-vahle": { outcome: "yes", final: false, pct: 63.8, reporting: "84% counted", source: "Arapahoe Votes" },
-      "j-washburn": { outcome: "yes", final: true, pct: 72.0, reporting: "Called (84% in)", source: "Arapahoe Votes" },
-      "j-apostoli": { outcome: "yes", final: true, pct: 72.4, reporting: "Called (84% in)", source: "Arapahoe Votes" },
-      "j-clark": { outcome: "yes", final: false, pct: 65.1, reporting: "84% counted", source: "Arapahoe Votes" },
-      "j-rowles": { outcome: "yes", final: true, pct: 73.6, reporting: "Called (84% in)", source: "Arapahoe Votes" },
-      a81: { outcome: "no", final: true, pct: 44.5, reporting: "Projected Failed", source: "CO SOS" },
-      a82: { outcome: "no", final: true, pct: 43.9, reporting: "Projected Failed", source: "CO SOS" },
-      a83: { outcome: "no", final: false, pct: 49.0, reporting: "82% counted (needs 55%)", source: "CO SOS" },
-      a84: { outcome: "no", final: true, pct: 39.8, reporting: "Projected Failed", source: "CO SOS" },
-      a85: { outcome: "no", final: true, pct: 51.4, reporting: "Projected Failed (failed 55% rule)", source: "CO SOS" },
-      a86: { outcome: "no", final: true, pct: 42.1, reporting: "Projected Failed", source: "CO SOS" },
-      a87: { outcome: "yes", final: false, pct: 56.8, reporting: "82% counted (leading >55%)", source: "CO SOS" },
-      pnn: { outcome: "yes", final: true, pct: 55.4, reporting: "Projected Passed", source: "CO SOS" },
-      p132: { outcome: "no", final: false, pct: 48.1, reporting: "82% counted", source: "CO SOS" },
-      p133: { outcome: "no", final: false, pct: 46.8, reporting: "82% counted", source: "CO SOS" },
-      p134: { outcome: "no", final: true, pct: 41.3, reporting: "Projected Failed", source: "CO SOS" },
-      p135: { outcome: "no", final: true, pct: 39.9, reporting: "Projected Failed", source: "CO SOS" },
-      p136: { outcome: "no", final: true, pct: 45.8, reporting: "Projected Failed", source: "CO SOS" },
-      p137: { outcome: "no", final: true, pct: 44.2, reporting: "Projected Failed", source: "CO SOS" },
-      i4a: { outcome: "yes", final: true, pct: 59.8, reporting: "Called Passed (84% in)", source: "Arapahoe Votes" },
-      i7a: { outcome: "yes", final: false, pct: 58.1, reporting: "80% counted (Districtwide)", source: "Front Range Rail Dist." }
+      "sen-me": { leader: "Troy Jackson (D)", leaderPct: 51.8, reporting: "82% counted (Leaning Dem)", final: false, source: "AP / ME SOS" },
+      "sen-tx": { leader: "Ken Paxton (R)", leaderPct: 53.1, reporting: "AP Called GOP", final: true, source: "AP / TX SOS" },
+      "sen-ak": { leader: "Mary Peltola (D)", leaderPct: 51.5, reporting: "Round 2 RCV Projection", final: false, source: "AK Division of Elections" },
+      "sen-mi": { leader: "Abdul El-Sayed (D)", leaderPct: 53.0, reporting: "AP Called Dem", final: true, source: "AP / MI SOS" },
+      "sen-nc": { leader: "Roy Cooper (D)", leaderPct: 52.4, reporting: "AP Called Dem", final: true, source: "AP / NC SBE" },
+      "sen-ga": { leader: "Jon Ossoff (D)", leaderPct: 53.8, reporting: "AP Called Dem", final: true, source: "AP / GA SOS" },
+      "sen-ia": { leader: "Ashley Hinson (R)", leaderPct: 54.2, reporting: "AP Called GOP", final: true, source: "AP / IA SOS" },
+      "sen-ks": { leader: "Roger Marshall (R)", leaderPct: 52.9, reporting: "AP Called GOP", final: true, source: "AP / KS SOS" },
+      "sen-oh": { leader: "Jon Husted (R)", leaderPct: 53.2, reporting: "AP Called GOP", final: true, source: "AP / OH SOS" },
+      "hse-co08": { leader: "Gabe Evans (R)", leaderPct: 50.4, reporting: "84% counted (Too Close to Call)", final: false, source: "CO SOS" },
+      "hse-az01": { leader: "Amish Shah (D)", leaderPct: 52.0, reporting: "Called Dem (78% in)", final: true, source: "AZ SOS" },
+      "hse-az06": { leader: "Juan Ciscomani (R)", leaderPct: 51.1, reporting: "76% counted", final: false, source: "AZ SOS" },
+      "hse-ca13": { leader: "Adam Gray (D)", leaderPct: 51.4, reporting: "62% counted", final: false, source: "CA SOS" },
+      "hse-ca22": { leader: "David Valadao (R)", leaderPct: 52.6, reporting: "65% counted", final: false, source: "CA SOS" },
+      "hse-ca45": { leader: "Derek Tran (D)", leaderPct: 51.2, reporting: "68% counted", final: false, source: "CA SOS" },
+      "hse-ny17": { leader: "Mike Lawler (R)", leaderPct: 52.1, reporting: "Called GOP (88% in)", final: true, source: "NY BOE" },
+      "hse-ny19": { leader: "Josh Riley (D)", leaderPct: 53.1, reporting: "Called Dem (85% in)", final: true, source: "NY BOE" },
+      "hse-pa01": { leader: "Brian Fitzpatrick (R)", leaderPct: 54.6, reporting: "Called GOP (92% in)", final: true, source: "PA DOS" },
+      "hse-oh09": { leader: "Marcy Kaptur (D)", leaderPct: 54.5, reporting: "Called Dem (89% in)", final: true, source: "OH SOS" },
+      "hse-wa03": { leader: "Marie Perez (D)", leaderPct: 52.8, reporting: "Called Dem (74% in)", final: true, source: "WA SOS" },
+      "meas-ca40": { outcome: "yes", pct: 55.8, reporting: "Leading (55.8% Yes)", final: false, source: "CA SOS" },
+      "meas-wa2124": { outcome: "yes", pct: 58.2, reporting: "Projected Passed", final: true, source: "WA SOS" },
+      "meas-co87": { outcome: "yes", pct: 56.8, reporting: "Leading above 55% threshold", final: false, source: "CO SOS" },
+      "meas-co136": { outcome: "no", pct: 45.8, reporting: "Projected Failed", final: true, source: "CO SOS" },
+      "meas-co134": { outcome: "no", pct: 41.3, reporting: "Projected Failed", final: true, source: "CO SOS" },
+      "meas-co135": { outcome: "no", pct: 39.9, reporting: "Projected Failed", final: true, source: "CO SOS" },
+      "meas-walgw": { outcome: "no", pct: 45.1, reporting: "Projected Failed", final: true, source: "WA SOS" },
+      "meas-mo-trans": { outcome: "no", pct: 47.1, reporting: "Trailing (52.9% No)", final: false, source: "MO SOS" },
+      "meas-ak2": { outcome: "no", pct: 44.5, reporting: "RCV Repeal Defeated (55.5% No)", final: true, source: "AK Division of Elections" },
+      "meas-az144": { outcome: "yes", pct: 54.5, reporting: "Projected Passed", final: true, source: "AZ SOS" },
+      "meas-co84": { outcome: "no", pct: 39.8, reporting: "Projected Failed", final: true, source: "CO SOS" },
+      "meas-co86": { outcome: "no", pct: 42.1, reporting: "Projected Failed", final: true, source: "CO SOS" },
+      "meas-nv7": { outcome: "yes", pct: 55.2, reporting: "Projected Passed", final: true, source: "NV SOS" }
     }
   }
 };
-
-// Effective outcome resolution: User's manual override wins, then live count, else null (uncounted)
-function effective(it) {
-  const manual = manualOutcomes[it.id];
-  if (manual === "yes" || manual === "no") {
-    return { outcome: manual, final: true, by: "you" };
-  }
-  const auto = autoData[it.id];
-  if (auto && (auto.outcome === "yes" || auto.outcome === "no")) {
-    return { outcome: auto.outcome, final: !!auto.final, by: "count", auto: auto };
-  }
-  return null;
-}
-
-function statusOf(it) {
-  const eff = effective(it);
-  if (!eff) return "wait";
-  return eff.outcome === it.v ? "good" : "bad";
-}
-
-function verdictText(it, status) {
-  if (status === "wait") return "Still counting";
-  const eff = effective(it);
-  if (eff && !eff.final) {
-    return status === "good" ? "Leaning your way" : "Leaning against you";
-  }
-  return status === "good" ? "Went your way" : "Didn't go your way";
-}
 
 function esc(str) {
   return String(str || "").replace(/[&<>'"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[c]));
 }
 
-function renderTallyLine(it, kind) {
+// Effective local status
+function effectiveLocal(it) {
+  const manual = manualOutcomes[it.id];
+  if (manual === "yes" || manual === "no") return { outcome: manual, final: true, by: "you" };
   const auto = autoData[it.id];
-  if (!auto) return "";
-  const parts = [];
-
-  if (typeof auto.pct === "number") {
-    const what = kind === "cand" ? "Your pick" : "Yes";
-    parts.push(`<span class="metric">${what}: <b>${auto.pct.toFixed(1)}%</b></span>`);
-  }
-  if (auto.leader && kind === "cand" && auto.leader !== it.pick) {
-    parts.push(`<span class="metric">Leader: ${esc(auto.leader)}${typeof auto.leaderPct === "number" ? " (" + auto.leaderPct.toFixed(1) + "%)" : ""}</span>`);
-  }
-  if (auto.reporting) {
-    parts.push(`<span class="metric">${esc(auto.reporting)}</span>`);
-  }
-  if (auto.source) {
-    parts.push(`<span class="source-tag">${esc(auto.source)}</span>`);
-  }
-  parts.push(auto.final ? "<b>Called</b>" : "Not yet called");
-
-  return `<div class="tallyline">${parts.join(" · ")}</div>`;
+  if (auto && (auto.outcome === "yes" || auto.outcome === "no")) return { outcome: auto.outcome, final: !!auto.final, by: "count", auto: auto };
+  return null;
 }
 
-function renderRow(it, kind) {
-  const status = statusOf(it);
-  if (currentFilter !== "all" && currentFilter !== status) return "";
+function statusOfLocal(it) {
+  const eff = effectiveLocal(it);
+  if (!eff) return "wait";
+  return eff.outcome === it.v ? "good" : "bad";
+}
 
-  // Search filter
-  if (currentSearch) {
-    const q = currentSearch.toLowerCase();
+function renderLocalRow(it, kind) {
+  const status = statusOfLocal(it);
+  if (currentFilterLocal !== "all" && currentFilterLocal !== status) return "";
+
+  if (currentSearchLocal) {
+    const q = currentSearchLocal.toLowerCase();
     const searchTarget = `${it.t} ${it.sub || ""} ${it.pick || ""} ${it.vs || ""}`.toLowerCase();
     if (!searchTarget.includes(q)) return "";
   }
@@ -567,9 +668,7 @@ function renderRow(it, kind) {
       <div class="detail">Also running: ${esc(it.vs)}</div>
     `;
   } else {
-    const voteWord = kind === "judge" 
-      ? (it.v === "yes" ? "Yes, retain" : "No, don't retain") 
-      : (it.v === "yes" ? "Yes / For" : "No / Against");
+    const voteWord = kind === "judge" ? (it.v === "yes" ? "Yes, retain" : "No, don't retain") : (it.v === "yes" ? "Yes / For" : "No / Against");
     infoHtml = `
       <div class="title">${esc(it.t)}${it.sub ? ` <em>· ${esc(it.sub)}</em>` : ""}</div>
       <div class="mark"><span class="oval" aria-hidden="true"></span><span>Your vote: <strong>${esc(voteWord)}</strong></span></div>
@@ -577,15 +676,26 @@ function renderRow(it, kind) {
     `;
   }
 
-  const eff = effective(it);
+  const auto = autoData[it.id];
+  let tallyParts = [];
+  if (auto) {
+    if (typeof auto.pct === "number") tallyParts.push(`<span class="metric">${kind === "cand" ? "Your pick" : "Yes"}: <b>${auto.pct.toFixed(1)}%</b></span>`);
+    if (auto.leader && kind === "cand" && auto.leader !== it.pick) tallyParts.push(`<span class="metric">Leader: ${esc(auto.leader)}${typeof auto.leaderPct === "number" ? " (" + auto.leaderPct.toFixed(1) + "%)" : ""}</span>`);
+    if (auto.reporting) tallyParts.push(`<span class="metric">${esc(auto.reporting)}</span>`);
+    if (auto.source) tallyParts.push(`<span class="source-tag">${esc(auto.source)}</span>`);
+    tallyParts.push(auto.final ? "<b>Called</b>" : "Not yet called");
+  }
+
+  const eff = effectiveLocal(it);
   const leanClass = (eff && !eff.final) ? " lean" : "";
   const matchClass = status === "good" ? " match" : (status === "bad" ? " miss" : "");
+  const verdictWord = status === "wait" ? "Still counting" : (eff && !eff.final ? (status === "good" ? "Leaning your way" : "Leaning against you") : (status === "good" ? "Went your way" : "Didn't go your way"));
 
   return `
     <div class="row ${matchClass}${leanClass}" data-id="${it.id}">
       <div class="info">
         ${infoHtml}
-        ${renderTallyLine(it, kind)}
+        ${tallyParts.length ? `<div class="tallyline">${tallyParts.join(" · ")}</div>` : ""}
         ${eff && eff.by === "you" ? `<div class="override-hint" data-action="reset" data-id="${it.id}">Overridden by your tap (Click to reset to live feed)</div>` : ""}
       </div>
       <div class="controls">
@@ -593,17 +703,17 @@ function renderRow(it, kind) {
           <button type="button" class="btn-vote" data-id="${it.id}" data-o="yes" aria-pressed="${manual === "yes"}">${L.yes}</button>
           <button type="button" class="btn-vote" data-id="${it.id}" data-o="no" aria-pressed="${manual === "no"}">${L.no}</button>
         </div>
-        <span class="verdict ${status}">${verdictText(it, status)}</span>
+        <span class="verdict ${status}">${verdictWord}</span>
       </div>
     </div>
   `;
 }
 
-function render() {
-  const sheet = document.getElementById("sheet");
+function renderLocalSheet() {
+  const sheet = document.getElementById("sheet-local");
   let fullHtml = "";
 
-  for (const p of PARTS) {
+  for (const p of LOCAL_PARTS) {
     let partBody = "";
     let sectionCount = 0, sectionCalled = 0;
 
@@ -612,49 +722,33 @@ function render() {
         let groupRows = "";
         for (const it of g.items) {
           sectionCount++;
-          const eff = effective(it);
+          const eff = effectiveLocal(it);
           if (eff && eff.final) sectionCalled++;
-          groupRows += renderRow({ ...it, v: it.v }, p.kind);
+          groupRows += renderLocalRow({ ...it, v: it.v }, p.kind);
         }
-        if (groupRows) {
-          partBody += `<div class="group-label">${esc(g.label)}</div>` + groupRows;
-        }
+        if (groupRows) partBody += `<div class="group-label">${esc(g.label)}</div>` + groupRows;
       }
     } else {
       for (const it of p.items) {
         sectionCount++;
-        const eff = effective(it);
+        const eff = effectiveLocal(it);
         if (eff && eff.final) sectionCalled++;
-        partBody += renderRow({ ...it, v: it.v || "yes" }, p.kind);
+        partBody += renderLocalRow({ ...it, v: it.v || "yes" }, p.kind);
       }
     }
 
-    if (!partBody) {
-      partBody = `<div class="empty">No contests in this category match the current filter or search.</div>`;
-    }
-
-    fullHtml += `
-      <section class="part">
-        <h2>
-          <span>${esc(p.name)}</span>
-          <small>${sectionCalled} of ${sectionCount} called</small>
-        </h2>
-        ${partBody}
-      </section>
-    `;
+    if (!partBody) partBody = `<div class="empty">No local contests match the current filter or search.</div>`;
+    fullHtml += `<section class="part"><h2><span>${esc(p.name)}</span><small>${sectionCalled} of ${sectionCount} called</small></h2>${partBody}</section>`;
   }
 
   sheet.innerHTML = fullHtml;
 
-  // Update Scoreboard metrics
+  // Local metrics
   let g = 0, b = 0, w = 0, calledTotal = 0;
-  for (const it of ITEMS) {
-    const s = statusOf(it);
-    if (s === "good") g++;
-    else if (s === "bad") b++;
-    else w++;
-
-    const eff = effective(it);
+  for (const it of LOCAL_ITEMS) {
+    const s = statusOfLocal(it);
+    if (s === "good") g++; else if (s === "bad") b++; else w++;
+    const eff = effectiveLocal(it);
     if (eff && eff.final) calledTotal++;
   }
 
@@ -662,7 +756,7 @@ function render() {
   document.getElementById("n-bad").textContent = b;
   document.getElementById("n-wait").textContent = w;
 
-  const total = ITEMS.length;
+  const total = LOCAL_ITEMS.length;
   document.getElementById("m-good").style.width = ((g / total) * 100) + "%";
   document.getElementById("m-bad").style.width = ((b / total) * 100) + "%";
 
@@ -673,21 +767,118 @@ function render() {
 
   document.getElementById("lbl-called").textContent = `${calledTotal} of ${total} contests officially called`;
   const diff = g - b;
-  const diffText = diff > 0 ? `+${diff} in your favor` : (diff < 0 ? `${diff} against` : "Even");
-  document.getElementById("lbl-alignment").textContent = `Net Alignment: ${diffText}`;
-
-  // Update status message
-  renderFeedStatus();
+  document.getElementById("lbl-alignment").textContent = `Net Alignment: ${diff > 0 ? "+" + diff + " in your favor" : (diff < 0 ? diff + " against" : "Even")}`;
 }
 
-function renderFeedStatus() {
+// Render National Watch Rows
+function renderNationalRow(it, category) {
+  if (currentFilterNational !== "all" && currentFilterNational !== category) return "";
+
+  if (currentSearchNational) {
+    const q = currentSearchNational.toLowerCase();
+    const searchTarget = `${it.state || ""} ${it.title} ${it.desc || ""} ${it.stakes || ""}`.toLowerCase();
+    if (!searchTarget.includes(q)) return "";
+  }
+
+  const live = nationalData.items && nationalData.items[it.id] ? nationalData.items[it.id] : null;
+  let statusBadge = `<span class="verdict wait">Still Counting</span>`;
+  let tallyLine = `<div class="tallyline"><span class="metric">${esc(it.stakes)}</span></div>`;
+
+  if (live) {
+    const isCalled = !!live.final;
+    let parts = [];
+    if (category === "senate" || category === "house") {
+      if (live.leader) {
+        const isDem = live.leader.includes("(D)");
+        statusBadge = `<span class="verdict ${isDem ? 'dem' : 'gop'}">${isCalled ? 'Called: ' : 'Leads: '}${esc(live.leader)}</span>`;
+      }
+      if (typeof live.leaderPct === "number") parts.push(`<span class="metric">Share: <b>${live.leaderPct.toFixed(1)}%</b></span>`);
+    } else {
+      if (live.outcome) {
+        statusBadge = `<span class="verdict ${live.outcome === 'yes' ? 'good' : 'bad'}">${isCalled ? (live.outcome === 'yes' ? 'Passed' : 'Failed') : (live.outcome === 'yes' ? 'Leaning Pass' : 'Leaning Fail')}</span>`;
+      }
+      if (typeof live.pct === "number") parts.push(`<span class="metric">Yes: <b>${live.pct.toFixed(1)}%</b></span>`);
+    }
+
+    if (live.reporting) parts.push(`<span class="metric">${esc(live.reporting)}</span>`);
+    if (live.source) parts.push(`<span class="source-tag">${esc(live.source)}</span>`);
+    parts.push(isCalled ? "<b>Called</b>" : "Counting");
+
+    tallyLine = `<div class="tallyline">${parts.join(" · ")}</div><div class="note" style="margin-top:2px;">${esc(it.stakes)}</div>`;
+  }
+
+  return `
+    <div class="row">
+      <div class="info">
+        <div class="title">
+          <span>${it.state ? `<strong>[${esc(it.state)}]</strong> ` : ""}${esc(it.title)}</span>
+          ${it.desc ? `<em>· ${esc(it.desc)}</em>` : ""}
+        </div>
+        ${tallyLine}
+      </div>
+      <div class="controls">
+        ${statusBadge}
+      </div>
+    </div>
+  `;
+}
+
+function renderNationalSheet() {
+  const sheet = document.getElementById("sheet-national");
+  let fullHtml = "";
+
+  for (const sec of NATIONAL_SECTIONS) {
+    let rowsHtml = "";
+    for (const it of sec.items) {
+      rowsHtml += renderNationalRow(it, sec.category);
+    }
+    if (!rowsHtml && (currentFilterNational === "all" || currentFilterNational === sec.category)) {
+      rowsHtml = `<div class="empty">No races in this category match the search filter.</div>`;
+    }
+    if (rowsHtml) {
+      fullHtml += `
+        <section class="part">
+          <h2>
+            <span>${esc(sec.name)}</span>
+            <small>${esc(sec.badge)}</small>
+          </h2>
+          ${rowsHtml}
+        </section>
+      `;
+    }
+  }
+
+  sheet.innerHTML = fullHtml || `<div class="empty">No national contests match the filter.</div>`;
+
+  // Update Senate & House Chamber cards
+  const sBal = nationalData.senateBalance || { dem: 47, gop: 53 };
+  const hBal = nationalData.houseBalance || { dem: 213, gop: 220 };
+
+  document.getElementById("txt-sen-d").textContent = `DEM: ${sBal.dem}`;
+  document.getElementById("txt-sen-r").textContent = `GOP: ${sBal.gop}`;
+  document.getElementById("bar-sen-d").style.width = (sBal.dem) + "%";
+  document.getElementById("bar-sen-r").style.width = (sBal.gop) + "%";
+
+  document.getElementById("txt-hse-d").textContent = `DEM: ${hBal.dem}`;
+  document.getElementById("txt-hse-r").textContent = `GOP: ${hBal.gop}`;
+  document.getElementById("bar-hse-d").style.width = (hBal.dem / 4.35) + "%";
+  document.getElementById("bar-hse-r").style.width = (hBal.gop / 4.35) + "%";
+}
+
+function render() {
+  if (activeTab === "local") {
+    renderLocalSheet();
+  } else {
+    renderNationalSheet();
+  }
+
+  // Update Status Banner
   const el = document.getElementById("feed-status");
   const timeStr = metaInfo.asOf ? new Date(metaInfo.asOf).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) : "";
-  const asOfText = timeStr ? ` · As of ${timeStr} MT` : "";
-  el.innerHTML = `<strong>${esc(metaInfo.status || "Polling active")}</strong>${asOfText} <span style="opacity:0.8">(${esc(metaInfo.source || "Official Feeds")})</span>`;
+  el.innerHTML = `<strong>${esc(metaInfo.status || "Polling active")}</strong>${timeStr ? " · As of " + timeStr + " MT" : ""} <span style="opacity:0.8">(${esc(metaInfo.source || "Official Feeds")})</span>`;
 }
 
-// Fetching Logic
+// Fetching Data from Local & National Endpoints
 async function fetchLatestData() {
   if (currentStage !== "live") {
     applyPresetStage(currentStage);
@@ -695,54 +886,35 @@ async function fetchLatestData() {
   }
 
   document.getElementById("refresh-timer").textContent = "Syncing…";
-  let loaded = false;
 
-  // 1. Try local ./results.json
+  // 1. Fetch Local Results
   try {
-    const res = await fetch("./results.json", { cache: "no-store" });
-    if (res.ok) {
-      const data = await res.json();
-      if (data && data.items) {
-        applyDataPayload(data);
-        loaded = true;
+    const resLocal = await fetch("./results.json?t=" + Date.now(), { cache: "no-store" });
+    if (resLocal.ok) {
+      const dataLocal = await resLocal.json();
+      if (dataLocal) {
+        autoData = dataLocal.items || {};
+        metaInfo.status = dataLocal.status || metaInfo.status;
+        metaInfo.asOf = dataLocal.asOf || metaInfo.asOf;
+        metaInfo.source = dataLocal.source || metaInfo.source;
       }
     }
-  } catch (err) {
-    // Local fetch failed, proceed to fallback
-  }
+  } catch (err) {}
 
-  // 2. Fallback to public CORS proxy / mirror if direct failed and not in simulated mode
-  if (!loaded) {
-    // Use simulated early or pre data if live feeds haven't dropped returns yet
-    const hour = new Date().getHours();
-    if (hour < 19) { // Before 7:00 PM MT
-      metaInfo = {
-        asOf: new Date().toISOString(),
-        status: "Polls open until 7:00 PM MT. Live counts begin as county clerks scan returns.",
-        source: "Arapahoe County & Colorado SOS"
-      };
-    } else {
-      metaInfo = {
-        asOf: new Date().toISOString(),
-        status: "Polling Secretary of State Clarity ENR & Arapahoe Votes feeds…",
-        source: "Official ENR Feeds"
-      };
+  // 2. Fetch National Results
+  try {
+    const resNat = await fetch("./national_results.json?t=" + Date.now(), { cache: "no-store" });
+    if (resNat.ok) {
+      const dataNat = await resNat.json();
+      if (dataNat) {
+        nationalData = dataNat;
+      }
     }
-    renderFeedStatus();
-  }
+  } catch (err) {}
 
+  render();
   refreshCountdown = refreshIntervalSec;
   updateTimerUI();
-}
-
-function applyDataPayload(data) {
-  autoData = data.items || {};
-  metaInfo = {
-    asOf: data.asOf || new Date().toISOString(),
-    status: data.status || "Live returns synchronized",
-    source: data.source || "Colorado Secretary of State & Arapahoe Elections"
-  };
-  render();
 }
 
 function applyPresetStage(stage) {
@@ -763,13 +935,30 @@ function applyPresetStage(stage) {
   } else {
     ind.style.display = "inline-flex";
     indText.textContent = "SIMULATION: " + stage.toUpperCase();
-    const preset = PRESETS[stage] || PRESETS.early;
-    applyDataPayload({
-      asOf: new Date().toISOString(),
-      status: preset.status,
-      source: preset.source,
-      items: preset.items
-    });
+    
+    // Apply local simulation preset if available
+    if (stage === "pre") {
+      autoData = {};
+      nationalData = {
+        senateBalance: { dem: 47, gop: 53 },
+        houseBalance: { dem: 213, gop: 220 },
+        items: {}
+      };
+      metaInfo = {
+        asOf: new Date().toISOString(),
+        status: "Polls open nationwide. Pre-election state.",
+        source: "State Election Offices & National Desks"
+      };
+    } else {
+      const natPreset = NATIONAL_SIM[stage] || NATIONAL_SIM.early;
+      nationalData = natPreset;
+      metaInfo = {
+        asOf: new Date().toISOString(),
+        status: stage === "early" ? "7:15 PM Initial Wave Simulation" : "9:45 PM Late Calls Simulation",
+        source: "AP / Decision Desk HQ / State SOS Feeds"
+      };
+    }
+    render();
   }
 }
 
@@ -801,34 +990,51 @@ function startTimer() {
 
 // Event Listeners
 document.addEventListener("click", (e) => {
-  // Category / Status Filter pills
-  const fBtn = e.target.closest(".filters button");
-  if (fBtn) {
-    currentFilter = fBtn.dataset.f;
-    document.querySelectorAll(".filters button").forEach(b => b.setAttribute("aria-pressed", String(b === fBtn)));
+  // Tab Switcher
+  const tabBtn = e.target.closest(".tab-btn");
+  if (tabBtn) {
+    activeTab = tabBtn.dataset.tab;
+    document.querySelectorAll(".tab-btn").forEach(b => b.setAttribute("aria-selected", String(b === tabBtn)));
+    document.getElementById("view-local").style.display = activeTab === "local" ? "grid" : "none";
+    document.getElementById("view-national").style.display = activeTab === "national" ? "grid" : "none";
     render();
     return;
   }
 
-  // Simulator Stage Buttons
+  // Local Filter Pills
+  const fBtn = e.target.closest(".filters button[data-f]");
+  if (fBtn) {
+    currentFilterLocal = fBtn.dataset.f;
+    document.querySelectorAll(".filters button[data-f]").forEach(b => b.setAttribute("aria-pressed", String(b === fBtn)));
+    renderLocalSheet();
+    return;
+  }
+
+  // National Filter Pills
+  const fnBtn = e.target.closest(".filters button[data-fn]");
+  if (fnBtn) {
+    currentFilterNational = fnBtn.dataset.fn;
+    document.querySelectorAll(".filters button[data-fn]").forEach(b => b.setAttribute("aria-pressed", String(b === fnBtn)));
+    renderNationalSheet();
+    return;
+  }
+
+  // Mode / Stage Buttons
   const stageBtn = e.target.closest(".mode-btn");
   if (stageBtn) {
     applyPresetStage(stageBtn.dataset.stage);
     return;
   }
 
-  // Manual Outcome Override Buttons
+  // Local Manual Override Buttons
   const vBtn = e.target.closest(".btn-vote");
   if (vBtn) {
     const id = vBtn.dataset.id;
     const o = vBtn.dataset.o;
-    if (manualOutcomes[id] === o) {
-      delete manualOutcomes[id];
-    } else {
-      manualOutcomes[id] = o;
-    }
+    if (manualOutcomes[id] === o) delete manualOutcomes[id];
+    else manualOutcomes[id] = o;
     saveManual();
-    render();
+    renderLocalSheet();
     return;
   }
 
@@ -838,7 +1044,7 @@ document.addEventListener("click", (e) => {
     const id = resetLink.dataset.id;
     delete manualOutcomes[id];
     saveManual();
-    render();
+    renderLocalSheet();
     return;
   }
 
@@ -866,8 +1072,9 @@ document.addEventListener("click", (e) => {
     if (txt) {
       try {
         const parsed = JSON.parse(txt);
-        applyDataPayload(parsed);
-        alert("Results data loaded successfully!");
+        autoData = parsed.items || {};
+        metaInfo.status = parsed.status || "Imported results data";
+        render();
       } catch (err) {
         alert("Invalid JSON format: " + err.message);
         return;
@@ -879,27 +1086,18 @@ document.addEventListener("click", (e) => {
   }
 });
 
-// Search input
-document.getElementById("search-input").addEventListener("input", (e) => {
-  currentSearch = e.target.value.trim();
-  render();
+// Search Inputs
+document.getElementById("search-input-local").addEventListener("input", (e) => {
+  currentSearchLocal = e.target.value.trim();
+  renderLocalSheet();
 });
-
-// File input in modal
-document.getElementById("file-input").addEventListener("change", (e) => {
-  const file = e.target.files && e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (evt) => {
-    document.getElementById("json-input").value = evt.target.result;
-  };
-  reader.readAsText(file);
+document.getElementById("search-input-nat").addEventListener("input", (e) => {
+  currentSearchNational = e.target.value.trim();
+  renderNationalSheet();
 });
 
 function saveManual() {
-  try {
-    localStorage.setItem(LS_MANUAL_KEY, JSON.stringify(manualOutcomes));
-  } catch (err) {}
+  try { localStorage.setItem(LS_MANUAL_KEY, JSON.stringify(manualOutcomes)); } catch (err) {}
 }
 
 function loadSaved() {
@@ -910,11 +1108,11 @@ function loadSaved() {
 
   try {
     const st = localStorage.getItem(LS_STAGE_KEY);
-    if (st && PRESETS[st]) currentStage = st;
+    if (st) currentStage = st;
   } catch (err) {}
 }
 
-// Initial bootstrap
+// Bootstrap
 loadSaved();
 render();
 applyPresetStage(currentStage);

@@ -15,6 +15,7 @@ import urllib.request
 import urllib.error
 
 DEFAULT_OUTPUT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results.json")
+DEFAULT_NAT_OUTPUT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "national_results.json")
 MT_TZ = timezone(timedelta(hours=-7))
 
 # Realistic election night simulated return curves for testing before polls close or for rehearsal
