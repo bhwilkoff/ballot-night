@@ -2,14 +2,19 @@ name: Poll Election Results
 
 on:
   schedule:
-    # Runs every 5 minutes from 7:00 PM to 1:00 AM Mountain Time on election night
-    - cron: '*/5 2-8 4 11 *'
+    # Runs every 10 minutes from 7:00 PM to 1:00 AM Mountain Time on election night
+    - cron: '*/10 2-8 4 11 *'
   workflow_dispatch:
     inputs:
       stage:
-        description: 'Election simulation stage (early, mid, or live)'
+        description: 'Election simulation stage (live, early, mid, pre)'
         required: false
-        default: 'early'
+        default: 'live'
+
+# Prevent concurrent runs from colliding
+concurrency:
+  group: update-results
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -28,7 +33,8 @@ jobs:
 
       - name: Fetch Latest Election Returns
         run: |
-          STAGE="${{ github.event.inputs.stage || 'early' }}"
+          STAGE="${{ github.event.inputs.stage || 'live' }}"
+          echo "Executing election scraper for stage: $STAGE"
           python fetch_election_results.py --stage "$STAGE" --output ./results.json
 
       - name: Commit and push if results changed
@@ -39,6 +45,7 @@ jobs:
           if ! git diff-index --quiet HEAD --; then
             git commit -m "Auto-update election results [$(date -u +'%Y-%m-%dT%H:%M:%SZ')]"
             git push
+            echo "New results committed and pushed successfully."
           else
-            echo "No changes in election results."
+            echo "No change in results since last batch. Skipping commit."
           fi

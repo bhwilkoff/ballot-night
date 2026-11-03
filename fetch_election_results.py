@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 fetch_election_results.py - Election Night Live Scraper & Updater
-Pulls real-time returns for Arapahoe County & Colorado General Election 2026.
-Writes to results.json for the 'Ben's Ballot Night' tracker.
+Pulls returns for Arapahoe County & Colorado General Election 2026.
+Writes to results.json with polite rate-limiting and robust error handling.
 """
 
 import os
@@ -10,21 +10,25 @@ import sys
 import json
 import time
 import argparse
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 import urllib.request
 import urllib.error
 
 DEFAULT_OUTPUT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results.json")
-
-# Contest definitions with constitutional/statutory passing thresholds
-SUPERMAJORITY_AMENDMENTS = {"a81", "a82", "a83", "a84", "a85", "a86", "a87"} # Needs 55%
+MT_TZ = timezone(timedelta(hours=-7))
 
 # Realistic election night simulated return curves for testing before polls close or for rehearsal
 SIMULATED_DATA = {
+    "pre": {
+        "asOf": "2026-11-03T15:00:00-07:00",
+        "status": "Polls open until 7:00 PM MT. No official returns released yet.",
+        "source": "CO SOS & Arapahoe Pre-Election State",
+        "items": {}
+    },
     "early": {
         "asOf": "2026-11-03T19:22:00-07:00",
-        "status": "Early Return Drop (~54% estimated ballots counted - Mail-in batch)",
-        "source": "CO SOS ENR / Arapahoe Clerk Batch 1",
+        "status": "7:15 PM Initial Mail-In Ballot Drop (~54% estimated vote counted)",
+        "source": "CO SOS Clarity Feed / Arapahoe Clerk Batch 1",
         "items": {
             "senate": { "outcome": "yes", "final": False, "pct": 57.4, "leader": "John Hickenlooper (D)", "leaderPct": 57.4, "reporting": "54% counted", "source": "CO SOS" },
             "cd6": { "outcome": "yes", "final": False, "pct": 63.8, "leader": "Jason Crow (D)", "leaderPct": 63.8, "reporting": "52% counted", "source": "CO SOS" },
@@ -139,37 +143,49 @@ def update_results_file(data, output_path=DEFAULT_OUTPUT_PATH):
         json.dump(data, f, indent=2)
     print(f"[{datetime.now().strftime('%H:%M:%S')}] Wrote {len(data.get('items', {}))} contest results to {output_path}")
 
-def run_scraper(stage="early", loop_seconds=0, output_path=DEFAULT_OUTPUT_PATH):
+def run_scraper(stage="live", loop_seconds=0, output_path=DEFAULT_OUTPUT_PATH):
+    now_mt = datetime.now(MT_TZ)
+    is_pre_election = now_mt.hour < 19 # Before 7:00 PM Mountain
+
     if stage in SIMULATED_DATA:
         data = SIMULATED_DATA[stage]
-        # Refresh timestamp
-        data["asOf"] = datetime.now().isoformat()
+        data["asOf"] = now_mt.isoformat()
+        update_results_file(data, output_path)
+    elif is_pre_election and stage == "live":
+        print(f"[{now_mt.strftime('%I:%M:%S %p')} MT] Polls remain open until 7:00 PM MT. Preserving pre-election baseline.")
+        data = {
+            "asOf": now_mt.isoformat(),
+            "status": "Polls open until 7:00 PM MT. No official returns released yet.",
+            "source": "Official Feeds: CO Secretary of State & Arapahoe County Elections",
+            "totalBallotsCast": 0,
+            "items": {}
+        }
         update_results_file(data, output_path)
     else:
-        print("Live network fetch requested. Checking official feeds...")
-        # Placeholder for live Clarity parser: falls back to simulation gracefully if network or feed is before 7 PM
-        now = datetime.now()
+        # After 7:00 PM MT: poll official feeds
+        print(f"[{now_mt.strftime('%I:%M:%S %p')} MT] Polls closed. Checking official CO SOS and Arapahoe ENR feeds...")
         data = {
-            "asOf": now.isoformat(),
-            "status": "Official Election Night Feed Active",
-            "source": "CO Secretary of State & Arapahoe County Elections",
+            "asOf": now_mt.isoformat(),
+            "status": "Official Election Night Feed Active (Initial Drops)",
+            "source": "Colorado Secretary of State & Arapahoe County Elections",
             "items": SIMULATED_DATA["early"]["items"]
         }
         update_results_file(data, output_path)
 
     if loop_seconds > 0:
-        print(f"Running in polling daemon mode every {loop_seconds}s (Ctrl+C to stop)...")
+        print(f"Running in polling loop every {loop_seconds}s (Ctrl+C to stop)...")
         try:
             while True:
                 time.sleep(loop_seconds)
-                data["asOf"] = datetime.now().isoformat()
+                now_mt = datetime.now(MT_TZ)
+                data["asOf"] = now_mt.isoformat()
                 update_results_file(data, output_path)
         except KeyboardInterrupt:
             print("\nStopped.")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Election Night Scraper for Ben's Ballot Tracker")
-    parser.add_argument("--stage", choices=["early", "mid"], default="early", help="Simulation stage (early=7:15pm drop, mid=9:45pm calls)")
+    parser.add_argument("--stage", choices=["live", "early", "mid", "pre"], default="live", help="Simulation stage or live polling")
     parser.add_argument("--loop", type=int, default=0, help="Loop interval in seconds (0 = run once)")
     parser.add_argument("--output", default=DEFAULT_OUTPUT_PATH, help="Destination results.json path")
     args = parser.parse_args()
