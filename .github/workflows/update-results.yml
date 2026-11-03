@@ -1,0 +1,44 @@
+name: Poll Election Results
+
+on:
+  schedule:
+    # Runs every 5 minutes from 7:00 PM to 1:00 AM Mountain Time on election night
+    - cron: '*/5 2-8 4 11 *'
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: 'Election simulation stage (early, mid, or live)'
+        required: false
+        default: 'early'
+
+permissions:
+  contents: write
+
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Fetch Latest Election Returns
+        run: |
+          STAGE="${{ github.event.inputs.stage || 'early' }}"
+          python fetch_election_results.py --stage "$STAGE" --output ./results.json
+
+      - name: Commit and push if results changed
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add results.json
+          if ! git diff-index --quiet HEAD --; then
+            git commit -m "Auto-update election results [$(date -u +'%Y-%m-%dT%H:%M:%SZ')]"
+            git push
+          else
+            echo "No changes in election results."
+          fi

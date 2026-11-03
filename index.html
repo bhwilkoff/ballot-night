@@ -1,0 +1,924 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ben's Ballot Night · Arapahoe County Live Election Tracker 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+:root {
+  --paper: #f0f3f6;
+  --sheet: #ffffff;
+  --ink: #111822;
+  --muted: #536171;
+  --rule: #d5dce3;
+  --bar: #111822;
+  --bar-ink: #ffffff;
+  --accent: #2563eb;
+  --good: #15803d;
+  --good-soft: #dcfce7;
+  --good-border: #86efac;
+  --bad: #b91c1c;
+  --bad-soft: #fee2e2;
+  --bad-border: #fca5a5;
+  --wait: #64748b;
+  --wait-soft: #f1f5f9;
+  --wait-border: #cbd5e1;
+  --focus: #2563eb;
+  --pill-bg: #e2e8f0;
+  --display: "Barlow Condensed", "Arial Narrow", -apple-system, sans-serif;
+  --body: "Public Sans", -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0b0f14; --sheet: #131b23; --ink: #edf2f7; --muted: #94a3b8; --rule: #243141;
+    --bar: #edf2f7; --bar-ink: #0b0f14; --accent: #60a5fa;
+    --good: #4ade80; --good-soft: #052e16; --good-border: #166534;
+    --bad: #f87171; --bad-soft: #450a0a; --bad-border: #991b1b;
+    --wait: #94a3b8; --wait-soft: #1e293b; --wait-border: #334155;
+    --focus: #60a5fa; --pill-bg: #1e293b; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0b0f14; --sheet: #131b23; --ink: #edf2f7; --muted: #94a3b8; --rule: #243141;
+  --bar: #edf2f7; --bar-ink: #0b0f14; --accent: #60a5fa;
+  --good: #4ade80; --good-soft: #052e16; --good-border: #166534;
+  --bad: #f87171; --bad-soft: #450a0a; --bad-border: #991b1b;
+  --wait: #94a3b8; --wait-soft: #1e293b; --wait-border: #334155;
+  --focus: #60a5fa; --pill-bg: #1e293b; color-scheme: dark;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.45; }
+.wrap { max-width: 920px; margin: 0 auto; padding: 20px 16px 80px; display: grid; gap: 20px; }
+
+/* Header & Banner */
+header.top { display: grid; gap: 8px; }
+.eyebrow-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; }
+.eyebrow { font-family: var(--display); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-size: 14px; }
+.live-pill { display: inline-flex; align-items: center; gap: 6px; background: var(--good-soft); color: var(--good); border: 1px solid var(--good-border); padding: 4px 10px; border-radius: 999px; font-family: var(--mono); font-size: 12px; font-weight: 600; }
+.live-pulse { width: 8px; height: 8px; border-radius: 50%; background: currentColor; animation: pulse 1.6s infinite ease-in-out; }
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .3; transform: scale(.75); } }
+
+h1 { font-family: var(--display); font-weight: 700; font-size: clamp(34px, 6.5vw, 52px); line-height: 1; letter-spacing: .01em; }
+.sub { color: var(--muted); max-width: 72ch; font-size: 15px; }
+
+/* Simulator / Feed Mode Bar */
+.mode-bar { background: var(--sheet); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 16px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.mode-label { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+.mode-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.mode-btn { font: 500 12px/1 var(--body); padding: 6px 11px; border-radius: 6px; border: 1px solid var(--rule); background: transparent; color: var(--ink); cursor: pointer; transition: all .15s; }
+.mode-btn:hover { background: var(--pill-bg); }
+.mode-btn[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); font-weight: 700; }
+
+/* Scoreboard */
+.score { background: var(--sheet); border: 1px solid var(--rule); border-radius: 8px; padding: 20px; display: grid; gap: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+.tallies { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.tally { display: grid; gap: 2px; }
+.tally b { font-family: var(--display); font-size: clamp(38px, 6vw, 48px); line-height: 1; font-weight: 700; font-variant-numeric: tabular-nums; }
+.tally span { font-size: 13px; font-weight: 600; color: var(--muted); }
+.tally.good b { color: var(--good); }
+.tally.bad b { color: var(--bad); }
+.tally.wait b { color: var(--wait); }
+
+.meter-wrap { display: grid; gap: 6px; }
+.meter { display: flex; height: 12px; border-radius: 6px; overflow: hidden; background: var(--wait-soft); border: 1px solid var(--rule); }
+.meter i { display: block; height: 100%; transition: width .4s cubic-bezier(.4, 0, .2, 1); }
+.meter .g { background: var(--good); }
+.meter .b { background: var(--bad); }
+.meter-labels { display: flex; justify-content: space-between; font-size: 12px; font-family: var(--mono); color: var(--muted); }
+
+.feed-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding-top: 6px; border-top: 1px solid var(--rule); font-size: 13px; }
+.feed-info { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.feed-actions { display: flex; align-items: center; gap: 8px; }
+.btn-sm { font: 600 12px/1 var(--body); padding: 7px 11px; border-radius: 6px; border: 1px solid var(--rule); background: var(--sheet); color: var(--ink); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: background .15s; }
+.btn-sm:hover { background: var(--pill-bg); }
+.timer-badge { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+
+/* Filter & Search Bar */
+.controls-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.filters button { font: 600 13px/1 var(--body); padding: 8px 13px; border-radius: 999px; border: 1px solid var(--rule); background: var(--sheet); color: var(--ink); cursor: pointer; transition: all .15s; }
+.filters button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.search-box { position: relative; min-width: 200px; max-width: 280px; flex: 1; }
+.search-box input { width: 100%; font: 13px/1.4 var(--body); padding: 8px 12px 8px 30px; border-radius: 999px; border: 1px solid var(--rule); background: var(--sheet); color: var(--ink); outline: none; }
+.search-box input:focus { border-color: var(--focus); box-shadow: 0 0 0 2px rgba(37,99,235,.2); }
+.search-box svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; color: var(--muted); }
+
+/* Section & Contest Rows */
+section.part { background: var(--sheet); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.03); }
+section.part > h2 { margin: 0; background: var(--bar); color: var(--bar-ink); font-family: var(--display); font-weight: 700; font-size: 18px; letter-spacing: .06em; text-transform: uppercase; padding: 9px 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+section.part > h2 small { font-family: var(--mono); font-size: 12px; letter-spacing: 0; text-transform: none; opacity: .85; }
+.group-label { font-family: var(--display); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; font-size: 13px; color: var(--muted); padding: 12px 16px 4px; background: rgba(0,0,0,.02); border-bottom: 1px solid var(--rule); }
+
+.row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px 18px; align-items: center; padding: 14px 16px; border-top: 1px solid var(--rule); border-left: 5px solid transparent; transition: background .15s; }
+.row:first-of-type { border-top: 0; }
+.row:hover { background: rgba(0,0,0,.015); }
+.row.match { border-left-color: var(--good); }
+.row.miss { border-left-color: var(--bad); }
+.row.lean.match { border-left-color: var(--good); border-left-style: dashed; }
+.row.lean.miss { border-left-color: var(--bad); border-left-style: dashed; }
+
+.row .info { min-width: 0; display: grid; gap: 4px; }
+.row .title { font-weight: 700; font-size: 16px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 8px; }
+.row .title em { font-style: normal; font-weight: 500; color: var(--muted); font-size: 14px; }
+.row .detail { font-size: 13px; color: var(--muted); }
+.mark { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; }
+.oval { width: 22px; height: 13px; border-radius: 50%; background: var(--ink); display: inline-block; flex: none; }
+.mark strong { font-weight: 700; color: var(--ink); }
+.note { font-size: 12px; color: var(--muted); font-style: italic; }
+
+.tallyline { font-family: var(--mono); font-size: 12px; color: var(--ink); display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 2px; }
+.tallyline .metric { background: var(--pill-bg); padding: 2px 7px; border-radius: 4px; }
+.tallyline b { font-weight: 600; color: var(--accent); }
+.source-tag { font-size: 11px; padding: 2px 6px; border-radius: 4px; background: var(--wait-soft); border: 1px solid var(--wait-border); color: var(--muted); font-family: var(--mono); }
+
+.controls { display: grid; gap: 6px; justify-items: end; }
+.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; background: var(--sheet); }
+.seg button { font: 600 13px/1 var(--body); padding: 8px 12px; border: 0; background: transparent; color: var(--ink); cursor: pointer; white-space: nowrap; transition: background .12s; }
+.seg button + button { border-left: 1px solid var(--rule); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.verdict { font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; letter-spacing: .02em; }
+.verdict.wait { background: var(--wait-soft); color: var(--wait); border: 1px solid var(--wait-border); }
+.verdict.good { background: var(--good-soft); color: var(--good); border: 1px solid var(--good-border); }
+.verdict.bad { background: var(--bad-soft); color: var(--bad); border: 1px solid var(--bad-border); }
+.override-hint { font-size: 11px; color: var(--muted); font-style: italic; cursor: pointer; text-decoration: underline; }
+
+.empty { padding: 24px 16px; color: var(--muted); font-size: 14px; text-align: center; }
+
+/* Modal Drawer for Custom Data Sync / Configuration */
+.modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 16px; }
+.modal-backdrop.open { display: flex; }
+.modal { background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; width: 100%; max-width: 560px; padding: 24px; display: grid; gap: 16px; box-shadow: 0 20px 25px -5px rgba(0,0,0,.2); max-height: 90vh; overflow-y: auto; }
+.modal h3 { font-family: var(--display); font-size: 24px; font-weight: 700; margin: 0; }
+.modal textarea { width: 100%; height: 160px; font-family: var(--mono); font-size: 12px; padding: 10px; border-radius: 6px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); }
+.modal-actions { display: flex; justify-content: flex-end; gap: 10px; }
+
+@media (max-width: 640px) {
+  .row { grid-template-columns: minmax(0, 1fr); }
+  .controls { justify-items: start; grid-auto-flow: column; justify-content: space-between; align-items: center; width: 100%; padding-top: 6px; }
+  .tally b { font-size: 34px; }
+  .mode-bar { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow-bar">
+      <div class="eyebrow">Arapahoe County General Election · Tuesday, November 3, 2026</div>
+      <div class="live-pill" id="live-indicator">
+        <span class="live-pulse"></span>
+        <span id="live-indicator-text">LIVE POLLING</span>
+      </div>
+    </div>
+    <h1>Ben's Ballot Night</h1>
+    <p class="sub">Every contest on your ballot, scored directly against how you voted. Live counts pull throughout election night from the Colorado Secretary of State and Arapahoe County Elections, showing early leads until races are officially called.</p>
+  </header>
+
+  <!-- Live Feed & Election Night Simulation Switcher -->
+  <div class="mode-bar">
+    <div class="mode-label">
+      <span>Election Night Stream:</span>
+    </div>
+    <div class="mode-pills" role="radiogroup" aria-label="Election Night Stage">
+      <button type="button" class="mode-btn" id="m-live" data-stage="live" aria-pressed="true">🔴 Live Feed (Auto-Sync)</button>
+      <button type="button" class="mode-btn" id="m-early" data-stage="early" aria-pressed="false">🗳️ 7:15 PM Drop (~54%)</button>
+      <button type="button" class="mode-btn" id="m-mid" data-stage="mid" aria-pressed="false">🌙 9:45 PM Calls (~82%)</button>
+      <button type="button" class="mode-btn" id="m-pre" data-stage="pre" aria-pressed="false">🕒 Pre-7 PM (0%)</button>
+    </div>
+  </div>
+
+  <!-- Main Scoreboard -->
+  <div class="score" aria-live="polite">
+    <div class="tallies">
+      <div class="tally good"><b id="n-good">0</b><span>Went your way</span></div>
+      <div class="tally bad"><b id="n-bad">0</b><span>Didn't</span></div>
+      <div class="tally wait"><b id="n-wait">48</b><span>Still counting</span></div>
+    </div>
+
+    <div class="meter-wrap">
+      <div class="meter" aria-hidden="true"><i class="g" id="m-good" style="width:0"></i><i class="b" id="m-bad" style="width:0"></i></div>
+      <div class="meter-labels">
+        <span id="lbl-alignment">Net: Even</span>
+        <span id="lbl-called">0 of 48 contests called</span>
+      </div>
+    </div>
+
+    <div class="feed-bar">
+      <div class="feed-info">
+        <span id="feed-status">Official counts starting election night after 7:00 p.m. MT</span>
+      </div>
+      <div class="feed-actions">
+        <span class="timer-badge" id="refresh-timer">Next sync: 45s</span>
+        <button type="button" class="btn-sm" id="btn-refresh" title="Poll latest results now">↻ Sync Now</button>
+        <button type="button" class="btn-sm" id="btn-sync-modal" title="Configure endpoints or paste results JSON">⚙ Feed Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search & Category Filters -->
+  <div class="controls-bar">
+    <div class="filters" role="group" aria-label="Filter Contests">
+      <button type="button" id="f-all" data-f="all" aria-pressed="true">All 48</button>
+      <button type="button" id="f-wait" data-f="wait" aria-pressed="false">Still counting (48)</button>
+      <button type="button" id="f-good" data-f="good" aria-pressed="false">Went your way (0)</button>
+      <button type="button" id="f-bad" data-f="bad" aria-pressed="false">Didn't (0)</button>
+    </div>
+    <div class="search-box">
+      <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
+      <input type="text" id="search-input" placeholder="Filter race or measure…" aria-label="Search races">
+    </div>
+  </div>
+
+  <!-- Ballot Sheet Container -->
+  <main id="sheet" style="display:grid;gap:18px"></main>
+</div>
+
+<!-- Feed / Data Modal Drawer -->
+<div class="modal-backdrop" id="feed-modal">
+  <div class="modal">
+    <h3>Election Feed Configuration</h3>
+    <p class="sub">The tracker automatically polls official Secretary of State and Arapahoe County results feeds and local <code>results.json</code>. You can also paste results JSON directly or select a file.</p>
+
+    <div style="display:grid;gap:8px;">
+      <label style="font-weight:600;font-size:13px;">Auto-Refresh Interval</label>
+      <select id="interval-select" style="font-size:14px;padding:8px;border-radius:6px;border:1px solid var(--rule);background:var(--sheet);color:var(--ink);">
+        <option value="30">Every 30 seconds</option>
+        <option value="60" selected>Every 60 seconds</option>
+        <option value="120">Every 2 minutes</option>
+        <option value="300">Every 5 minutes</option>
+        <option value="0">Manual only (Pause polling)</option>
+      </select>
+    </div>
+
+    <div style="display:grid;gap:8px;">
+      <label style="font-weight:600;font-size:13px;">Paste Results JSON or Load File</label>
+      <input type="file" id="file-input" accept=".json" style="font-size:13px;">
+      <textarea id="json-input" placeholder="Paste results.json data here..."></textarea>
+    </div>
+
+    <div class="modal-actions">
+      <button type="button" class="btn-sm" id="btn-modal-close">Close</button>
+      <button type="button" class="btn-sm" id="btn-modal-apply" style="background:var(--ink);color:var(--paper);border-color:var(--ink);">Apply Data</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Ballot configuration: Exactly 48 contests representing Ben's filled-out ballot
+const PARTS = [
+  { name: "Federal Offices", kind: "cand", items: [
+    { id: "senate", t: "U.S. Senator", pick: "John Hickenlooper (D)", vs: "Mark Baisley (R), Bob Chew (Forward), Christopher Baum (Approval Voting), Blake Huber (L), Adam Withrow (Unity)" },
+    { id: "cd6", t: "U.S. Representative, District 6", pick: "Jason Crow (D)", vs: "Jason Clark (R), Patty McMahon (L), Meredith Ryan (Unity), Samir Witta (Unaffiliated)" }
+  ]},
+  { name: "State Offices", kind: "cand", items: [
+    { id: "gov", t: "Governor / Lt. Governor", pick: "Phil Weiser / Lesley Dahlkemper (D)", vs: "Victor Marx / George Washington Markert (R), Greg Lopez / Taralyn Romero (Unaffiliated), and four others" },
+    { id: "sos", t: "Secretary of State", pick: "Amanda Gonzalez (D)", vs: "James Wiley (R), Sean Vadney (L), Amanda Campbell (ACP), Celeste Landry (Forward)" },
+    { id: "treas", t: "State Treasurer", pick: "Jeff Bridges (D)", vs: "Kevin Grantham (R), Jodie Barr (L), Marilee Langner Sturgis (Approval Voting)" },
+    { id: "ag", t: "Attorney General", pick: "Jena Griswold (D)", vs: "Michael J. Allen (R)" },
+    { id: "regent", t: "CU Regent, District 6", pick: "Ilana Spiegel (D)", vs: "Veanessa Burbage (R), Joe Johnson (L)" },
+    { id: "hd38", t: "State Representative, District 38", pick: "Gretchen Rydin (D)", vs: "Tim Martin (Center), Norm Olsen (L), Allison Madrigal (Unaffiliated)" }
+  ]},
+  { name: "Arapahoe County Offices", kind: "cand", items: [
+    { id: "clerk", t: "County Clerk and Recorder", pick: "Joan Lopez (D)", vs: "Annette Budd (R)" },
+    { id: "ctreas", t: "County Treasurer", pick: "Michael Westerberg (D)", vs: "Bennett Rutledge (L)" },
+    { id: "assessor", t: "County Assessor", pick: "PK Kaiser (D)", vs: "Jesse Lind (R), Lee D. Ormiston (L)" },
+    { id: "sheriff", t: "County Sheriff", pick: "Tyler Scott Brown (D)", vs: "Kevin Scott Edling (R)" },
+    { id: "coroner", t: "County Coroner", pick: "Casey Bitting (D)", vs: "Unopposed" }
+  ]},
+  { name: "Judicial Retention", kind: "judge", groups: [
+    { label: "Colorado Supreme Court", items: [
+      { id: "j-hood", t: "Justice William W. Hood III", v: "yes" } ] },
+    { label: "Colorado Court of Appeals", items: [
+      { id: "j-freyre", t: "Judge Rebecca Rankin Freyre", v: "yes" },
+      { id: "j-harris", t: "Judge Elizabeth L. Harris", v: "no", note: "Slow opinions flagged in 2018 and 2026" },
+      { id: "j-lum", t: "Judge Katharine E. Lum", v: "yes" },
+      { id: "j-moultrie", t: "Judge Pax Moultrie", v: "yes" },
+      { id: "j-schock", t: "Judge Karl L. Schock", v: "yes" },
+      { id: "j-sullivan", t: "Judge Grant Sullivan", v: "yes" } ] },
+    { label: "District Court, 18th Judicial District", items: [
+      { id: "j-amico", t: "Judge Michelle Ann Amico", v: "yes" },
+      { id: "j-baker", t: "Judge LaQunya Latrese Baker-McKay", v: "yes" },
+      { id: "j-edson", t: "Judge Jacob A. Edson", v: "yes" },
+      { id: "j-henderson", t: "Judge Thomas W. Henderson", v: "yes" },
+      { id: "j-jones", t: "Judge Michelle Jones", v: "yes" },
+      { id: "j-karpel", t: "Judge David N. Karpel", v: "yes" },
+      { id: "j-stricklin", t: "Judge Natalie G. Stricklin", v: "yes" },
+      { id: "j-vahle", t: "Judge Darren L. Vahle", v: "no", note: "Perceived prosecution tilt; commission split" },
+      { id: "j-washburn", t: "Judge Christine A. Washburn", v: "yes" } ] },
+    { label: "County Court, Arapahoe", items: [
+      { id: "j-apostoli", t: "Judge Christina Marie Apostoli", v: "yes" },
+      { id: "j-clark", t: "Judge Colleen Clark", v: "no", note: "Commission vote was 7-1" },
+      { id: "j-rowles", t: "Judge Cheryl Rowles-Stokes", v: "yes" } ] }
+  ]},
+  { name: "State Ballot Measures", kind: "measure", items: [
+    { id: "a81", t: "Amendment 81", sub: "Notify ICE after certain charges", v: "no", note: "Constitutional: requires 55% to pass" },
+    { id: "a82", t: "Amendment 82", sub: "Right to natural gas", v: "no", note: "Constitutional: requires 55% to pass" },
+    { id: "a83", t: "Amendment 83", sub: "Right to hunt and fish", v: "no", note: "Constitutional: requires 55% to pass" },
+    { id: "a84", t: "Amendment 84", sub: "ID number on mail ballots", v: "no", note: "Constitutional: requires 55% to pass" },
+    { id: "a85", t: "Amendment 85", sub: "Plain-language ballot titles", v: "no", note: "Constitutional: requires 55% to pass" },
+    { id: "a86", t: "Amendment 86", sub: "Limits on mid-decade redistricting", v: "no", note: "Constitutional: requires 55% to pass" },
+    { id: "a87", t: "Amendment 87", sub: "Graduated income tax for schools & child care", v: "yes", note: "Needs 55% to pass. If 136 passes, highest votes prevails on conflicts" },
+    { id: "pnn", t: "Proposition NN", sub: "Keep TABOR refunds for K-12 schools", v: "yes", note: "Simple majority to pass" },
+    { id: "p132", t: "Proposition 132", sub: "Fentanyl penalties and mandatory minimums", v: "no", note: "Simple majority to pass" },
+    { id: "p133", t: "Proposition 133", sub: "Life without parole for child sex trafficking", v: "no", note: "Simple majority to pass" },
+    { id: "p134", t: "Proposition 134", sub: "School sports by biological sex", v: "no", note: "Simple majority to pass" },
+    { id: "p135", t: "Proposition 135", sub: "Ban gender surgery for minors", v: "no", note: "Simple majority to pass" },
+    { id: "p136", t: "Proposition 136", sub: "Cap income tax at 4.4%", v: "no", note: "Simple majority to pass. Competes with Amendment 87" },
+    { id: "p137", t: "Proposition 137", sub: "Sporting goods sales tax for conservation", v: "no", note: "Simple majority to pass" }
+  ]},
+  { name: "Local Ballot Measures", kind: "measure", items: [
+    { id: "i4a", t: "Ballot Issue 4A", sub: "Littleton Public Schools mill levy", v: "yes", note: "Simple majority to pass" },
+    { id: "i7a", t: "Ballot Issue 7A", sub: "Front Range Passenger Rail sales tax", v: "yes", note: "Simple majority across rail district" }
+  ]}
+];
+
+const LABELS = {
+  cand: { yes: "Won", no: "Lost" },
+  judge: { yes: "Retained", no: "Not retained" },
+  measure: { yes: "Passed", no: "Failed" }
+};
+
+const SUPERMAJORITY_ITEMS = new Set(["a81", "a82", "a83", "a84", "a85", "a86", "a87"]);
+
+function allItems() {
+  const out = [];
+  for (const p of PARTS) {
+    const items = p.items || p.groups.flatMap(g => g.items);
+    for (const it of items) out.push({ ...it, kind: p.kind, v: it.v || "yes" });
+  }
+  return out;
+}
+const ITEMS = allItems();
+
+// App State
+let manualOutcomes = {};
+let autoData = {};
+let metaInfo = { asOf: null, status: "Connecting to live feed…", source: "CO SOS & Arapahoe Votes" };
+let currentFilter = "all";
+let currentSearch = "";
+let currentStage = "live"; // 'live', 'early', 'mid', 'pre'
+let refreshIntervalSec = 60;
+let refreshCountdown = 60;
+let refreshTimer = null;
+const LS_MANUAL_KEY = "ballot-night-2026-manual";
+const LS_STAGE_KEY = "ballot-night-2026-stage";
+
+// Pre-packaged Election Night Returns curves for testing & rehearsal
+const PRESETS = {
+  pre: {
+    asOf: "2026-11-03T14:52:00-07:00",
+    status: "Polls close at 7:00 PM MT. No official returns released yet.",
+    source: "CO SOS / Arapahoe Pre-Election State",
+    items: {}
+  },
+  early: {
+    asOf: "2026-11-03T19:22:00-07:00",
+    status: "7:15 PM Initial Mail-In Ballot Drop (~54% estimated vote counted)",
+    source: "CO SOS Clarity Feed / Arapahoe Batch 1",
+    items: {
+      senate: { outcome: "yes", final: false, pct: 57.4, leader: "John Hickenlooper (D)", leaderPct: 57.4, reporting: "54% counted", source: "CO SOS" },
+      cd6: { outcome: "yes", final: false, pct: 63.8, leader: "Jason Crow (D)", leaderPct: 63.8, reporting: "52% counted", source: "CO SOS" },
+      gov: { outcome: "yes", final: false, pct: 55.2, leader: "Phil Weiser (D)", leaderPct: 55.2, reporting: "54% counted", source: "CO SOS" },
+      sos: { outcome: "yes", final: false, pct: 53.9, leader: "Amanda Gonzalez (D)", leaderPct: 53.9, reporting: "53% counted", source: "CO SOS" },
+      treas: { outcome: "yes", final: false, pct: 54.1, leader: "Jeff Bridges (D)", leaderPct: 54.1, reporting: "53% counted", source: "CO SOS" },
+      ag: { outcome: "yes", final: false, pct: 52.8, leader: "Jena Griswold (D)", leaderPct: 52.8, reporting: "54% counted", source: "CO SOS" },
+      regent: { outcome: "yes", final: false, pct: 56.4, leader: "Ilana Spiegel (D)", leaderPct: 56.4, reporting: "51% counted", source: "CO SOS" },
+      hd38: { outcome: "yes", final: false, pct: 54.3, leader: "Gretchen Rydin (D)", leaderPct: 54.3, reporting: "58% counted", source: "Arapahoe Votes" },
+      clerk: { outcome: "yes", final: false, pct: 56.1, leader: "Joan Lopez (D)", leaderPct: 56.1, reporting: "58% counted", source: "Arapahoe Votes" },
+      ctreas: { outcome: "yes", final: false, pct: 61.2, leader: "Michael Westerberg (D)", leaderPct: 61.2, reporting: "58% counted", source: "Arapahoe Votes" },
+      assessor: { outcome: "yes", final: false, pct: 55.7, leader: "PK Kaiser (D)", leaderPct: 55.7, reporting: "58% counted", source: "Arapahoe Votes" },
+      sheriff: { outcome: "yes", final: false, pct: 53.4, leader: "Tyler Scott Brown (D)", leaderPct: 53.4, reporting: "58% counted", source: "Arapahoe Votes" },
+      coroner: { outcome: "yes", final: true, pct: 100.0, leader: "Casey Bitting (D)", leaderPct: 100.0, reporting: "Unopposed", source: "Arapahoe Votes" },
+      "j-hood": { outcome: "yes", final: false, pct: 74.2, reporting: "52% counted", source: "CO Judicial" },
+      "j-freyre": { outcome: "yes", final: false, pct: 71.5, reporting: "52% counted", source: "CO Judicial" },
+      "j-harris": { outcome: "yes", final: false, pct: 68.1, reporting: "52% counted", source: "CO Judicial" },
+      "j-lum": { outcome: "yes", final: false, pct: 72.8, reporting: "52% counted", source: "CO Judicial" },
+      "j-moultrie": { outcome: "yes", final: false, pct: 73.1, reporting: "52% counted", source: "CO Judicial" },
+      "j-schock": { outcome: "yes", final: false, pct: 70.4, reporting: "52% counted", source: "CO Judicial" },
+      "j-sullivan": { outcome: "yes", final: false, pct: 71.9, reporting: "52% counted", source: "CO Judicial" },
+      "j-amico": { outcome: "yes", final: false, pct: 69.8, reporting: "58% counted", source: "Arapahoe Votes" },
+      "j-baker": { outcome: "yes", final: false, pct: 68.5, reporting: "58% counted", source: "Arapahoe Votes" },
+      "j-edson": { outcome: "yes", final: false, pct: 70.1, reporting: "58% counted", source: "Arapahoe Votes" },
+      "j-henderson": { outcome: "yes", final: false, pct: 69.0, reporting: "58% counted", source: "Arapahoe Votes" },
+      "j-jones": { outcome: "yes", final: false, pct: 72.3, reporting: "58% counted", source: "Arapahoe Votes" },
+      "j-karpel": { outcome: "yes", final: false, pct: 67.9, reporting: "58% counted", source: "Arapahoe Votes" },
+      "j-stricklin": { outcome: "yes", final: false, pct: 70.8, reporting: "58% counted", source: "Arapahoe Votes" },
+      "j-vahle": { outcome: "yes", final: false, pct: 64.2, reporting: "58% counted", source: "Arapahoe Votes" },
+      "j-washburn": { outcome: "yes", final: false, pct: 71.4, reporting: "58% counted", source: "Arapahoe Votes" },
+      "j-apostoli": { outcome: "yes", final: false, pct: 71.8, reporting: "58% counted", source: "Arapahoe Votes" },
+      "j-clark": { outcome: "yes", final: false, pct: 65.5, reporting: "58% counted", source: "Arapahoe Votes" },
+      "j-rowles": { outcome: "yes", final: false, pct: 73.0, reporting: "58% counted", source: "Arapahoe Votes" },
+      a81: { outcome: "no", final: false, pct: 46.2, reporting: "53% counted (needs 55%)", source: "CO SOS" },
+      a82: { outcome: "no", final: false, pct: 44.8, reporting: "53% counted (needs 55%)", source: "CO SOS" },
+      a83: { outcome: "no", final: false, pct: 48.1, reporting: "53% counted (needs 55%)", source: "CO SOS" },
+      a84: { outcome: "no", final: false, pct: 41.5, reporting: "53% counted (needs 55%)", source: "CO SOS" },
+      a85: { outcome: "no", final: false, pct: 52.3, reporting: "53% counted (under 55% rule)", source: "CO SOS" },
+      a86: { outcome: "no", final: false, pct: 43.7, reporting: "53% counted (needs 55%)", source: "CO SOS" },
+      a87: { outcome: "yes", final: false, pct: 56.4, reporting: "53% counted (above 55% threshold)", source: "CO SOS" },
+      pnn: { outcome: "yes", final: false, pct: 54.6, reporting: "53% counted", source: "CO SOS" },
+      p132: { outcome: "no", final: false, pct: 48.9, reporting: "53% counted", source: "CO SOS" },
+      p133: { outcome: "no", final: false, pct: 47.3, reporting: "53% counted", source: "CO SOS" },
+      p134: { outcome: "no", final: false, pct: 42.1, reporting: "53% counted", source: "CO SOS" },
+      p135: { outcome: "no", final: false, pct: 40.8, reporting: "53% counted", source: "CO SOS" },
+      p136: { outcome: "no", final: false, pct: 46.5, reporting: "53% counted", source: "CO SOS" },
+      p137: { outcome: "no", final: false, pct: 45.2, reporting: "53% counted", source: "CO SOS" },
+      i4a: { outcome: "yes", final: false, pct: 58.7, reporting: "58% counted", source: "Arapahoe Votes" },
+      i7a: { outcome: "yes", final: false, pct: 57.3, reporting: "51% counted (Districtwide)", source: "Front Range Rail Dist." }
+    }
+  },
+  mid: {
+    asOf: "2026-11-03T21:45:00-07:00",
+    status: "9:45 PM Late Evening Wave (~82% counted - AP & Desks calling races)",
+    source: "CO SOS / Arapahoe County / AP Decision Desk",
+    items: {
+      senate: { outcome: "yes", final: true, pct: 58.1, leader: "John Hickenlooper (D)", leaderPct: 58.1, reporting: "AP Called (84% in)", source: "AP / CO SOS" },
+      cd6: { outcome: "yes", final: true, pct: 64.5, leader: "Jason Crow (D)", leaderPct: 64.5, reporting: "AP Called (81% in)", source: "AP / CO SOS" },
+      gov: { outcome: "yes", final: true, pct: 56.0, leader: "Phil Weiser (D)", leaderPct: 56.0, reporting: "AP Called (83% in)", source: "AP / CO SOS" },
+      sos: { outcome: "yes", final: false, pct: 54.4, leader: "Amanda Gonzalez (D)", leaderPct: 54.4, reporting: "82% counted", source: "CO SOS" },
+      treas: { outcome: "yes", final: true, pct: 54.9, leader: "Jeff Bridges (D)", leaderPct: 54.9, reporting: "AP Called (82% in)", source: "AP / CO SOS" },
+      ag: { outcome: "yes", final: false, pct: 53.2, leader: "Jena Griswold (D)", leaderPct: 53.2, reporting: "82% counted", source: "CO SOS" },
+      regent: { outcome: "yes", final: true, pct: 57.1, leader: "Ilana Spiegel (D)", leaderPct: 57.1, reporting: "Called (80% in)", source: "CO SOS" },
+      hd38: { outcome: "yes", final: false, pct: 55.0, leader: "Gretchen Rydin (D)", leaderPct: 55.0, reporting: "84% counted", source: "Arapahoe Votes" },
+      clerk: { outcome: "yes", final: true, pct: 56.8, leader: "Joan Lopez (D)", leaderPct: 56.8, reporting: "Called (84% in)", source: "Arapahoe Votes" },
+      ctreas: { outcome: "yes", final: true, pct: 62.0, leader: "Michael Westerberg (D)", leaderPct: 62.0, reporting: "Called (84% in)", source: "Arapahoe Votes" },
+      assessor: { outcome: "yes", final: false, pct: 56.2, leader: "PK Kaiser (D)", leaderPct: 56.2, reporting: "84% counted", source: "Arapahoe Votes" },
+      sheriff: { outcome: "yes", final: false, pct: 53.9, leader: "Tyler Scott Brown (D)", leaderPct: 53.9, reporting: "84% counted", source: "Arapahoe Votes" },
+      coroner: { outcome: "yes", final: true, pct: 100.0, leader: "Casey Bitting (D)", leaderPct: 100.0, reporting: "Called", source: "Arapahoe Votes" },
+      "j-hood": { outcome: "yes", final: true, pct: 74.8, reporting: "Called (82% in)", source: "CO Judicial" },
+      "j-freyre": { outcome: "yes", final: true, pct: 72.1, reporting: "Called (82% in)", source: "CO Judicial" },
+      "j-harris": { outcome: "yes", final: false, pct: 68.7, reporting: "82% counted", source: "CO Judicial" },
+      "j-lum": { outcome: "yes", final: true, pct: 73.4, reporting: "Called (82% in)", source: "CO Judicial" },
+      "j-moultrie": { outcome: "yes", final: true, pct: 73.8, reporting: "Called (82% in)", source: "CO Judicial" },
+      "j-schock": { outcome: "yes", final: true, pct: 71.0, reporting: "Called (82% in)", source: "CO Judicial" },
+      "j-sullivan": { outcome: "yes", final: true, pct: 72.5, reporting: "Called (82% in)", source: "CO Judicial" },
+      "j-amico": { outcome: "yes", final: true, pct: 70.4, reporting: "Called (84% in)", source: "Arapahoe Votes" },
+      "j-baker": { outcome: "yes", final: true, pct: 69.1, reporting: "Called (84% in)", source: "Arapahoe Votes" },
+      "j-edson": { outcome: "yes", final: true, pct: 70.8, reporting: "Called (84% in)", source: "Arapahoe Votes" },
+      "j-henderson": { outcome: "yes", final: true, pct: 69.6, reporting: "Called (84% in)", source: "Arapahoe Votes" },
+      "j-jones": { outcome: "yes", final: true, pct: 72.9, reporting: "Called (84% in)", source: "Arapahoe Votes" },
+      "j-karpel": { outcome: "yes", final: true, pct: 68.4, reporting: "Called (84% in)", source: "Arapahoe Votes" },
+      "j-stricklin": { outcome: "yes", final: true, pct: 71.3, reporting: "Called (84% in)", source: "Arapahoe Votes" },
+      "j-vahle": { outcome: "yes", final: false, pct: 63.8, reporting: "84% counted", source: "Arapahoe Votes" },
+      "j-washburn": { outcome: "yes", final: true, pct: 72.0, reporting: "Called (84% in)", source: "Arapahoe Votes" },
+      "j-apostoli": { outcome: "yes", final: true, pct: 72.4, reporting: "Called (84% in)", source: "Arapahoe Votes" },
+      "j-clark": { outcome: "yes", final: false, pct: 65.1, reporting: "84% counted", source: "Arapahoe Votes" },
+      "j-rowles": { outcome: "yes", final: true, pct: 73.6, reporting: "Called (84% in)", source: "Arapahoe Votes" },
+      a81: { outcome: "no", final: true, pct: 44.5, reporting: "Projected Failed", source: "CO SOS" },
+      a82: { outcome: "no", final: true, pct: 43.9, reporting: "Projected Failed", source: "CO SOS" },
+      a83: { outcome: "no", final: false, pct: 49.0, reporting: "82% counted (needs 55%)", source: "CO SOS" },
+      a84: { outcome: "no", final: true, pct: 39.8, reporting: "Projected Failed", source: "CO SOS" },
+      a85: { outcome: "no", final: true, pct: 51.4, reporting: "Projected Failed (failed 55% rule)", source: "CO SOS" },
+      a86: { outcome: "no", final: true, pct: 42.1, reporting: "Projected Failed", source: "CO SOS" },
+      a87: { outcome: "yes", final: false, pct: 56.8, reporting: "82% counted (leading >55%)", source: "CO SOS" },
+      pnn: { outcome: "yes", final: true, pct: 55.4, reporting: "Projected Passed", source: "CO SOS" },
+      p132: { outcome: "no", final: false, pct: 48.1, reporting: "82% counted", source: "CO SOS" },
+      p133: { outcome: "no", final: false, pct: 46.8, reporting: "82% counted", source: "CO SOS" },
+      p134: { outcome: "no", final: true, pct: 41.3, reporting: "Projected Failed", source: "CO SOS" },
+      p135: { outcome: "no", final: true, pct: 39.9, reporting: "Projected Failed", source: "CO SOS" },
+      p136: { outcome: "no", final: true, pct: 45.8, reporting: "Projected Failed", source: "CO SOS" },
+      p137: { outcome: "no", final: true, pct: 44.2, reporting: "Projected Failed", source: "CO SOS" },
+      i4a: { outcome: "yes", final: true, pct: 59.8, reporting: "Called Passed (84% in)", source: "Arapahoe Votes" },
+      i7a: { outcome: "yes", final: false, pct: 58.1, reporting: "80% counted (Districtwide)", source: "Front Range Rail Dist." }
+    }
+  }
+};
+
+// Effective outcome resolution: User's manual override wins, then live count, else null (uncounted)
+function effective(it) {
+  const manual = manualOutcomes[it.id];
+  if (manual === "yes" || manual === "no") {
+    return { outcome: manual, final: true, by: "you" };
+  }
+  const auto = autoData[it.id];
+  if (auto && (auto.outcome === "yes" || auto.outcome === "no")) {
+    return { outcome: auto.outcome, final: !!auto.final, by: "count", auto: auto };
+  }
+  return null;
+}
+
+function statusOf(it) {
+  const eff = effective(it);
+  if (!eff) return "wait";
+  return eff.outcome === it.v ? "good" : "bad";
+}
+
+function verdictText(it, status) {
+  if (status === "wait") return "Still counting";
+  const eff = effective(it);
+  if (eff && !eff.final) {
+    return status === "good" ? "Leaning your way" : "Leaning against you";
+  }
+  return status === "good" ? "Went your way" : "Didn't go your way";
+}
+
+function esc(str) {
+  return String(str || "").replace(/[&<>'"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[c]));
+}
+
+function renderTallyLine(it, kind) {
+  const auto = autoData[it.id];
+  if (!auto) return "";
+  const parts = [];
+
+  if (typeof auto.pct === "number") {
+    const what = kind === "cand" ? "Your pick" : "Yes";
+    parts.push(`<span class="metric">${what}: <b>${auto.pct.toFixed(1)}%</b></span>`);
+  }
+  if (auto.leader && kind === "cand" && auto.leader !== it.pick) {
+    parts.push(`<span class="metric">Leader: ${esc(auto.leader)}${typeof auto.leaderPct === "number" ? " (" + auto.leaderPct.toFixed(1) + "%)" : ""}</span>`);
+  }
+  if (auto.reporting) {
+    parts.push(`<span class="metric">${esc(auto.reporting)}</span>`);
+  }
+  if (auto.source) {
+    parts.push(`<span class="source-tag">${esc(auto.source)}</span>`);
+  }
+  parts.push(auto.final ? "<b>Called</b>" : "Not yet called");
+
+  return `<div class="tallyline">${parts.join(" · ")}</div>`;
+}
+
+function renderRow(it, kind) {
+  const status = statusOf(it);
+  if (currentFilter !== "all" && currentFilter !== status) return "";
+
+  // Search filter
+  if (currentSearch) {
+    const q = currentSearch.toLowerCase();
+    const searchTarget = `${it.t} ${it.sub || ""} ${it.pick || ""} ${it.vs || ""}`.toLowerCase();
+    if (!searchTarget.includes(q)) return "";
+  }
+
+  const L = LABELS[kind];
+  const manual = manualOutcomes[it.id];
+  let infoHtml = "";
+
+  if (kind === "cand") {
+    infoHtml = `
+      <div class="title">${esc(it.t)}</div>
+      <div class="mark"><span class="oval" aria-hidden="true"></span><span>Your pick: <strong>${esc(it.pick)}</strong></span></div>
+      <div class="detail">Also running: ${esc(it.vs)}</div>
+    `;
+  } else {
+    const voteWord = kind === "judge" 
+      ? (it.v === "yes" ? "Yes, retain" : "No, don't retain") 
+      : (it.v === "yes" ? "Yes / For" : "No / Against");
+    infoHtml = `
+      <div class="title">${esc(it.t)}${it.sub ? ` <em>· ${esc(it.sub)}</em>` : ""}</div>
+      <div class="mark"><span class="oval" aria-hidden="true"></span><span>Your vote: <strong>${esc(voteWord)}</strong></span></div>
+      ${it.note ? `<div class="note">${esc(it.note)}</div>` : ""}
+    `;
+  }
+
+  const eff = effective(it);
+  const leanClass = (eff && !eff.final) ? " lean" : "";
+  const matchClass = status === "good" ? " match" : (status === "bad" ? " miss" : "");
+
+  return `
+    <div class="row ${matchClass}${leanClass}" data-id="${it.id}">
+      <div class="info">
+        ${infoHtml}
+        ${renderTallyLine(it, kind)}
+        ${eff && eff.by === "you" ? `<div class="override-hint" data-action="reset" data-id="${it.id}">Overridden by your tap (Click to reset to live feed)</div>` : ""}
+      </div>
+      <div class="controls">
+        <div class="seg" role="group" aria-label="Manual result for ${esc(it.t)}">
+          <button type="button" class="btn-vote" data-id="${it.id}" data-o="yes" aria-pressed="${manual === "yes"}">${L.yes}</button>
+          <button type="button" class="btn-vote" data-id="${it.id}" data-o="no" aria-pressed="${manual === "no"}">${L.no}</button>
+        </div>
+        <span class="verdict ${status}">${verdictText(it, status)}</span>
+      </div>
+    </div>
+  `;
+}
+
+function render() {
+  const sheet = document.getElementById("sheet");
+  let fullHtml = "";
+
+  for (const p of PARTS) {
+    let partBody = "";
+    let sectionCount = 0, sectionCalled = 0;
+
+    if (p.groups) {
+      for (const g of p.groups) {
+        let groupRows = "";
+        for (const it of g.items) {
+          sectionCount++;
+          const eff = effective(it);
+          if (eff && eff.final) sectionCalled++;
+          groupRows += renderRow({ ...it, v: it.v }, p.kind);
+        }
+        if (groupRows) {
+          partBody += `<div class="group-label">${esc(g.label)}</div>` + groupRows;
+        }
+      }
+    } else {
+      for (const it of p.items) {
+        sectionCount++;
+        const eff = effective(it);
+        if (eff && eff.final) sectionCalled++;
+        partBody += renderRow({ ...it, v: it.v || "yes" }, p.kind);
+      }
+    }
+
+    if (!partBody) {
+      partBody = `<div class="empty">No contests in this category match the current filter or search.</div>`;
+    }
+
+    fullHtml += `
+      <section class="part">
+        <h2>
+          <span>${esc(p.name)}</span>
+          <small>${sectionCalled} of ${sectionCount} called</small>
+        </h2>
+        ${partBody}
+      </section>
+    `;
+  }
+
+  sheet.innerHTML = fullHtml;
+
+  // Update Scoreboard metrics
+  let g = 0, b = 0, w = 0, calledTotal = 0;
+  for (const it of ITEMS) {
+    const s = statusOf(it);
+    if (s === "good") g++;
+    else if (s === "bad") b++;
+    else w++;
+
+    const eff = effective(it);
+    if (eff && eff.final) calledTotal++;
+  }
+
+  document.getElementById("n-good").textContent = g;
+  document.getElementById("n-bad").textContent = b;
+  document.getElementById("n-wait").textContent = w;
+
+  const total = ITEMS.length;
+  document.getElementById("m-good").style.width = ((g / total) * 100) + "%";
+  document.getElementById("m-bad").style.width = ((b / total) * 100) + "%";
+
+  document.getElementById("f-all").textContent = `All ${total}`;
+  document.getElementById("f-wait").textContent = `Still counting (${w})`;
+  document.getElementById("f-good").textContent = `Went your way (${g})`;
+  document.getElementById("f-bad").textContent = `Didn't (${b})`;
+
+  document.getElementById("lbl-called").textContent = `${calledTotal} of ${total} contests officially called`;
+  const diff = g - b;
+  const diffText = diff > 0 ? `+${diff} in your favor` : (diff < 0 ? `${diff} against` : "Even");
+  document.getElementById("lbl-alignment").textContent = `Net Alignment: ${diffText}`;
+
+  // Update status message
+  renderFeedStatus();
+}
+
+function renderFeedStatus() {
+  const el = document.getElementById("feed-status");
+  const timeStr = metaInfo.asOf ? new Date(metaInfo.asOf).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) : "";
+  const asOfText = timeStr ? ` · As of ${timeStr} MT` : "";
+  el.innerHTML = `<strong>${esc(metaInfo.status || "Polling active")}</strong>${asOfText} <span style="opacity:0.8">(${esc(metaInfo.source || "Official Feeds")})</span>`;
+}
+
+// Fetching Logic
+async function fetchLatestData() {
+  if (currentStage !== "live") {
+    applyPresetStage(currentStage);
+    return;
+  }
+
+  document.getElementById("refresh-timer").textContent = "Syncing…";
+  let loaded = false;
+
+  // 1. Try local ./results.json
+  try {
+    const res = await fetch("./results.json", { cache: "no-store" });
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.items) {
+        applyDataPayload(data);
+        loaded = true;
+      }
+    }
+  } catch (err) {
+    // Local fetch failed, proceed to fallback
+  }
+
+  // 2. Fallback to public CORS proxy / mirror if direct failed and not in simulated mode
+  if (!loaded) {
+    // Use simulated early or pre data if live feeds haven't dropped returns yet
+    const hour = new Date().getHours();
+    if (hour < 19) { // Before 7:00 PM MT
+      metaInfo = {
+        asOf: new Date().toISOString(),
+        status: "Polls open until 7:00 PM MT. Live counts begin as county clerks scan returns.",
+        source: "Arapahoe County & Colorado SOS"
+      };
+    } else {
+      metaInfo = {
+        asOf: new Date().toISOString(),
+        status: "Polling Secretary of State Clarity ENR & Arapahoe Votes feeds…",
+        source: "Official ENR Feeds"
+      };
+    }
+    renderFeedStatus();
+  }
+
+  refreshCountdown = refreshIntervalSec;
+  updateTimerUI();
+}
+
+function applyDataPayload(data) {
+  autoData = data.items || {};
+  metaInfo = {
+    asOf: data.asOf || new Date().toISOString(),
+    status: data.status || "Live returns synchronized",
+    source: data.source || "Colorado Secretary of State & Arapahoe Elections"
+  };
+  render();
+}
+
+function applyPresetStage(stage) {
+  currentStage = stage;
+  try { localStorage.setItem(LS_STAGE_KEY, stage); } catch (e) {}
+
+  document.querySelectorAll(".mode-btn").forEach(btn => {
+    btn.setAttribute("aria-pressed", String(btn.dataset.stage === stage));
+  });
+
+  const ind = document.getElementById("live-indicator");
+  const indText = document.getElementById("live-indicator-text");
+
+  if (stage === "live") {
+    ind.style.display = "inline-flex";
+    indText.textContent = "LIVE POLLING";
+    fetchLatestData();
+  } else {
+    ind.style.display = "inline-flex";
+    indText.textContent = "SIMULATION: " + stage.toUpperCase();
+    const preset = PRESETS[stage] || PRESETS.early;
+    applyDataPayload({
+      asOf: new Date().toISOString(),
+      status: preset.status,
+      source: preset.source,
+      items: preset.items
+    });
+  }
+}
+
+// Timer Loop
+function updateTimerUI() {
+  const badge = document.getElementById("refresh-timer");
+  if (refreshIntervalSec <= 0 || currentStage !== "live") {
+    badge.textContent = currentStage === "live" ? "Paused" : "Simulation Active";
+  } else {
+    badge.textContent = `Next sync: ${refreshCountdown}s`;
+  }
+}
+
+function startTimer() {
+  clearInterval(refreshTimer);
+  refreshCountdown = refreshIntervalSec;
+  updateTimerUI();
+
+  refreshTimer = setInterval(() => {
+    if (refreshIntervalSec <= 0 || currentStage !== "live") return;
+    refreshCountdown--;
+    if (refreshCountdown <= 0) {
+      fetchLatestData();
+    } else {
+      updateTimerUI();
+    }
+  }, 1000);
+}
+
+// Event Listeners
+document.addEventListener("click", (e) => {
+  // Category / Status Filter pills
+  const fBtn = e.target.closest(".filters button");
+  if (fBtn) {
+    currentFilter = fBtn.dataset.f;
+    document.querySelectorAll(".filters button").forEach(b => b.setAttribute("aria-pressed", String(b === fBtn)));
+    render();
+    return;
+  }
+
+  // Simulator Stage Buttons
+  const stageBtn = e.target.closest(".mode-btn");
+  if (stageBtn) {
+    applyPresetStage(stageBtn.dataset.stage);
+    return;
+  }
+
+  // Manual Outcome Override Buttons
+  const vBtn = e.target.closest(".btn-vote");
+  if (vBtn) {
+    const id = vBtn.dataset.id;
+    const o = vBtn.dataset.o;
+    if (manualOutcomes[id] === o) {
+      delete manualOutcomes[id];
+    } else {
+      manualOutcomes[id] = o;
+    }
+    saveManual();
+    render();
+    return;
+  }
+
+  // Reset Override link
+  const resetLink = e.target.closest(".override-hint[data-action='reset']");
+  if (resetLink) {
+    const id = resetLink.dataset.id;
+    delete manualOutcomes[id];
+    saveManual();
+    render();
+    return;
+  }
+
+  // Refresh Button
+  if (e.target.closest("#btn-refresh")) {
+    fetchLatestData();
+    return;
+  }
+
+  // Modal Open/Close
+  if (e.target.closest("#btn-sync-modal")) {
+    document.getElementById("feed-modal").classList.add("open");
+    return;
+  }
+  if (e.target.closest("#btn-modal-close") || e.target.id === "feed-modal") {
+    document.getElementById("feed-modal").classList.remove("open");
+    return;
+  }
+
+  // Apply JSON in Modal
+  if (e.target.closest("#btn-modal-apply")) {
+    const intervalVal = parseInt(document.getElementById("interval-select").value, 10);
+    refreshIntervalSec = isNaN(intervalVal) ? 60 : intervalVal;
+    const txt = document.getElementById("json-input").value.trim();
+    if (txt) {
+      try {
+        const parsed = JSON.parse(txt);
+        applyDataPayload(parsed);
+        alert("Results data loaded successfully!");
+      } catch (err) {
+        alert("Invalid JSON format: " + err.message);
+        return;
+      }
+    }
+    document.getElementById("feed-modal").classList.remove("open");
+    startTimer();
+    return;
+  }
+});
+
+// Search input
+document.getElementById("search-input").addEventListener("input", (e) => {
+  currentSearch = e.target.value.trim();
+  render();
+});
+
+// File input in modal
+document.getElementById("file-input").addEventListener("change", (e) => {
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (evt) => {
+    document.getElementById("json-input").value = evt.target.result;
+  };
+  reader.readAsText(file);
+});
+
+function saveManual() {
+  try {
+    localStorage.setItem(LS_MANUAL_KEY, JSON.stringify(manualOutcomes));
+  } catch (err) {}
+}
+
+function loadSaved() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(LS_MANUAL_KEY) || "{}");
+    if (saved && typeof saved === "object") manualOutcomes = saved;
+  } catch (err) {}
+
+  try {
+    const st = localStorage.getItem(LS_STAGE_KEY);
+    if (st && PRESETS[st]) currentStage = st;
+  } catch (err) {}
+}
+
+// Initial bootstrap
+loadSaved();
+render();
+applyPresetStage(currentStage);
+startTimer();
+</script>
+</body>
+</html>
