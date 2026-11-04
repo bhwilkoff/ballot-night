@@ -1,0 +1,21 @@
+name: Diag Clarity
+on: workflow_dispatch
+jobs:
+  diag:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          UA="ballot-night-tracker/1.0 (personal results dashboard)"
+          for u in https://results.enr.clarityelections.com/CO/127407/current_ver.txt \
+                   https://results.enr.clarityelections.com/CO/127407/385575/json/en/summary.json \
+                   https://results.enr.clarityelections.com/IA/elections.json \
+                   https://api.sos.ca.gov/returns/ballot-measures \
+                   https://er.ncsbe.gov/enr/20261103/data/results_0.txt \
+                   https://results.sos.ga.gov/results/public/api/jurisdictions/Georgia \
+                   https://results.votewa.gov/results/public/api/jurisdictions/washington \
+                   https://www.elections.alaska.gov/enr/26GENR/results/statewide.js ; do
+            echo "== $u"
+            curl -s -A "$UA" -m 20 -o body -D hdr -w 'code=%{http_code} size=%{size_download}\n' "$u"
+            grep -i '^\(content-type\|content-encoding\|server\|x-cache\|cf-\)' hdr || true
+            head -c 120 body | od -c | head -3
+          done
