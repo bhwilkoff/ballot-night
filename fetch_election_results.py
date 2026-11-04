@@ -57,11 +57,21 @@ def http_get(url, timeout=30):
         return r.read()
 
 
+def get_json(url):
+    raw = http_get(url)
+    try:
+        return json.loads(raw.decode("utf-8-sig"))
+    except ValueError:
+        raise RuntimeError(f"non-JSON response from {url}: {raw[:200]!r}")
+
+
 def clarity_summary(path):
     """path like 'CO/127407' or 'CO/Arapahoe/127409' -> (contests_by_name, settings)."""
     ver = http_get(f"{CLARITY}/{path}/current_ver.txt").decode().strip()
-    summary = json.loads(http_get(f"{CLARITY}/{path}/{ver}/json/en/summary.json"))
-    settings = json.loads(http_get(f"{CLARITY}/{path}/{ver}/json/en/electionsettings.json"))["settings"]
+    if not ver.isdigit():
+        raise RuntimeError(f"unexpected Clarity version response for {path}: {ver[:200]!r}")
+    summary = get_json(f"{CLARITY}/{path}/{ver}/json/en/summary.json")
+    settings = get_json(f"{CLARITY}/{path}/{ver}/json/en/electionsettings.json")["settings"]
     return {c["C"].strip(): c for c in summary}, settings, ver
 
 

@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-04T13:33:11.897615+00:00",
+ "asOf": "2026-11-04T13:34:15.356464+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -321,7 +321,8 @@
      "pct": 0.12
     }
    ],
-   "final": false
+   "final": false,
+   "stale": true
   },
   "sen-nc": {
    "source": "NC SBE",
@@ -358,5 +359,8 @@
    ],
    "final": false
   }
+ },
+ "errors": {
+  "ia": "UnicodeDecodeError: 'utf-8' codec can't decode byte 0x8b in position 1: invalid start byte"
  }
 }
