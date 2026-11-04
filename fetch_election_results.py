@@ -197,7 +197,11 @@ def update_file(data, path):
 
 def run_scraper(stage="live", loop_seconds=0, output_path=DEFAULT_OUTPUT_PATH, nat_output_path=DEFAULT_NAT_OUTPUT_PATH):
     now_mt = datetime.now(MT_TZ)
-    is_pre_election = now_mt.hour < 19
+    # Only gate on pre-7PM on election day itself (Nov 3, 2026).
+    # After midnight (Nov 4+) we're post-election — keep showing results.
+    ELECTION_DATE = (2026, 11, 3)
+    is_election_day = (now_mt.year, now_mt.month, now_mt.day) == ELECTION_DATE
+    is_pre_election = is_election_day and now_mt.hour < 19
 
     if stage in SIMULATED_LOCAL:
         local_data = SIMULATED_LOCAL[stage]
