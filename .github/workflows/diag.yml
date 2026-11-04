@@ -1,5 +1,7 @@
 name: Diag Clarity
-on: workflow_dispatch
+on:
+  push:
+    branches: [diag-clarity]
 jobs:
   diag:
     runs-on: ubuntu-latest
