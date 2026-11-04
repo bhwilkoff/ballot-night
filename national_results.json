@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-04T13:40:24.223570+00:00",
+ "asOf": "2026-11-04T20:33:09.636232+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -144,7 +144,7 @@
   "meas-ca40": {
    "source": "CA SOS",
    "sourceUrl": "https://electionresults.sos.ca.gov/returns/ballot-measures",
-   "reporting": "99.8% (23,801 of 23,860) precincts reporting",
+   "reporting": "100.0% (23,860 of 23,860) precincts reporting",
    "contest": "Proposition 40: Imposes One-Time Tax On Certain Taxpayers. Initiative Constitutional Amendment And Statute.",
    "outcome": "no",
    "pct": 44.4,
@@ -283,13 +283,13 @@
     {
      "name": "Jon Ossoff",
      "party": "DEM",
-     "votes": 2463132,
+     "votes": 2463134,
      "pct": 59.0
     },
     {
      "name": "Mike Collins",
      "party": "REP",
-     "votes": 1711322,
+     "votes": 1711327,
      "pct": 41.0
     }
    ],
