@@ -849,33 +849,127 @@ function render() {
 }
 
 // Fetching Data from Local & National Endpoints
+// ---- Live Colorado results, straight from the official Clarity ENR feeds ----
+// Clarity serves CORS (Access-Control-Allow-Origin: *), so each viewer's browser reads the
+// CO Secretary of State + Arapahoe County feeds directly. results.json is the fallback.
+// Contest map is generated from fetch_election_results.py (keep the two in sync).
+const CLARITY = "https://results.enr.clarityelections.com";
+const CO_EID = "127407";
+const CO_MAP = {"cand": {"senate": ["state", "United States Senator", "Hickenlooper"], "cd6": ["state", "Representative to the 120th United States Congress - District 6", "Crow"], "gov": ["state", "Governor / Lieutenant Governor", "Weiser"], "sos": ["state", "Secretary of State", "Gonzalez"], "treas": ["state", "State Treasurer", "Bridges"], "ag": ["state", "Attorney General", "Griswold"], "regent": ["state", "Regent of the University of Colorado - Congressional District 6", "Spiegel"], "hd38": ["state", "State Representative - District 38", "Rydin"], "clerk": ["county", "Arapahoe County Clerk and Recorder", "Lopez"], "ctreas": ["county", "Arapahoe County Treasurer", "Westerberg"], "assessor": ["county", "Arapahoe County Assessor", "Kaiser"], "sheriff": ["county", "Arapahoe County Sheriff", "Brown"], "coroner": ["county", "Arapahoe County Coroner", "Bitting"]}, "yesno": {"j-hood": ["state", "Colorado Supreme Court Justice - Hood", 50], "j-freyre": ["state", "Colorado Court of Appeals Judge - Freyre", 50], "j-harris": ["state", "Colorado Court of Appeals Judge - Harris", 50], "j-lum": ["state", "Colorado Court of Appeals Judge - Lum", 50], "j-moultrie": ["state", "Colorado Court of Appeals Judge - Moultrie", 50], "j-schock": ["state", "Colorado Court of Appeals Judge - Schock", 50], "j-sullivan": ["state", "Colorado Court of Appeals Judge - Sullivan", 50], "j-amico": ["state", "District Court Judge - 18th Judicial District - Amico", 50], "j-baker": ["state", "District Court Judge - 18th Judicial District - Baker-McKay", 50], "j-edson": ["state", "District Court Judge - 18th Judicial District - Edson", 50], "j-henderson": ["state", "District Court Judge - 18th Judicial District - Henderson", 50], "j-jones": ["state", "District Court Judge - 18th Judicial District - Jones", 50], "j-karpel": ["state", "District Court Judge - 18th Judicial District - Karpel", 50], "j-stricklin": ["state", "District Court Judge - 18th Judicial District - Stricklin", 50], "j-vahle": ["state", "District Court Judge - 18th Judicial District - Vahle", 50], "j-washburn": ["state", "District Court Judge - 18th Judicial District - Washburn", 50], "j-apostoli": ["state", "County Court Judge - Arapahoe - Apostoli", 50], "j-clark": ["state", "County Court Judge - Arapahoe - Clark", 50], "j-rowles": ["state", "County Court Judge - Arapahoe - Rowles-Stokes", 50], "a81": ["state", "Amendment 81 (CONSTITUTIONAL)", 55], "a82": ["state", "Amendment 82 (CONSTITUTIONAL)", 55], "a83": ["state", "Amendment 83 (CONSTITUTIONAL)", 55], "a84": ["state", "Amendment 84 (CONSTITUTIONAL)", 55], "a85": ["state", "Amendment 85 (CONSTITUTIONAL)", 55], "a86": ["state", "Amendment 86 (CONSTITUTIONAL)", 55], "a87": ["state", "Amendment 87 (CONSTITUTIONAL)", 55], "pnn": ["state", "Proposition NN (STATUTORY)", 50], "p132": ["state", "Proposition 132 (STATUTORY)", 50], "p133": ["state", "Proposition 133 (STATUTORY)", 50], "p134": ["state", "Proposition 134 (STATUTORY)", 50], "p135": ["state", "Proposition 135 (STATUTORY)", 50], "p136": ["state", "Proposition 136 (STATUTORY)", 50], "p137": ["state", "Proposition 137 (STATUTORY)", 50], "i4a": ["county", "Arapahoe County School District #6 Littleton Public Schools Ballot Issue 4A", 50], "i7a": ["state", "Front Range Passenger Rail District Ballot Issue 7A", 50]}, "natCand": {"hse-co08": "Representative to the 120th United States Congress - District 8"}, "natMeas": {"meas-co87": ["Amendment 87 (CONSTITUTIONAL)", 55], "meas-co136": ["Proposition 136 (STATUTORY)", 50], "meas-co134": ["Proposition 134 (STATUTORY)", 50], "meas-co135": ["Proposition 135 (STATUTORY)", 50], "meas-co84": ["Amendment 84 (CONSTITUTIONAL)", 55], "meas-co86": ["Amendment 86 (CONSTITUTIONAL)", 55]}};
+const PARTY_LETTER = { DEM: "D", REP: "R", LBR: "L", LIB: "L", GRN: "G", UAF: "U", UNA: "U", IND: "I" };
+
+async function clarity(path) {
+  const ver = (await (await fetch(`${CLARITY}/${path}/current_ver.txt?t=${Date.now()}`, { cache: "no-store" })).text()).trim();
+  if (!/^\d+$/.test(ver)) throw new Error("bad version");
+  const [summary, settings] = await Promise.all([
+    fetch(`${CLARITY}/${path}/${ver}/json/en/summary.json`).then(r => r.json()),
+    fetch(`${CLARITY}/${path}/${ver}/json/en/electionsettings.json`).then(r => r.json())
+  ]);
+  const byName = {};
+  for (const c of summary) byName[c.C.trim()] = c;
+  return { byName, settings: settings.settings };
+}
+function cCands(c) {
+  return c.CH.map((n, i) => ({ name: n.trim(), party: (c.P || [])[i] || "", votes: c.V[i], pct: Math.round(c.PCT[i] * 100) / 100 }))
+    .sort((a, b) => b.votes - a.votes);
+}
+function withParty(n, p) { const l = PARTY_LETTER[(p || "").toUpperCase()] || (p || "").slice(0, 3); return l ? `${n} (${l})` : n; }
+function cRep(c, unit) { const t = (c.T && c.T[0]) || c.V.reduce((a, b) => a + b, 0); return `${c.PR} of ${c.TP} ${unit} fully reported · ${t.toLocaleString()} votes`; }
+function cYesNo(c) {
+  let y = null, n = null;
+  c.CH.forEach((x, i) => { const l = x.toLowerCase(); if (l.startsWith("yes")) y = [c.PCT[i], c.V[i]]; else if (l.startsWith("no")) n = [c.PCT[i], c.V[i]]; });
+  return [y, n];
+}
+function parseClarityTime(s) {
+  const m = s.match(/^(\d+)\/(\d+)\/(\d{4}) (\d+):(\d+):(\d+) (AM|PM) (MST|MDT)$/);
+  if (!m) return null;
+  let h = +m[4] % 12; if (m[7] === "PM") h += 12;
+  const off = m[8] === "MDT" ? 6 : 7;
+  return new Date(Date.UTC(+m[3], +m[1] - 1, +m[2], h + off, +m[5], +m[6]));
+}
+async function fetchLiveColorado() {
+  const st = await clarity(`CO/${CO_EID}`);
+  const counties = st.settings.electiondetails.participatingcounties || [];
+  const times = counties.map(x => parseClarityTime((x.split("|")[3] || ""))).filter(Boolean);
+  const arap = counties.map(x => x.split("|")).find(x => x[0] === "Arapahoe");
+  const stUrl = `${CLARITY}/CO/${CO_EID}/`;
+  let co = { byName: {} }, coUrl = stUrl;
+  if (arap) { coUrl = `${CLARITY}/CO/Arapahoe/${arap[1]}/`; try { co = await clarity(`CO/Arapahoe/${arap[1]}`); } catch (e) {} }
+  const feeds = { state: [st.byName, "counties", "CO SOS", stUrl], county: [co.byName, "precincts", "Arapahoe Votes", coUrl] };
+  const items = {};
+  for (const [id, [feed, name, pick]] of Object.entries(CO_MAP.cand)) {
+    const [by, unit, src, url] = feeds[feed]; const c = by[name]; if (!c) continue;
+    const cs = cCands(c), top = cs[0], mine = cs.find(x => x.name.toLowerCase().includes(pick.toLowerCase()));
+    const unopposed = cs.length === 1;
+    items[id] = { outcome: mine && mine === top && top.votes > 0 ? "yes" : "no", final: unopposed || (c.W || []).some(Boolean),
+      pct: mine ? mine.pct : 0, leader: withParty(top.name, top.party), leaderPct: top.pct,
+      reporting: unopposed ? "Unopposed" : cRep(c, unit), source: src, sourceUrl: url, candidates: cs.slice(0, 4) };
+  }
+  for (const [id, [feed, name, thr]] of Object.entries(CO_MAP.yesno)) {
+    const [by, unit, src, url] = feeds[feed]; const c = by[name]; if (!c) continue;
+    const [y] = cYesNo(c); if (!y) continue;
+    items[id] = { outcome: y[0] >= thr && y[1] > 0 ? "yes" : "no", final: false, pct: Math.round(y[0] * 100) / 100,
+      reporting: cRep(c, unit) + (thr !== 50 ? ` · needs ${thr}% Yes` : ""), source: src, sourceUrl: url };
+  }
+  const nat = {};
+  for (const [id, name] of Object.entries(CO_MAP.natCand)) {
+    const c = st.byName[name]; if (!c) continue; const cs = cCands(c);
+    nat[id] = { contest: name, candidates: cs.slice(0, 4), leader: withParty(cs[0].name, cs[0].party), leaderPct: cs[0].pct,
+      final: false, reporting: cRep(c, "counties"), source: "CO SOS", sourceUrl: stUrl };
+  }
+  for (const [id, [name, thr]] of Object.entries(CO_MAP.natMeas)) {
+    const c = st.byName[name]; if (!c) continue; const [y] = cYesNo(c); if (!y) continue;
+    nat[id] = { contest: name, outcome: y[0] >= thr ? "yes" : "no", pct: Math.round(y[0] * 100) / 100, final: false,
+      reporting: cRep(c, "counties") + (thr !== 50 ? ` · needs ${thr}% Yes` : ""), source: "CO SOS", sourceUrl: stUrl };
+  }
+  if (Object.keys(items).length < 40) throw new Error("incomplete live data");
+  const asOf = times.length ? new Date(Math.max(...times)).toISOString() : new Date().toISOString();
+  return { items, nat, asOf };
+}
+
+// Iowa's Senate race is also on Clarity (blocked from the scheduled job's servers), so read it live too.
+async function fetchLiveIowa() {
+  const els = await (await fetch(`${CLARITY}/IA/elections.json?t=${Date.now()}`, { cache: "no-store" })).json();
+  const e = els.find(x => (x.Date || "").startsWith("11/3/2026"));
+  if (!e) throw new Error("no IA election");
+  const ia = await clarity(`IA/${e.EID}`);
+  const c = ia.byName["United States Senator"];
+  if (!c) throw new Error("no IA senate");
+  const cs = cCands(c);
+  return { "sen-ia": { contest: "United States Senator", candidates: cs.slice(0, 4), leader: withParty(cs[0].name, cs[0].party),
+    leaderPct: cs[0].pct, final: (c.W || []).some(Boolean), reporting: `${c.PR} of ${c.TP} counties reporting`,
+    source: "IA SOS (Clarity)", sourceUrl: `${CLARITY}/IA/${e.EID}/` } };
+}
+
 async function fetchLatestData() {
   document.getElementById("refresh-timer").textContent = "Syncing…";
 
-  // 1. Fetch Local Results
+  // 1. Colorado: live from the official feeds, else the last snapshot in results.json
+  let liveNat = null;
   try {
-    const resLocal = await fetch("./results.json?t=" + Date.now(), { cache: "no-store" });
-    if (resLocal.ok) {
-      const dataLocal = await resLocal.json();
-      if (dataLocal) {
+    const live = await fetchLiveColorado();
+    autoData = live.items;
+    liveNat = live.nat;
+    metaInfo = { asOf: live.asOf, status: "Live unofficial results from official election offices (not yet certified)",
+      source: "CO Secretary of State & Arapahoe County, read live" };
+  } catch (err) {
+    try {
+      const resLocal = await fetch("./results.json?t=" + Date.now(), { cache: "no-store" });
+      if (resLocal.ok) {
+        const dataLocal = await resLocal.json();
         autoData = dataLocal.items || {};
-        metaInfo.status = dataLocal.status || metaInfo.status;
-        metaInfo.asOf = dataLocal.asOf || metaInfo.asOf;
-        metaInfo.source = dataLocal.source || metaInfo.source;
+        metaInfo = { asOf: dataLocal.asOf, status: (dataLocal.status || "") + " · saved snapshot", source: dataLocal.source };
       }
-    }
-  } catch (err) {}
+    } catch (e) {}
+  }
 
-  // 2. Fetch National Results
+  // 2. Other states: snapshot written by the scheduled job
   try {
     const resNat = await fetch("./national_results.json?t=" + Date.now(), { cache: "no-store" });
-    if (resNat.ok) {
-      const dataNat = await resNat.json();
-      if (dataNat) {
-        nationalData = dataNat;
-      }
-    }
+    if (resNat.ok) nationalData = await resNat.json();
   } catch (err) {}
+  try { liveNat = { ...(liveNat || {}), ...(await fetchLiveIowa()) }; } catch (err) {}
+  if (liveNat) nationalData = { ...nationalData, items: { ...(nationalData.items || {}), ...liveNat } };
 
   render();
   refreshCountdown = refreshIntervalSec;

@@ -351,36 +351,44 @@ def run_once():
     now = datetime.now(timezone.utc)
     prev_local, prev_nat = load_json(LOCAL_PATH), load_json(NAT_PATH)
 
-    state, settings, _ = clarity_summary(f"CO/{CO_ELECTION_ID}")
-    counties = settings["electiondetails"].get("participatingcounties") or []
-    updates = [parse_clarity_time(x.split("|")[3]) for x in counties if x.count("|") >= 3]
-    co_asof = max(updates).isoformat() if updates else now.isoformat()
+    # Colorado (Clarity). Clarity's CDN challenges some cloud IP ranges (e.g. GitHub
+    # Actions); the page then reads Clarity live in the browser instead, so a failure
+    # here just keeps the last snapshot and the other states still update.
+    state, co_changed = {}, False
+    try:
+        state, settings, _ = clarity_summary(f"CO/{CO_ELECTION_ID}")
+        counties = settings["electiondetails"].get("participatingcounties") or []
+        updates = [parse_clarity_time(x.split("|")[3]) for x in counties if x.count("|") >= 3]
+        co_asof = max(updates).isoformat() if updates else now.isoformat()
 
-    arap = next((x.split("|") for x in counties if x.startswith(CO_COUNTY + "|")), None)
-    county, county_url, county_err = {}, CO_SOURCE_URL, None
-    if arap:
-        county_url = f"{CLARITY}/CO/{CO_COUNTY}/{arap[1]}/"
-        try:
-            county, _, _ = clarity_summary(f"CO/{CO_COUNTY}/{arap[1]}")
-        except Exception as e:
-            county_err = str(e)
+        arap = next((x.split("|") for x in counties if x.startswith(CO_COUNTY + "|")), None)
+        county, county_url, county_err = {}, CO_SOURCE_URL, None
+        if arap:
+            county_url = f"{CLARITY}/CO/{CO_COUNTY}/{arap[1]}/"
+            try:
+                county, _, _ = clarity_summary(f"CO/{CO_COUNTY}/{arap[1]}")
+            except Exception as e:
+                county_err = str(e)
 
-    local_items, missing = build_local(state, county, CO_SOURCE_URL, county_url)
-    for rid in missing:  # reuse last-known value if a contest temporarily vanished
-        if (prev_local.get("items") or {}).get(rid, {}).get("sourceUrl"):
-            local_items[rid] = {**prev_local["items"][rid], "stale": True}
+        local_items, missing = build_local(state, county, CO_SOURCE_URL, county_url)
+        for rid in missing:  # reuse last-known value if a contest temporarily vanished
+            if (prev_local.get("items") or {}).get(rid, {}).get("sourceUrl"):
+                local_items[rid] = {**prev_local["items"][rid], "stale": True}
 
-    local = {
-        "asOf": co_asof,
-        "status": "Unofficial results from official election offices (not yet certified)",
-        "source": "CO Secretary of State & Arapahoe County Clarity ENR",
-        "sourceUrl": CO_SOURCE_URL,
-        "items": dict(sorted(local_items.items())),
-    }
-    if missing:
-        local["missing"] = sorted(missing)
-    if county_err:
-        local["errors"] = {"Arapahoe": county_err[:200]}
+        local = {
+            "asOf": co_asof,
+            "status": "Unofficial results from official election offices (not yet certified)",
+            "source": "CO Secretary of State & Arapahoe County Clarity ENR",
+            "sourceUrl": CO_SOURCE_URL,
+            "items": dict(sorted(local_items.items())),
+        }
+        if missing:
+            local["missing"] = sorted(missing)
+        if county_err:
+            local["errors"] = {"Arapahoe": county_err[:200]}
+        co_changed = write_if_changed(LOCAL_PATH, local)
+    except Exception as e:
+        print(f"  WARNING Colorado feed unavailable from here ({type(e).__name__}: {e}); keeping last snapshot")
 
     nat_items, nat_errors = build_national(state, CO_SOURCE_URL, prev_nat)
     nat = {
@@ -392,10 +400,7 @@ def run_once():
     if nat_errors:
         nat["errors"] = dict(sorted(nat_errors.items()))
 
-    changed = write_if_changed(LOCAL_PATH, local)
-    changed |= write_if_changed(NAT_PATH, nat)
-    if missing:
-        print("  WARNING missing local contests:", ", ".join(missing))
+    changed = co_changed | write_if_changed(NAT_PATH, nat)
     for st, err in nat_errors.items():
         print(f"  WARNING {st.upper()}: {err}")
     return changed
