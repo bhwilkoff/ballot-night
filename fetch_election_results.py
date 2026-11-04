@@ -21,12 +21,15 @@ Usage:  python3 fetch_election_results.py            # run once
 """
 
 import argparse
+import gzip
+import io
 import importlib
 import json
 import os
 import sys
 import time
 import urllib.request
+import urllib.response
 from concurrent.futures import ThreadPoolExecutor, wait
 from datetime import datetime, timezone, timedelta
 
@@ -51,6 +54,25 @@ PARTY_LETTER = {"DEM": "D", "REP": "R", "LBR": "L", "LIB": "L", "GRN": "G",
 # --------------------------------------------------------------------------
 # HTTP / Clarity helpers
 # --------------------------------------------------------------------------
+class _GunzipProcessor(urllib.request.BaseHandler):
+    """Clarity's CDN sometimes returns gzip bodies even when none was requested.
+    Installed globally so the per-state adapters get the same treatment."""
+    handler_order = 1000
+
+    def http_response(self, req, resp):
+        body = resp.read()
+        if body[:2] == b"\x1f\x8b":
+            body = gzip.decompress(body)
+        new = urllib.response.addinfourl(io.BytesIO(body), resp.headers, resp.url, resp.code)
+        new.msg = resp.msg
+        return new
+
+    https_response = http_response
+
+
+urllib.request.install_opener(urllib.request.build_opener(_GunzipProcessor()))
+
+
 def http_get(url, timeout=30):
     req = urllib.request.Request(url, headers={"User-Agent": UA})
     with urllib.request.urlopen(req, timeout=timeout) as r:
