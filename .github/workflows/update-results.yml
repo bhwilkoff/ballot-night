@@ -2,19 +2,15 @@ name: Poll Election Results
 
 on:
   schedule:
-    # Runs every 10 minutes from 7:00 PM to 1:00 AM Mountain Time on election night
-    - cron: '*/10 2-8 4 11 *'
+    # Colorado keeps counting for days (cure / overseas ballots through ~Nov 12, canvass after).
+    # Every 15 min through Nov 6, then hourly through the end of November (times are UTC).
+    - cron: '*/15 * 4-6 11 *'
+    - cron: '7 * 7-30 11 *'
   workflow_dispatch:
-    inputs:
-      stage:
-        description: 'Election simulation stage (live, early, mid, pre)'
-        required: false
-        default: 'live'
 
-# Prevent concurrent runs from colliding
 concurrency:
   group: update-results
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -22,6 +18,7 @@ permissions:
 jobs:
   poll:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -31,21 +28,18 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Fetch Latest Election Returns
-        run: |
-          STAGE="${{ github.event.inputs.stage || 'live' }}"
-          echo "Executing election scraper for stage: $STAGE"
-          python fetch_election_results.py --stage "$STAGE" --output ./results.json
+      - name: Fetch official election returns
+        run: python fetch_election_results.py
 
       - name: Commit and push if results changed
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add results.json national_results.json
-          if ! git diff-index --quiet HEAD --; then
-            git commit -m "Auto-update election results [$(date -u +'%Y-%m-%dT%H:%M:%SZ')]"
-            git push
-            echo "New results committed and pushed successfully."
+          if git diff --cached --quiet; then
+            echo "No change in official results since last check."
           else
-            echo "No change in results since last batch. Skipping commit."
+            git commit -m "Update official results [$(date -u +'%Y-%m-%dT%H:%M:%SZ')]"
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+            git push
           fi

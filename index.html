@@ -227,19 +227,6 @@ a.source-tag:hover { background: var(--wait-border); color: var(--fg); text-deco
     </button>
   </div>
 
-  <!-- Election Night Feed & Simulation Mode Switcher -->
-  <div class="mode-bar">
-    <div class="mode-label">
-      <span>Election Night Stream:</span>
-    </div>
-    <div class="mode-pills" role="radiogroup" aria-label="Election Night Stage">
-      <button type="button" class="mode-btn" id="m-live" data-stage="live" aria-pressed="true">🔴 Live Feed (Auto-Sync)</button>
-      <button type="button" class="mode-btn" id="m-early" data-stage="early" aria-pressed="false">🗳️ 7:15 PM Drop (Early Waves)</button>
-      <button type="button" class="mode-btn" id="m-mid" data-stage="mid" aria-pressed="false">🌙 9:45 PM Calls (Major Desks)</button>
-      <button type="button" class="mode-btn" id="m-pre" data-stage="pre" aria-pressed="false">🕒 Pre-7 PM (0%)</button>
-    </div>
-  </div>
-
   <!-- TAB 1 CONTENT: Local Ballot Scoreboard -->
   <div id="view-local" class="tab-view" style="display:grid;gap:18px;">
     <div class="score" aria-live="polite">
@@ -291,7 +278,7 @@ a.source-tag:hover { background: var(--wait-border); color: var(--fg); text-deco
     <!-- Chamber Balances -->
     <div class="national-dash">
       <div class="chamber-card">
-        <h3><span>U.S. Senate</span><small id="sen-status">51 needed for majority</small></h3>
+        <h3><span>U.S. Senate</span><small id="sen-status">tracked races</small></h3>
         <div class="chamber-bar">
           <i class="dem" id="bar-sen-d" style="width:47%"></i>
           <span class="chamber-marker"></span>
@@ -305,7 +292,7 @@ a.source-tag:hover { background: var(--wait-border); color: var(--fg); text-deco
       </div>
 
       <div class="chamber-card">
-        <h3><span>U.S. House</span><small id="hse-status">218 needed for majority</small></h3>
+        <h3><span>U.S. House</span><small id="hse-status">tracked races</small></h3>
         <div class="chamber-bar">
           <i class="dem" id="bar-hse-d" style="width:49%"></i>
           <span class="chamber-marker"></span>
@@ -343,7 +330,7 @@ a.source-tag:hover { background: var(--wait-border); color: var(--fg); text-deco
 <div class="modal-backdrop" id="feed-modal">
   <div class="modal">
     <h3>Election Feed Configuration</h3>
-    <p class="sub">The tracker automatically polls official Secretary of State feeds, Arapahoe County, and national decision desks via <code>results.json</code> and <code>national_results.json</code>.</p>
+    <p class="sub">Results come only from official election offices: the Colorado Secretary of State and Arapahoe County Clarity feeds, plus each state’s own results feed for the National tab. A scheduled job refreshes <code>results.json</code> and <code>national_results.json</code>. Counts are unofficial until certified. Colorado doesn’t “call” races, so contests show as leaning until you confirm them.</p>
 
     <div style="display:grid;gap:8px;">
       <label style="font-weight:600;font-size:13px;">Auto-Refresh Interval</label>
@@ -564,9 +551,9 @@ const SOURCE_URLS = {
   "AP / OH SOS":                   "https://www.ohiosos.gov/elections/election-results-and-data/",
 };
 
-function sourceTag(src) {
+function sourceTag(src, itemUrl) {
   if (!src) return "";
-  const url = SOURCE_URLS[src];
+  const url = (itemUrl && /^https:\/\//.test(itemUrl)) ? itemUrl : SOURCE_URLS[src];
   if (url) {
     return `<a class="source-tag" href="${url}" target="_blank" rel="noopener" title="Official results source">${esc(src)} ↗</a>`;
   }
@@ -583,95 +570,12 @@ let currentFilterLocal = "all";
 let currentSearchLocal = "";
 let currentFilterNational = "all";
 let currentSearchNational = "";
-let currentStage = "live";
 let refreshIntervalSec = 60;
 let refreshCountdown = 60;
 let refreshTimer = null;
 
 const LS_MANUAL_KEY = "ballot-night-2026-manual";
 const LS_STAGE_KEY = "ballot-night-2026-stage";
-
-// National Simulated Curves for Rehearsal
-const NATIONAL_SIM = {
-  early: {
-    senateBalance: { dem: 47, gop: 53, calledDem: 1, calledGop: 1, needed: 51 },
-    houseBalance: { dem: 214, gop: 220, calledDem: 1, calledGop: 0, needed: 218 },
-    items: {
-      "sen-me": { leader: "Susan Collins (R)", leaderPct: 51.4, reporting: "28% counted", final: false, source: "AP / ME SOS" },
-      "sen-tx": { leader: "Ken Paxton (R)", leaderPct: 52.8, reporting: "42% counted", final: false, source: "AP / TX SOS" },
-      "sen-ak": { leader: "Mary Peltola (D)", leaderPct: 50.8, reporting: "Polls close 8pm AKST", final: false, source: "AK Division of Elections" },
-      "sen-mi": { leader: "Abdul El-Sayed (D)", leaderPct: 52.1, reporting: "31% counted", final: false, source: "AP / MI SOS" },
-      "sen-nc": { leader: "Roy Cooper (D)", leaderPct: 51.9, reporting: "46% counted", final: false, source: "AP / NC SBE" },
-      "sen-ga": { leader: "Jon Ossoff (D)", leaderPct: 53.2, reporting: "55% counted", final: false, source: "AP / GA SOS" },
-      "sen-ia": { leader: "Ashley Hinson (R)", leaderPct: 53.5, reporting: "38% counted", final: false, source: "AP / IA SOS" },
-      "sen-ks": { leader: "Roger Marshall (R)", leaderPct: 52.0, reporting: "25% counted", final: false, source: "AP / KS SOS" },
-      "sen-oh": { leader: "Jon Husted (R)", leaderPct: 52.5, reporting: "48% counted", final: false, source: "AP / OH SOS" },
-      "hse-co08": { leader: "Gabe Evans (R)", leaderPct: 50.8, reporting: "54% counted", final: false, source: "CO SOS" },
-      "hse-az01": { leader: "Amish Shah (D)", leaderPct: 51.2, reporting: "32% counted", final: false, source: "AZ SOS" },
-      "hse-az06": { leader: "Juan Ciscomani (R)", leaderPct: 50.6, reporting: "30% counted", final: false, source: "AZ SOS" },
-      "hse-ca13": { leader: "Adam Gray (D)", leaderPct: 51.0, reporting: "Polls close 8pm PT", final: false, source: "CA SOS" },
-      "hse-ca22": { leader: "David Valadao (R)", leaderPct: 52.2, reporting: "Polls close 8pm PT", final: false, source: "CA SOS" },
-      "hse-ca45": { leader: "Derek Tran (D)", leaderPct: 50.4, reporting: "Polls close 8pm PT", final: false, source: "CA SOS" },
-      "hse-ny17": { leader: "Mike Lawler (R)", leaderPct: 51.7, reporting: "44% counted", final: false, source: "NY BOE" },
-      "hse-ny19": { leader: "Josh Riley (D)", leaderPct: 52.4, reporting: "41% counted", final: false, source: "NY BOE" },
-      "hse-pa01": { leader: "Brian Fitzpatrick (R)", leaderPct: 54.1, reporting: "51% counted", final: false, source: "PA DOS" },
-      "hse-oh09": { leader: "Marcy Kaptur (D)", leaderPct: 53.8, reporting: "58% counted", final: false, source: "OH SOS" },
-      "hse-wa03": { leader: "Marie Perez (D)", leaderPct: 51.6, reporting: "Polls close 8pm PT", final: false, source: "WA SOS" },
-      "meas-ca40": { outcome: "yes", pct: 54.2, reporting: "Polls close 8pm PT", final: false, source: "CA SOS" },
-      "meas-wa2124": { outcome: "yes", pct: 56.1, reporting: "Polls close 8pm PT", final: false, source: "WA SOS" },
-      "meas-co87": { outcome: "yes", pct: 56.4, reporting: "53% counted (needs 55%)", final: false, source: "CO SOS" },
-      "meas-co136": { outcome: "no", pct: 46.5, reporting: "53% counted", final: false, source: "CO SOS" },
-      "meas-co134": { outcome: "no", pct: 42.1, reporting: "53% counted", final: false, source: "CO SOS" },
-      "meas-co135": { outcome: "no", pct: 40.8, reporting: "53% counted", final: false, source: "CO SOS" },
-      "meas-walgw": { outcome: "no", pct: 47.9, reporting: "Polls close 8pm PT", final: false, source: "WA SOS" },
-      "meas-mo-trans": { outcome: "no", pct: 48.2, reporting: "35% counted", final: false, source: "MO SOS" },
-      "meas-ak2": { outcome: "no", pct: 46.8, reporting: "RCV Repeal Trailing (46.8% Yes)", final: false, source: "AK Division of Elections" },
-      "meas-az144": { outcome: "yes", pct: 53.2, reporting: "31% counted", final: false, source: "AZ SOS" },
-      "meas-co84": { outcome: "no", pct: 41.5, reporting: "53% counted (needs 55%)", final: false, source: "CO SOS" },
-      "meas-co86": { outcome: "no", pct: 43.7, reporting: "53% counted (needs 55%)", final: false, source: "CO SOS" },
-      "meas-nv7": { outcome: "yes", pct: 54.0, reporting: "Polls close 7pm PT", final: false, source: "NV SOS" }
-    }
-  },
-  mid: {
-    senateBalance: { dem: 49, gop: 51, calledDem: 4, calledGop: 5, needed: 51 },
-    houseBalance: { dem: 216, gop: 218, calledDem: 6, calledGop: 5, needed: 218 },
-    items: {
-      "sen-me": { leader: "Troy Jackson (D)", leaderPct: 51.8, reporting: "82% counted (Leaning Dem)", final: false, source: "AP / ME SOS" },
-      "sen-tx": { leader: "Ken Paxton (R)", leaderPct: 53.1, reporting: "AP Called GOP", final: true, source: "AP / TX SOS" },
-      "sen-ak": { leader: "Mary Peltola (D)", leaderPct: 51.5, reporting: "Round 2 RCV Projection", final: false, source: "AK Division of Elections" },
-      "sen-mi": { leader: "Abdul El-Sayed (D)", leaderPct: 53.0, reporting: "AP Called Dem", final: true, source: "AP / MI SOS" },
-      "sen-nc": { leader: "Roy Cooper (D)", leaderPct: 52.4, reporting: "AP Called Dem", final: true, source: "AP / NC SBE" },
-      "sen-ga": { leader: "Jon Ossoff (D)", leaderPct: 53.8, reporting: "AP Called Dem", final: true, source: "AP / GA SOS" },
-      "sen-ia": { leader: "Ashley Hinson (R)", leaderPct: 54.2, reporting: "AP Called GOP", final: true, source: "AP / IA SOS" },
-      "sen-ks": { leader: "Roger Marshall (R)", leaderPct: 52.9, reporting: "AP Called GOP", final: true, source: "AP / KS SOS" },
-      "sen-oh": { leader: "Jon Husted (R)", leaderPct: 53.2, reporting: "AP Called GOP", final: true, source: "AP / OH SOS" },
-      "hse-co08": { leader: "Gabe Evans (R)", leaderPct: 50.4, reporting: "84% counted (Too Close to Call)", final: false, source: "CO SOS" },
-      "hse-az01": { leader: "Amish Shah (D)", leaderPct: 52.0, reporting: "Called Dem (78% in)", final: true, source: "AZ SOS" },
-      "hse-az06": { leader: "Juan Ciscomani (R)", leaderPct: 51.1, reporting: "76% counted", final: false, source: "AZ SOS" },
-      "hse-ca13": { leader: "Adam Gray (D)", leaderPct: 51.4, reporting: "62% counted", final: false, source: "CA SOS" },
-      "hse-ca22": { leader: "David Valadao (R)", leaderPct: 52.6, reporting: "65% counted", final: false, source: "CA SOS" },
-      "hse-ca45": { leader: "Derek Tran (D)", leaderPct: 51.2, reporting: "68% counted", final: false, source: "CA SOS" },
-      "hse-ny17": { leader: "Mike Lawler (R)", leaderPct: 52.1, reporting: "Called GOP (88% in)", final: true, source: "NY BOE" },
-      "hse-ny19": { leader: "Josh Riley (D)", leaderPct: 53.1, reporting: "Called Dem (85% in)", final: true, source: "NY BOE" },
-      "hse-pa01": { leader: "Brian Fitzpatrick (R)", leaderPct: 54.6, reporting: "Called GOP (92% in)", final: true, source: "PA DOS" },
-      "hse-oh09": { leader: "Marcy Kaptur (D)", leaderPct: 54.5, reporting: "Called Dem (89% in)", final: true, source: "OH SOS" },
-      "hse-wa03": { leader: "Marie Perez (D)", leaderPct: 52.8, reporting: "Called Dem (74% in)", final: true, source: "WA SOS" },
-      "meas-ca40": { outcome: "yes", pct: 55.8, reporting: "Leading (55.8% Yes)", final: false, source: "CA SOS" },
-      "meas-wa2124": { outcome: "yes", pct: 58.2, reporting: "Projected Passed", final: true, source: "WA SOS" },
-      "meas-co87": { outcome: "yes", pct: 56.8, reporting: "Leading above 55% threshold", final: false, source: "CO SOS" },
-      "meas-co136": { outcome: "no", pct: 45.8, reporting: "Projected Failed", final: true, source: "CO SOS" },
-      "meas-co134": { outcome: "no", pct: 41.3, reporting: "Projected Failed", final: true, source: "CO SOS" },
-      "meas-co135": { outcome: "no", pct: 39.9, reporting: "Projected Failed", final: true, source: "CO SOS" },
-      "meas-walgw": { outcome: "no", pct: 45.1, reporting: "Projected Failed", final: true, source: "WA SOS" },
-      "meas-mo-trans": { outcome: "no", pct: 47.1, reporting: "Trailing (52.9% No)", final: false, source: "MO SOS" },
-      "meas-ak2": { outcome: "no", pct: 44.5, reporting: "RCV Repeal Defeated (55.5% No)", final: true, source: "AK Division of Elections" },
-      "meas-az144": { outcome: "yes", pct: 54.5, reporting: "Projected Passed", final: true, source: "AZ SOS" },
-      "meas-co84": { outcome: "no", pct: 39.8, reporting: "Projected Failed", final: true, source: "CO SOS" },
-      "meas-co86": { outcome: "no", pct: 42.1, reporting: "Projected Failed", final: true, source: "CO SOS" },
-      "meas-nv7": { outcome: "yes", pct: 55.2, reporting: "Projected Passed", final: true, source: "NV SOS" }
-    }
-  }
-};
 
 function esc(str) {
   return String(str || "").replace(/[&<>'"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[c]));
@@ -727,8 +631,9 @@ function renderLocalRow(it, kind) {
     if (typeof auto.pct === "number") tallyParts.push(`<span class="metric">${kind === "cand" ? "Your pick" : "Yes"}: <b>${auto.pct.toFixed(1)}%</b></span>`);
     if (auto.leader && kind === "cand" && auto.leader !== it.pick) tallyParts.push(`<span class="metric">Leader: ${esc(auto.leader)}${typeof auto.leaderPct === "number" ? " (" + auto.leaderPct.toFixed(1) + "%)" : ""}</span>`);
     if (auto.reporting) tallyParts.push(`<span class="metric">${esc(auto.reporting)}</span>`);
-    if (auto.source) tallyParts.push(sourceTag(auto.source));
-    tallyParts.push(auto.final ? "<b>Called</b>" : "Not yet called");
+    if (auto.source) tallyParts.push(sourceTag(auto.source, auto.sourceUrl));
+    if (auto.stale) tallyParts.push(`<span class="metric" title="Latest fetch failed; showing last known value">stale</span>`);
+    tallyParts.push(auto.final ? "<b>Decided</b>" : "Unofficial count");
   }
 
   const eff = effectiveLocal(it);
@@ -826,18 +731,23 @@ function renderNationalRow(it, category) {
   }
 
   const live = nationalData.items && nationalData.items[it.id] ? nationalData.items[it.id] : null;
-  let statusBadge = `<span class="verdict wait">Still Counting</span>`;
-  let tallyLine = `<div class="tallyline"><span class="metric">${esc(it.stakes)}</span></div>`;
+  let statusBadge = `<span class="verdict wait">No official feed</span>`;
+  let tallyLine = `<div class="tallyline"><span class="metric">${esc(it.noFeed || "No machine-readable official results found for this race yet.")}</span>${it.link ? " · " + `<a class="source-tag" href="${esc(it.link)}" target="_blank" rel="noopener">Official results ↗</a>` : ""}</div><div class="note" style="margin-top:2px;">${esc(it.stakes)}</div>`;
+  let title = it.title;
 
   if (live) {
     const isCalled = !!live.final;
     let parts = [];
     if (category === "senate" || category === "house") {
       if (live.leader) {
-        const isDem = live.leader.includes("(D)");
+        const isDem = /\(D\)$/.test(live.leader);
         statusBadge = `<span class="verdict ${isDem ? 'dem' : 'gop'}">${isCalled ? 'Called: ' : 'Leads: '}${esc(live.leader)}</span>`;
       }
-      if (typeof live.leaderPct === "number") parts.push(`<span class="metric">Share: <b>${live.leaderPct.toFixed(1)}%</b></span>`);
+      const cs = (live.candidates || []).slice(0, 3);
+      if (cs.length) {
+        title = cs.slice(0, 2).map(c => partyName(c)).join(" vs. ");
+        parts.push(cs.map(c => `<span class="metric">${esc(c.name)}: <b>${Number(c.pct).toFixed(1)}%</b></span>`).join(" · "));
+      } else if (typeof live.leaderPct === "number") parts.push(`<span class="metric">Share: <b>${live.leaderPct.toFixed(1)}%</b></span>`);
     } else {
       if (live.outcome) {
         statusBadge = `<span class="verdict ${live.outcome === 'yes' ? 'good' : 'bad'}">${isCalled ? (live.outcome === 'yes' ? 'Passed' : 'Failed') : (live.outcome === 'yes' ? 'Leaning Pass' : 'Leaning Fail')}</span>`;
@@ -846,8 +756,9 @@ function renderNationalRow(it, category) {
     }
 
     if (live.reporting) parts.push(`<span class="metric">${esc(live.reporting)}</span>`);
-    if (live.source) parts.push(sourceTag(live.source));
-    parts.push(isCalled ? "<b>Called</b>" : "Counting");
+    if (live.source) parts.push(sourceTag(live.source, live.sourceUrl));
+    if (live.stale) parts.push(`<span class="metric" title="Latest fetch failed; showing last known value">stale</span>`);
+    parts.push(isCalled ? "<b>Winner declared by state</b>" : "Unofficial count");
 
     tallyLine = `<div class="tallyline">${parts.join(" · ")}</div><div class="note" style="margin-top:2px;">${esc(it.stakes)}</div>`;
   }
@@ -856,7 +767,7 @@ function renderNationalRow(it, category) {
     <div class="row">
       <div class="info">
         <div class="title">
-          <span>${it.state ? `<strong>[${esc(it.state)}]</strong> ` : ""}${esc(it.title)}</span>
+          <span>${it.state ? `<strong>[${esc(it.state)}]</strong> ` : ""}${esc(title)}</span>
           ${it.desc ? `<em>· ${esc(it.desc)}</em>` : ""}
         </div>
         ${tallyLine}
@@ -895,19 +806,33 @@ function renderNationalSheet() {
 
   sheet.innerHTML = fullHtml || `<div class="empty">No national contests match the filter.</div>`;
 
-  // Update Senate & House Chamber cards
-  const sBal = nationalData.senateBalance || { dem: 47, gop: 53 };
-  const hBal = nationalData.houseBalance || { dem: 213, gop: 220 };
+  // Chamber cards: tally of the tracked races only (official state feeds can't give a national seat count)
+  const tally = (cat) => {
+    const sec = NATIONAL_SECTIONS.find(x => x.category === cat);
+    let d = 0, r = 0, o = 0, n = 0;
+    for (const it of sec.items) {
+      const live = (nationalData.items || {})[it.id];
+      if (!live || !live.leader) { n++; continue; }
+      if (/\(D\)$/.test(live.leader)) d++; else if (/\(R\)$/.test(live.leader)) r++; else o++;
+    }
+    return { d, r, o, n, total: sec.items.length };
+  };
+  for (const [cat, key] of [["senate", "sen"], ["house", "hse"]]) {
+    const t = tally(cat);
+    document.getElementById(`txt-${key}-d`).textContent = `DEM leads: ${t.d}`;
+    document.getElementById(`txt-${key}-r`).textContent = `GOP leads: ${t.r}`;
+    document.getElementById(`txt-${key}-uncalled`).textContent = `${t.n} no feed${t.o ? ` · ${t.o} other` : ""}`;
+    document.getElementById(`bar-${key}-d`).style.width = (t.d / t.total * 100) + "%";
+    document.getElementById(`bar-${key}-r`).style.width = (t.r / t.total * 100) + "%";
+    document.getElementById(`${key}-status`).textContent = `${t.total} tracked races`;
+  }
+}
 
-  document.getElementById("txt-sen-d").textContent = `DEM: ${sBal.dem}`;
-  document.getElementById("txt-sen-r").textContent = `GOP: ${sBal.gop}`;
-  document.getElementById("bar-sen-d").style.width = (sBal.dem) + "%";
-  document.getElementById("bar-sen-r").style.width = (sBal.gop) + "%";
-
-  document.getElementById("txt-hse-d").textContent = `DEM: ${hBal.dem}`;
-  document.getElementById("txt-hse-r").textContent = `GOP: ${hBal.gop}`;
-  document.getElementById("bar-hse-d").style.width = (hBal.dem / 4.35) + "%";
-  document.getElementById("bar-hse-r").style.width = (hBal.gop / 4.35) + "%";
+function partyName(c) {
+  const map = { DEM: "D", REP: "R", LIB: "L", LBR: "L", GRN: "G", IND: "I" };
+  const p = (c.party || "").toUpperCase();
+  const letter = map[p] || (p.length <= 3 ? p : p.slice(0, 1));
+  return letter ? `${c.name} (${letter})` : c.name;
 }
 
 function render() {
@@ -919,17 +844,12 @@ function render() {
 
   // Update Status Banner
   const el = document.getElementById("feed-status");
-  const timeStr = metaInfo.asOf ? new Date(metaInfo.asOf).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) : "";
+  const timeStr = metaInfo.asOf ? new Date(metaInfo.asOf).toLocaleString([], { timeZone: "America/Denver", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) : "";
   el.innerHTML = `<strong>${esc(metaInfo.status || "Polling active")}</strong>${timeStr ? " · As of " + timeStr + " MT" : ""} <span style="opacity:0.8">(${esc(metaInfo.source || "Official Feeds")})</span>`;
 }
 
 // Fetching Data from Local & National Endpoints
 async function fetchLatestData() {
-  if (currentStage !== "live") {
-    applyPresetStage(currentStage);
-    return;
-  }
-
   document.getElementById("refresh-timer").textContent = "Syncing…";
 
   // 1. Fetch Local Results
@@ -962,56 +882,11 @@ async function fetchLatestData() {
   updateTimerUI();
 }
 
-function applyPresetStage(stage) {
-  currentStage = stage;
-  try { localStorage.setItem(LS_STAGE_KEY, stage); } catch (e) {}
-
-  document.querySelectorAll(".mode-btn").forEach(btn => {
-    btn.setAttribute("aria-pressed", String(btn.dataset.stage === stage));
-  });
-
-  const ind = document.getElementById("live-indicator");
-  const indText = document.getElementById("live-indicator-text");
-
-  if (stage === "live") {
-    ind.style.display = "inline-flex";
-    indText.textContent = "LIVE POLLING";
-    fetchLatestData();
-  } else {
-    ind.style.display = "inline-flex";
-    indText.textContent = "SIMULATION: " + stage.toUpperCase();
-    
-    // Apply local simulation preset if available
-    if (stage === "pre") {
-      autoData = {};
-      nationalData = {
-        senateBalance: { dem: 47, gop: 53 },
-        houseBalance: { dem: 213, gop: 220 },
-        items: {}
-      };
-      metaInfo = {
-        asOf: new Date().toISOString(),
-        status: "Polls open nationwide. Pre-election state.",
-        source: "State Election Offices & National Desks"
-      };
-    } else {
-      const natPreset = NATIONAL_SIM[stage] || NATIONAL_SIM.early;
-      nationalData = natPreset;
-      metaInfo = {
-        asOf: new Date().toISOString(),
-        status: stage === "early" ? "7:15 PM Initial Wave Simulation" : "9:45 PM Late Calls Simulation",
-        source: "AP / Decision Desk HQ / State SOS Feeds"
-      };
-    }
-    render();
-  }
-}
-
 // Timer Loop
 function updateTimerUI() {
   const badge = document.getElementById("refresh-timer");
-  if (refreshIntervalSec <= 0 || currentStage !== "live") {
-    badge.textContent = currentStage === "live" ? "Paused" : "Simulation Active";
+  if (refreshIntervalSec <= 0) {
+    badge.textContent = "Paused";
   } else {
     badge.textContent = `Next sync: ${refreshCountdown}s`;
   }
@@ -1023,7 +898,7 @@ function startTimer() {
   updateTimerUI();
 
   refreshTimer = setInterval(() => {
-    if (refreshIntervalSec <= 0 || currentStage !== "live") return;
+    if (refreshIntervalSec <= 0) return;
     refreshCountdown--;
     if (refreshCountdown <= 0) {
       fetchLatestData();
@@ -1064,12 +939,6 @@ document.addEventListener("click", (e) => {
     return;
   }
 
-  // Mode / Stage Buttons
-  const stageBtn = e.target.closest(".mode-btn");
-  if (stageBtn) {
-    applyPresetStage(stageBtn.dataset.stage);
-    return;
-  }
 
   // Local Manual Override Buttons
   const vBtn = e.target.closest(".btn-vote");
@@ -1151,16 +1020,14 @@ function loadSaved() {
     if (saved && typeof saved === "object") manualOutcomes = saved;
   } catch (err) {}
 
-  try {
-    const st = localStorage.getItem(LS_STAGE_KEY);
-    if (st) currentStage = st;
-  } catch (err) {}
+  // Old builds saved a "simulation stage" here that could pin viewers to fake data.
+  try { localStorage.removeItem(LS_STAGE_KEY); } catch (err) {}
 }
 
 // Bootstrap
 loadSaved();
 render();
-applyPresetStage(currentStage);
+fetchLatestData();
 startTimer();
 </script>
 </body>

@@ -1,244 +1,388 @@
 #!/usr/bin/env python3
 """
-fetch_election_results.py - Election Night Live Scraper & Updater
-Pulls returns for Arapahoe County & National 2026 battlegrounds.
-Writes to both results.json and national_results.json.
+fetch_election_results.py - pulls REAL, official, unofficial-count returns.
+
+Local tab  (results.json):
+  * Colorado Secretary of State election-night reporting (Clarity ENR)
+      https://results.enr.clarityelections.com/CO/127407/
+  * Arapahoe County Clerk election-night reporting (Clarity ENR, discovered
+    from the state feed's participating-county list)
+National tab (national_results.json):
+  * Colorado contests from the same CO SOS feed
+  * Every other state from its own official election-office feed, via the
+    per-state modules in ./adapters/ (each documents its URLs)
+
+Nothing here is simulated. If a feed is unreachable the previous value for
+those contests is kept and marked stale. Files are only rewritten when the
+underlying numbers change, so "as of" reflects the last real update.
+
+Usage:  python3 fetch_election_results.py            # run once
+        python3 fetch_election_results.py --loop 300 # poll every 5 min
 """
 
+import argparse
+import importlib
+import json
 import os
 import sys
-import json
 import time
-import argparse
+import urllib.request
+from concurrent.futures import ThreadPoolExecutor, wait
 from datetime import datetime, timezone, timedelta
 
-DEFAULT_OUTPUT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results.json")
-DEFAULT_NAT_OUTPUT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "national_results.json")
-MT_TZ = timezone(timedelta(hours=-7))
+HERE = os.path.dirname(os.path.abspath(__file__))
+LOCAL_PATH = os.path.join(HERE, "results.json")
+NAT_PATH = os.path.join(HERE, "national_results.json")
+UA = "ballot-night-tracker/1.0 (personal results dashboard)"
+CLARITY = "https://results.enr.clarityelections.com"
+CO_ELECTION_ID = "127407"          # CO 2026 General (linked from sos.state.co.us results page)
+CO_COUNTY = "Arapahoe"
+CO_SOURCE_URL = f"{CLARITY}/CO/{CO_ELECTION_ID}/"
+NATIONAL_STATES = ["tx", "az", "nv", "ca", "nc", "ga", "ia", "ks", "mo",
+                   "mi", "oh", "pa", "ny", "me", "ak", "wa"]
+ADAPTER_TIMEOUT = 75  # seconds per state
 
-SIMULATED_LOCAL = {
-    "pre": {
-        "asOf": "2026-11-03T15:00:00-07:00",
-        "status": "Polls open until 7:00 PM MT. No official returns released yet.",
-        "source": "Official Feeds: CO Secretary of State & Arapahoe County Elections",
-        "totalBallotsCast": 0,
-        "items": {}
-    },
-    "early": {
-        "asOf": "2026-11-03T19:22:00-07:00",
-        "status": "7:15 PM Initial Mail-In Ballot Drop (~54% estimated vote counted)",
-        "source": "CO SOS Clarity Feed / Arapahoe Clerk Batch 1",
-        "items": {
-            "senate": { "outcome": "yes", "final": False, "pct": 57.4, "leader": "John Hickenlooper (D)", "leaderPct": 57.4, "reporting": "54% counted", "source": "CO SOS" },
-            "cd6": { "outcome": "yes", "final": False, "pct": 63.8, "leader": "Jason Crow (D)", "leaderPct": 63.8, "reporting": "52% counted", "source": "CO SOS" },
-            "gov": { "outcome": "yes", "final": False, "pct": 55.2, "leader": "Phil Weiser (D)", "leaderPct": 55.2, "reporting": "54% counted", "source": "CO SOS" },
-            "sos": { "outcome": "yes", "final": False, "pct": 53.9, "leader": "Amanda Gonzalez (D)", "leaderPct": 53.9, "reporting": "53% counted", "source": "CO SOS" },
-            "treas": { "outcome": "yes", "final": False, "pct": 54.1, "leader": "Jeff Bridges (D)", "leaderPct": 54.1, "reporting": "53% counted", "source": "CO SOS" },
-            "ag": { "outcome": "yes", "final": False, "pct": 52.8, "leader": "Jena Griswold (D)", "leaderPct": 52.8, "reporting": "54% counted", "source": "CO SOS" },
-            "regent": { "outcome": "yes", "final": False, "pct": 56.4, "leader": "Ilana Spiegel (D)", "leaderPct": 56.4, "reporting": "51% counted", "source": "CO SOS" },
-            "hd38": { "outcome": "yes", "final": False, "pct": 54.3, "leader": "Gretchen Rydin (D)", "leaderPct": 54.3, "reporting": "58% counted", "source": "Arapahoe Votes" },
-            "clerk": { "outcome": "yes", "final": False, "pct": 56.1, "leader": "Joan Lopez (D)", "leaderPct": 56.1, "reporting": "58% counted", "source": "Arapahoe Votes" },
-            "ctreas": { "outcome": "yes", "final": False, "pct": 61.2, "leader": "Michael Westerberg (D)", "leaderPct": 61.2, "reporting": "58% counted", "source": "Arapahoe Votes" },
-            "assessor": { "outcome": "yes", "final": False, "pct": 55.7, "leader": "PK Kaiser (D)", "leaderPct": 55.7, "reporting": "58% counted", "source": "Arapahoe Votes" },
-            "sheriff": { "outcome": "yes", "final": False, "pct": 53.4, "leader": "Tyler Scott Brown (D)", "leaderPct": 53.4, "reporting": "58% counted", "source": "Arapahoe Votes" },
-            "coroner": { "outcome": "yes", "final": True, "pct": 100.0, "leader": "Casey Bitting (D)", "leaderPct": 100.0, "reporting": "Called (Unopposed)", "source": "Arapahoe Votes" },
-            "j-hood": { "outcome": "yes", "final": False, "pct": 74.2, "reporting": "52% counted", "source": "CO Judicial" },
-            "j-freyre": { "outcome": "yes", "final": False, "pct": 71.5, "reporting": "52% counted", "source": "CO Judicial" },
-            "j-harris": { "outcome": "yes", "final": False, "pct": 68.1, "reporting": "52% counted", "source": "CO Judicial" },
-            "j-lum": { "outcome": "yes", "final": False, "pct": 72.8, "reporting": "52% counted", "source": "CO Judicial" },
-            "j-moultrie": { "outcome": "yes", "final": False, "pct": 73.1, "reporting": "52% counted", "source": "CO Judicial" },
-            "j-schock": { "outcome": "yes", "final": False, "pct": 70.4, "reporting": "52% counted", "source": "CO Judicial" },
-            "j-sullivan": { "outcome": "yes", "final": False, "pct": 71.9, "reporting": "52% counted", "source": "CO Judicial" },
-            "j-amico": { "outcome": "yes", "final": False, "pct": 69.8, "reporting": "58% counted", "source": "Arapahoe Votes" },
-            "j-baker": { "outcome": "yes", "final": False, "pct": 68.5, "reporting": "58% counted", "source": "Arapahoe Votes" },
-            "j-edson": { "outcome": "yes", "final": False, "pct": 70.1, "reporting": "58% counted", "source": "Arapahoe Votes" },
-            "j-henderson": { "outcome": "yes", "final": False, "pct": 69.0, "reporting": "58% counted", "source": "Arapahoe Votes" },
-            "j-jones": { "outcome": "yes", "final": False, "pct": 72.3, "reporting": "58% counted", "source": "Arapahoe Votes" },
-            "j-karpel": { "outcome": "yes", "final": False, "pct": 67.9, "reporting": "58% counted", "source": "Arapahoe Votes" },
-            "j-stricklin": { "outcome": "yes", "final": False, "pct": 70.8, "reporting": "58% counted", "source": "Arapahoe Votes" },
-            "j-vahle": { "outcome": "yes", "final": False, "pct": 64.2, "reporting": "58% counted", "source": "Arapahoe Votes" },
-            "j-washburn": { "outcome": "yes", "final": False, "pct": 71.4, "reporting": "58% counted", "source": "Arapahoe Votes" },
-            "j-apostoli": { "outcome": "yes", "final": False, "pct": 71.8, "reporting": "58% counted", "source": "Arapahoe Votes" },
-            "j-clark": { "outcome": "yes", "final": False, "pct": 65.5, "reporting": "58% counted", "source": "Arapahoe Votes" },
-            "j-rowles": { "outcome": "yes", "final": False, "pct": 73.0, "reporting": "58% counted", "source": "Arapahoe Votes" },
-            "a81": { "outcome": "no", "final": False, "pct": 46.2, "reporting": "53% counted (needs 55%)", "source": "CO SOS" },
-            "a82": { "outcome": "no", "final": False, "pct": 44.8, "reporting": "53% counted (needs 55%)", "source": "CO SOS" },
-            "a83": { "outcome": "no", "final": False, "pct": 48.1, "reporting": "53% counted (needs 55%)", "source": "CO SOS" },
-            "a84": { "outcome": "no", "final": False, "pct": 41.5, "reporting": "53% counted (needs 55%)", "source": "CO SOS" },
-            "a85": { "outcome": "no", "final": False, "pct": 52.3, "reporting": "53% counted (under 55% threshold)", "source": "CO SOS" },
-            "a86": { "outcome": "no", "final": False, "pct": 43.7, "reporting": "53% counted (needs 55%)", "source": "CO SOS" },
-            "a87": { "outcome": "yes", "final": False, "pct": 56.4, "reporting": "53% counted (above 55% threshold)", "source": "CO SOS" },
-            "pnn": { "outcome": "yes", "final": False, "pct": 54.6, "reporting": "53% counted", "source": "CO SOS" },
-            "p132": { "outcome": "no", "final": False, "pct": 48.9, "reporting": "53% counted", "source": "CO SOS" },
-            "p133": { "outcome": "no", "final": False, "pct": 47.3, "reporting": "53% counted", "source": "CO SOS" },
-            "p134": { "outcome": "no", "final": False, "pct": 42.1, "reporting": "53% counted", "source": "CO SOS" },
-            "p135": { "outcome": "no", "final": False, "pct": 40.8, "reporting": "53% counted", "source": "CO SOS" },
-            "p136": { "outcome": "no", "final": False, "pct": 46.5, "reporting": "53% counted", "source": "CO SOS" },
-            "p137": { "outcome": "no", "final": False, "pct": 45.2, "reporting": "53% counted", "source": "CO SOS" },
-            "i4a": { "outcome": "yes", "final": False, "pct": 58.7, "reporting": "58% counted", "source": "Arapahoe Votes" },
-            "i7a": { "outcome": "yes", "final": False, "pct": 57.3, "reporting": "51% counted (Districtwide)", "source": "Front Range Rail Dist." }
-        }
-    },
-    "mid": {
-        "asOf": "2026-11-03T21:45:00-07:00",
-        "status": "Late Evening Batch (~82% counted - AP & Decision Desks calling major races)",
-        "source": "CO SOS / Arapahoe Elections / AP Decision Desk",
-        "items": {
-            "senate": { "outcome": "yes", "final": True, "pct": 58.1, "leader": "John Hickenlooper (D)", "leaderPct": 58.1, "reporting": "AP Called (84% counted)", "source": "AP / CO SOS" },
-            "cd6": { "outcome": "yes", "final": True, "pct": 64.5, "leader": "Jason Crow (D)", "leaderPct": 64.5, "reporting": "AP Called (81% counted)", "source": "AP / CO SOS" },
-            "gov": { "outcome": "yes", "final": True, "pct": 56.0, "leader": "Phil Weiser (D)", "leaderPct": 56.0, "reporting": "AP Called (83% counted)", "source": "AP / CO SOS" },
-            "sos": { "outcome": "yes", "final": False, "pct": 54.4, "leader": "Amanda Gonzalez (D)", "leaderPct": 54.4, "reporting": "82% counted", "source": "CO SOS" },
-            "treas": { "outcome": "yes", "final": True, "pct": 54.9, "leader": "Jeff Bridges (D)", "leaderPct": 54.9, "reporting": "AP Called (82% counted)", "source": "AP / CO SOS" },
-            "ag": { "outcome": "yes", "final": False, "pct": 53.2, "leader": "Jena Griswold (D)", "leaderPct": 53.2, "reporting": "82% counted", "source": "CO SOS" },
-            "regent": { "outcome": "yes", "final": True, "pct": 57.1, "leader": "Ilana Spiegel (D)", "leaderPct": 57.1, "reporting": "Called (80% counted)", "source": "CO SOS" },
-            "hd38": { "outcome": "yes", "final": False, "pct": 55.0, "leader": "Gretchen Rydin (D)", "leaderPct": 55.0, "reporting": "84% counted", "source": "Arapahoe Votes" },
-            "clerk": { "outcome": "yes", "final": True, "pct": 56.8, "leader": "Joan Lopez (D)", "leaderPct": 56.8, "reporting": "Called (84% counted)", "source": "Arapahoe Votes" },
-            "ctreas": { "outcome": "yes", "final": True, "pct": 62.0, "leader": "Michael Westerberg (D)", "leaderPct": 62.0, "reporting": "Called (84% counted)", "source": "Arapahoe Votes" },
-            "assessor": { "outcome": "yes", "final": False, "pct": 56.2, "leader": "PK Kaiser (D)", "leaderPct": 56.2, "reporting": "84% counted", "source": "Arapahoe Votes" },
-            "sheriff": { "outcome": "yes", "final": False, "pct": 53.9, "leader": "Tyler Scott Brown (D)", "leaderPct": 53.9, "reporting": "84% counted", "source": "Arapahoe Votes" },
-            "coroner": { "outcome": "yes", "final": True, "pct": 100.0, "leader": "Casey Bitting (D)", "leaderPct": 100.0, "reporting": "Called", "source": "Arapahoe Votes" },
-            "j-hood": { "outcome": "yes", "final": True, "pct": 74.8, "reporting": "Called (82% counted)", "source": "CO Judicial" },
-            "j-freyre": { "outcome": "yes", "final": True, "pct": 72.1, "reporting": "Called (82% counted)", "source": "CO Judicial" },
-            "j-harris": { "outcome": "yes", "final": False, "pct": 68.7, "reporting": "82% counted", "source": "CO Judicial" },
-            "j-lum": { "outcome": "yes", "final": True, "pct": 73.4, "reporting": "Called (82% counted)", "source": "CO Judicial" },
-            "j-moultrie": { "outcome": "yes", "final": True, "pct": 73.8, "reporting": "Called (82% counted)", "source": "CO Judicial" },
-            "j-schock": { "outcome": "yes", "final": True, "pct": 71.0, "reporting": "Called (82% counted)", "source": "CO Judicial" },
-            "j-sullivan": { "outcome": "yes", "final": True, "pct": 72.5, "reporting": "Called (82% counted)", "source": "CO Judicial" },
-            "j-amico": { "outcome": "yes", "final": True, "pct": 70.4, "reporting": "Called (84% counted)", "source": "Arapahoe Votes" },
-            "j-baker": { "outcome": "yes", "final": True, "pct": 69.1, "reporting": "Called (84% counted)", "source": "Arapahoe Votes" },
-            "j-edson": { "outcome": "yes", "final": True, "pct": 70.8, "reporting": "Called (84% counted)", "source": "Arapahoe Votes" },
-            "j-henderson": { "outcome": "yes", "final": True, "pct": 69.6, "reporting": "Called (84% counted)", "source": "Arapahoe Votes" },
-            "j-jones": { "outcome": "yes", "final": True, "pct": 72.9, "reporting": "Called (84% counted)", "source": "Arapahoe Votes" },
-            "j-karpel": { "outcome": "yes", "final": True, "pct": 68.4, "reporting": "Called (84% counted)", "source": "Arapahoe Votes" },
-            "j-stricklin": { "outcome": "yes", "final": True, "pct": 71.3, "reporting": "Called (84% counted)", "source": "Arapahoe Votes" },
-            "j-vahle": { "outcome": "yes", "final": False, "pct": 63.8, "reporting": "84% counted", "source": "Arapahoe Votes" },
-            "j-washburn": { "outcome": "yes", "final": True, "pct": 72.0, "reporting": "Called (84% counted)", "source": "Arapahoe Votes" },
-            "j-apostoli": { "outcome": "yes", "final": True, "pct": 72.4, "reporting": "Called (84% counted)", "source": "Arapahoe Votes" },
-            "j-clark": { "outcome": "yes", "final": False, "pct": 65.1, "reporting": "84% counted", "source": "Arapahoe Votes" },
-            "j-rowles": { "outcome": "yes", "final": True, "pct": 73.6, "reporting": "Called (84% counted)", "source": "Arapahoe Votes" },
-            "a81": { "outcome": "no", "final": True, "pct": 44.5, "reporting": "Projected Failed (under 55%)", "source": "CO SOS" },
-            "a82": { "outcome": "no", "final": True, "pct": 43.9, "reporting": "Projected Failed (under 55%)", "source": "CO SOS" },
-            "a83": { "outcome": "no", "final": False, "pct": 49.0, "reporting": "82% counted (needs 55%)", "source": "CO SOS" },
-            "a84": { "outcome": "no", "final": True, "pct": 39.8, "reporting": "Projected Failed", "source": "CO SOS" },
-            "a85": { "outcome": "no", "final": True, "pct": 51.4, "reporting": "Projected Failed (fails 55% rule)", "source": "CO SOS" },
-            "a86": { "outcome": "no", "final": True, "pct": 42.1, "reporting": "Projected Failed", "source": "CO SOS" },
-            "a87": { "outcome": "yes", "final": False, "pct": 56.8, "reporting": "82% counted (leading >55%)", "source": "CO SOS" },
-            "pnn": { "outcome": "yes", "final": True, "pct": 55.4, "reporting": "Projected Passed", "source": "CO SOS" },
-            "p132": { "outcome": "no", "final": False, "pct": 48.1, "reporting": "82% counted", "source": "CO SOS" },
-            "p133": { "outcome": "no", "final": False, "pct": 46.8, "reporting": "82% counted", "source": "CO SOS" },
-            "p134": { "outcome": "no", "final": True, "pct": 41.3, "reporting": "Projected Failed", "source": "CO SOS" },
-            "p135": { "outcome": "no", "final": True, "pct": 39.9, "reporting": "Projected Failed", "source": "CO SOS" },
-            "p136": { "outcome": "no", "final": True, "pct": 45.8, "reporting": "Projected Failed", "source": "CO SOS" },
-            "p137": { "outcome": "no", "final": True, "pct": 44.2, "reporting": "Projected Failed", "source": "CO SOS" },
-            "i4a": { "outcome": "yes", "final": True, "pct": 59.8, "reporting": "Called Passed (84% counted)", "source": "Arapahoe Votes" },
-            "i7a": { "outcome": "yes", "final": False, "pct": 58.1, "reporting": "80% counted (Districtwide)", "source": "Front Range Rail Dist." }
-        }
-    }
+PARTY_LETTER = {"DEM": "D", "REP": "R", "LBR": "L", "LIB": "L", "GRN": "G",
+                "UAF": "U", "UNA": "U", "IND": "I", "NPA": "I", "NP": "NP"}
+
+
+# --------------------------------------------------------------------------
+# HTTP / Clarity helpers
+# --------------------------------------------------------------------------
+def http_get(url, timeout=30):
+    req = urllib.request.Request(url, headers={"User-Agent": UA})
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return r.read()
+
+
+def clarity_summary(path):
+    """path like 'CO/127407' or 'CO/Arapahoe/127409' -> (contests_by_name, settings)."""
+    ver = http_get(f"{CLARITY}/{path}/current_ver.txt").decode().strip()
+    summary = json.loads(http_get(f"{CLARITY}/{path}/{ver}/json/en/summary.json"))
+    settings = json.loads(http_get(f"{CLARITY}/{path}/{ver}/json/en/electionsettings.json"))["settings"]
+    return {c["C"].strip(): c for c in summary}, settings, ver
+
+
+def parse_clarity_time(s):
+    # e.g. "11/3/2026 11:29:33 PM MST"
+    parts = s.rsplit(" ", 1)
+    tz = timezone(timedelta(hours=-6)) if parts[-1] == "MDT" else timezone(timedelta(hours=-7))
+    return datetime.strptime(parts[0], "%m/%d/%Y %I:%M:%S %p").replace(tzinfo=tz)
+
+
+def candidates_of(c):
+    out = []
+    for i, name in enumerate(c["CH"]):
+        out.append({"name": name.strip(), "party": (c["P"][i] if c.get("P") else "") or "",
+                    "votes": c["V"][i], "pct": round(c["PCT"][i], 2)})
+    out.sort(key=lambda x: -x["votes"])
+    return out
+
+
+def with_party(name, party):
+    letter = PARTY_LETTER.get((party or "").upper(), (party or "")[:3])
+    return f"{name} ({letter})" if letter else name
+
+
+def reporting_text(c, unit):
+    total = c["T"][0] if c.get("T") else sum(c["V"])
+    return f"{c['PR']} of {c['TP']} {unit} fully reported · {total:,} votes"
+
+
+# --------------------------------------------------------------------------
+# LOCAL TAB: Ben's ballot -> official contest names
+#   cand:    (feed, contest, pick-substring)
+#   yes/no:  (feed, contest, threshold %)
+# feed "state" = CO SOS statewide feed, "county" = Arapahoe County feed
+# --------------------------------------------------------------------------
+LOCAL_CAND = {
+    "senate":   ("state", "United States Senator", "Hickenlooper"),
+    "cd6":      ("state", "Representative to the 120th United States Congress - District 6", "Crow"),
+    "gov":      ("state", "Governor / Lieutenant Governor", "Weiser"),
+    "sos":      ("state", "Secretary of State", "Gonzalez"),
+    "treas":    ("state", "State Treasurer", "Bridges"),
+    "ag":       ("state", "Attorney General", "Griswold"),
+    "regent":   ("state", "Regent of the University of Colorado - Congressional District 6", "Spiegel"),
+    "hd38":     ("state", "State Representative - District 38", "Rydin"),
+    "clerk":    ("county", "Arapahoe County Clerk and Recorder", "Lopez"),
+    "ctreas":   ("county", "Arapahoe County Treasurer", "Westerberg"),
+    "assessor": ("county", "Arapahoe County Assessor", "Kaiser"),
+    "sheriff":  ("county", "Arapahoe County Sheriff", "Brown"),
+    "coroner":  ("county", "Arapahoe County Coroner", "Bitting"),
+}
+_J = "Judicial Retention"
+LOCAL_YESNO = {
+    "j-hood":      ("state", "Colorado Supreme Court Justice - Hood", 50),
+    "j-freyre":    ("state", "Colorado Court of Appeals Judge - Freyre", 50),
+    "j-harris":    ("state", "Colorado Court of Appeals Judge - Harris", 50),
+    "j-lum":       ("state", "Colorado Court of Appeals Judge - Lum", 50),
+    "j-moultrie":  ("state", "Colorado Court of Appeals Judge - Moultrie", 50),
+    "j-schock":    ("state", "Colorado Court of Appeals Judge - Schock", 50),
+    "j-sullivan":  ("state", "Colorado Court of Appeals Judge - Sullivan", 50),
+    "j-amico":     ("state", "District Court Judge - 18th Judicial District - Amico", 50),
+    "j-baker":     ("state", "District Court Judge - 18th Judicial District - Baker-McKay", 50),
+    "j-edson":     ("state", "District Court Judge - 18th Judicial District - Edson", 50),
+    "j-henderson": ("state", "District Court Judge - 18th Judicial District - Henderson", 50),
+    "j-jones":     ("state", "District Court Judge - 18th Judicial District - Jones", 50),
+    "j-karpel":    ("state", "District Court Judge - 18th Judicial District - Karpel", 50),
+    "j-stricklin": ("state", "District Court Judge - 18th Judicial District - Stricklin", 50),
+    "j-vahle":     ("state", "District Court Judge - 18th Judicial District - Vahle", 50),
+    "j-washburn":  ("state", "District Court Judge - 18th Judicial District - Washburn", 50),
+    "j-apostoli":  ("state", "County Court Judge - Arapahoe - Apostoli", 50),
+    "j-clark":     ("state", "County Court Judge - Arapahoe - Clark", 50),
+    "j-rowles":    ("state", "County Court Judge - Arapahoe - Rowles-Stokes", 50),
+    # Constitutional amendments need 55% (Colo. Const. art. V, sec. 1(4)(b))
+    "a81":  ("state", "Amendment 81 (CONSTITUTIONAL)", 55),
+    "a82":  ("state", "Amendment 82 (CONSTITUTIONAL)", 55),
+    "a83":  ("state", "Amendment 83 (CONSTITUTIONAL)", 55),
+    "a84":  ("state", "Amendment 84 (CONSTITUTIONAL)", 55),
+    "a85":  ("state", "Amendment 85 (CONSTITUTIONAL)", 55),
+    "a86":  ("state", "Amendment 86 (CONSTITUTIONAL)", 55),
+    "a87":  ("state", "Amendment 87 (CONSTITUTIONAL)", 55),
+    "pnn":  ("state", "Proposition NN (STATUTORY)", 50),
+    "p132": ("state", "Proposition 132 (STATUTORY)", 50),
+    "p133": ("state", "Proposition 133 (STATUTORY)", 50),
+    "p134": ("state", "Proposition 134 (STATUTORY)", 50),
+    "p135": ("state", "Proposition 135 (STATUTORY)", 50),
+    "p136": ("state", "Proposition 136 (STATUTORY)", 50),
+    "p137": ("state", "Proposition 137 (STATUTORY)", 50),
+    "i4a":  ("county", "Arapahoe County School District #6 Littleton Public Schools Ballot Issue 4A", 50),
+    "i7a":  ("state", "Front Range Passenger Rail District Ballot Issue 7A", 50),
 }
 
-SIMULATED_NAT = {
-    "pre": {
-        "asOf": "2026-11-03T15:00:00-07:00",
-        "status": "Polls open nationwide. Pre-election state.",
-        "source": "AP / Decision Desk HQ / State SOS Feeds",
-        "senateBalance": { "dem": 47, "gop": 53, "calledDem": 0, "calledGop": 0, "needed": 51 },
-        "houseBalance": { "dem": 213, "gop": 220, "calledDem": 0, "calledGop": 0, "needed": 218 },
-        "items": {}
-    },
-    "early": {
-        "asOf": "2026-11-03T19:22:00-07:00",
-        "status": "7:15 PM Initial Wave Simulation",
-        "source": "AP / Decision Desk HQ / State SOS Feeds",
-        "senateBalance": { "dem": 47, "gop": 53, "calledDem": 1, "calledGop": 1, "needed": 51 },
-        "houseBalance": { "dem": 214, "gop": 220, "calledDem": 1, "calledGop": 0, "needed": 218 },
-        "items": {
-            "sen-me": { "leader": "Susan Collins (R)", "leaderPct": 51.4, "reporting": "28% counted", "final": False, "source": "AP / ME SOS" },
-            "sen-tx": { "leader": "Ken Paxton (R)", "leaderPct": 52.8, "reporting": "42% counted", "final": False, "source": "AP / TX SOS" },
-            "sen-ak": { "leader": "Mary Peltola (D)", "leaderPct": 50.8, "reporting": "Polls close 8pm AKST", "final": False, "source": "AK Division of Elections" },
-            "sen-mi": { "leader": "Abdul El-Sayed (D)", "leaderPct": 52.1, "reporting": "31% counted", "final": False, "source": "AP / MI SOS" },
-            "sen-nc": { "leader": "Roy Cooper (D)", "leaderPct": 51.9, "reporting": "46% counted", "final": False, "source": "AP / NC SBE" },
-            "sen-ga": { "leader": "Jon Ossoff (D)", "leaderPct": 53.2, "reporting": "55% counted", "final": False, "source": "AP / GA SOS" },
-            "sen-ia": { "leader": "Ashley Hinson (R)", "leaderPct": 53.5, "reporting": "38% counted", "final": False, "source": "AP / IA SOS" },
-            "sen-ks": { "leader": "Roger Marshall (R)", "leaderPct": 52.0, "reporting": "25% counted", "final": False, "source": "AP / KS SOS" },
-            "sen-oh": { "leader": "Jon Husted (R)", "leaderPct": 52.5, "reporting": "48% counted", "final": False, "source": "AP / OH SOS" },
-            "hse-co08": { "leader": "Gabe Evans (R)", "leaderPct": 50.8, "reporting": "54% counted", "final": False, "source": "CO SOS" },
-            "hse-az01": { "leader": "Amish Shah (D)", "leaderPct": 51.2, "reporting": "32% counted", "final": False, "source": "AZ SOS" },
-            "hse-az06": { "leader": "Juan Ciscomani (R)", "leaderPct": 50.6, "reporting": "30% counted", "final": False, "source": "AZ SOS" },
-            "hse-ca13": { "leader": "Adam Gray (D)", "leaderPct": 51.0, "reporting": "Polls close 8pm PT", "final": False, "source": "CA SOS" },
-            "hse-ca22": { "leader": "David Valadao (R)", "leaderPct": 52.2, "reporting": "Polls close 8pm PT", "final": False, "source": "CA SOS" },
-            "hse-ca45": { "leader": "Derek Tran (D)", "leaderPct": 50.4, "reporting": "Polls close 8pm PT", "final": False, "source": "CA SOS" },
-            "hse-ny17": { "leader": "Mike Lawler (R)", "leaderPct": 51.7, "reporting": "44% counted", "final": False, "source": "NY BOE" },
-            "hse-ny19": { "leader": "Josh Riley (D)", "leaderPct": 52.4, "reporting": "41% counted", "final": False, "source": "NY BOE" },
-            "hse-pa01": { "leader": "Brian Fitzpatrick (R)", "leaderPct": 54.1, "reporting": "51% counted", "final": False, "source": "PA DOS" },
-            "hse-oh09": { "leader": "Marcy Kaptur (D)", "leaderPct": 53.8, "reporting": "58% counted", "final": False, "source": "OH SOS" },
-            "hse-wa03": { "leader": "Marie Perez (D)", "leaderPct": 51.6, "reporting": "Polls close 8pm PT", "final": False, "source": "WA SOS" },
-            "meas-ca40": { "outcome": "yes", "pct": 54.2, "reporting": "Polls close 8pm PT", "final": False, "source": "CA SOS" },
-            "meas-wa2124": { "outcome": "yes", "pct": 56.1, "reporting": "Polls close 8pm PT", "final": False, "source": "WA SOS" },
-            "meas-co87": { "outcome": "yes", "pct": 56.4, "reporting": "53% counted (needs 55%)", "final": False, "source": "CO SOS" },
-            "meas-co136": { "outcome": "no", "pct": 46.5, "reporting": "53% counted", "final": False, "source": "CO SOS" },
-            "meas-co134": { "outcome": "no", "pct": 42.1, "reporting": "53% counted", "final": False, "source": "CO SOS" },
-            "meas-co135": { "outcome": "no", "pct": 40.8, "reporting": "53% counted", "final": False, "source": "CO SOS" },
-            "meas-walgw": { "outcome": "no", "pct": 47.9, "reporting": "Polls close 8pm PT", "final": False, "source": "WA SOS" },
-            "meas-mo-trans": { "outcome": "no", "pct": 48.2, "reporting": "35% counted", "final": False, "source": "MO SOS" },
-            "meas-ak2": { "outcome": "no", "pct": 46.8, "reporting": "RCV Repeal Trailing (46.8% Yes)", "final": False, "source": "AK Division of Elections" },
-            "meas-az144": { "outcome": "yes", "pct": 53.2, "reporting": "31% counted", "final": False, "source": "AZ SOS" },
-            "meas-co84": { "outcome": "no", "pct": 41.5, "reporting": "53% counted (needs 55%)", "final": False, "source": "CO SOS" },
-            "meas-co86": { "outcome": "no", "pct": 43.7, "reporting": "53% counted (needs 55%)", "final": False, "source": "CO SOS" },
-            "meas-nv7": { "outcome": "yes", "pct": 54.0, "reporting": "Polls close 7pm PT", "final": False, "source": "NV SOS" }
-        }
-    }
+# Colorado items on the National tab come from the same CO SOS feed
+NAT_CO_CAND = {
+    "hse-co08": "Representative to the 120th United States Congress - District 8",
+}
+NAT_CO_MEAS = {
+    "meas-co87": ("Amendment 87 (CONSTITUTIONAL)", 55),
+    "meas-co136": ("Proposition 136 (STATUTORY)", 50),
+    "meas-co134": ("Proposition 134 (STATUTORY)", 50),
+    "meas-co135": ("Proposition 135 (STATUTORY)", 50),
+    "meas-co84": ("Amendment 84 (CONSTITUTIONAL)", 55),
+    "meas-co86": ("Amendment 86 (CONSTITUTIONAL)", 55),
 }
 
-def update_file(data, path):
-    os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2)
-    print(f"[{datetime.now().strftime('%H:%M:%S')}] Saved {len(data.get('items', {}))} items to {path}")
 
-def run_scraper(stage="live", loop_seconds=0, output_path=DEFAULT_OUTPUT_PATH, nat_output_path=DEFAULT_NAT_OUTPUT_PATH):
-    now_mt = datetime.now(MT_TZ)
-    # Only gate on pre-7PM on election day itself (Nov 3, 2026).
-    # After midnight (Nov 4+) we're post-election — keep showing results.
-    ELECTION_DATE = (2026, 11, 3)
-    is_election_day = (now_mt.year, now_mt.month, now_mt.day) == ELECTION_DATE
-    is_pre_election = is_election_day and now_mt.hour < 19
+def yes_no(c):
+    yes = no = None
+    for i, n in enumerate(c["CH"]):
+        if n.lower().startswith("yes"):
+            yes = (c["PCT"][i], c["V"][i])
+        elif n.lower().startswith("no"):
+            no = (c["PCT"][i], c["V"][i])
+    return yes, no
 
-    if stage in SIMULATED_LOCAL:
-        local_data = SIMULATED_LOCAL[stage]
-        nat_data = SIMULATED_NAT.get(stage, SIMULATED_NAT["early"])
-    elif is_pre_election and stage == "live":
-        print(f"[{now_mt.strftime('%I:%M:%S %p')} MT] Polls remain open until 7:00 PM MT. Preserving clean baseline.")
-        local_data = SIMULATED_LOCAL["pre"]
-        nat_data = SIMULATED_NAT["pre"]
+
+def build_local(state, county, state_url, county_url):
+    feeds = {"state": (state, "counties", "CO SOS", state_url),
+             "county": (county, "precincts", "Arapahoe Votes", county_url)}
+    items, missing = {}, []
+    for rid, (feed, name, pick) in LOCAL_CAND.items():
+        contests, unit, src, url = feeds[feed]
+        c = contests.get(name)
+        if not c:
+            missing.append(rid)
+            continue
+        cands = candidates_of(c)
+        mine = next((x for x in cands if pick.lower() in x["name"].lower()), None)
+        top = cands[0]
+        unopposed = len(cands) == 1
+        winner_flag = any(c.get("W") or [])
+        items[rid] = {
+            "outcome": "yes" if mine and mine is top and top["votes"] > 0 else "no",
+            "final": bool(unopposed or winner_flag),
+            "pct": mine["pct"] if mine else 0.0,
+            "leader": with_party(top["name"], top["party"]),
+            "leaderPct": top["pct"],
+            "reporting": "Unopposed" if unopposed else reporting_text(c, unit),
+            "source": src, "sourceUrl": url,
+            "candidates": cands[:4],
+        }
+    for rid, (feed, name, threshold) in LOCAL_YESNO.items():
+        contests, unit, src, url = feeds[feed]
+        c = contests.get(name)
+        if not c:
+            missing.append(rid)
+            continue
+        yes, no = yes_no(c)
+        if yes is None:
+            missing.append(rid)
+            continue
+        rep = reporting_text(c, unit)
+        if threshold != 50:
+            rep += f" · needs {threshold}% Yes"
+        items[rid] = {
+            "outcome": "yes" if yes[0] >= threshold and yes[1] > 0 else "no",
+            "final": False,
+            "pct": round(yes[0], 2),
+            "reporting": rep,
+            "source": src, "sourceUrl": url,
+            "yesVotes": yes[1], "noVotes": no[1] if no else None,
+        }
+    return items, missing
+
+
+def nat_from_adapter(rid, r):
+    """Convert an adapter result to the page's national item schema."""
+    out = {"source": r.get("source"), "sourceUrl": r.get("sourceUrl"),
+           "reporting": r.get("reporting"), "contest": r.get("contest")}
+    if r.get("type") == "measure":
+        thr = r.get("threshold") or 50
+        yes = r.get("yesPct")
+        out.update({"outcome": "yes" if yes is not None and yes >= thr else "no",
+                    "pct": yes, "threshold": thr, "final": False})
+        if thr != 50 and out["reporting"]:
+            out["reporting"] += f" · needs {thr}% Yes"
     else:
-        print(f"[{now_mt.strftime('%I:%M:%S %p')} MT] Polls closed! Pulling official CO SOS & National feeds...")
-        local_data = SIMULATED_LOCAL["early"]
-        nat_data = SIMULATED_NAT["early"]
+        cands = r.get("candidates") or []
+        if cands:
+            top = cands[0]
+            out.update({"leader": with_party(top["name"], top.get("party")),
+                        "leaderPct": top.get("pct")})
+        out["candidates"] = cands[:4]
+        out["final"] = bool(r.get("winnerDeclared"))
+    return out
 
-    local_data["asOf"] = now_mt.isoformat()
-    nat_data["asOf"] = now_mt.isoformat()
 
-    update_file(local_data, output_path)
-    update_file(nat_data, nat_output_path)
+def run_adapter(st):
+    mod = importlib.import_module(f"adapters.{st}")
+    return mod.fetch()
 
-    if loop_seconds > 0:
-        print(f"Running polling loop every {loop_seconds}s (Ctrl+C to stop)...")
+
+def build_national(state, state_url, previous):
+    items, errors = {}, {}
+    for rid, name in NAT_CO_CAND.items():
+        c = state.get(name)
+        if c:
+            cands = candidates_of(c)
+            items[rid] = nat_from_adapter(rid, {"type": "cand", "contest": name, "candidates": cands,
+                                                "reporting": reporting_text(c, "counties"),
+                                                "source": "CO SOS", "sourceUrl": state_url})
+    for rid, (name, thr) in NAT_CO_MEAS.items():
+        c = state.get(name)
+        if c:
+            yes, no = yes_no(c)
+            items[rid] = nat_from_adapter(rid, {"type": "measure", "contest": name, "yesPct": round(yes[0], 2),
+                                                "threshold": thr, "reporting": reporting_text(c, "counties"),
+                                                "source": "CO SOS", "sourceUrl": state_url})
+
+    sys.path.insert(0, HERE)
+    pool = ThreadPoolExecutor(max_workers=8)
+    futs = {pool.submit(run_adapter, st): st for st in NATIONAL_STATES
+            if os.path.exists(os.path.join(HERE, "adapters", f"{st}.py"))}
+    done, not_done = wait(futs, timeout=ADAPTER_TIMEOUT)
+    for f in done:
+        st = futs[f]
         try:
-            while True:
-                time.sleep(loop_seconds)
-                now_mt = datetime.now(MT_TZ)
-                local_data["asOf"] = now_mt.isoformat()
-                nat_data["asOf"] = now_mt.isoformat()
-                update_file(local_data, output_path)
-                update_file(nat_data, nat_output_path)
-        except KeyboardInterrupt:
-            print("\nStopped.")
+            for rid, r in (f.result() or {}).items():
+                items[rid] = nat_from_adapter(rid, r)
+        except Exception as e:  # keep going; old values are reused below
+            errors[st] = f"{type(e).__name__}: {e}"[:200]
+    for f in not_done:
+        errors[futs[f]] = "timed out"
+    pool.shutdown(wait=False, cancel_futures=True)
+
+    # keep last-known values for anything we failed to fetch this round
+    # (only values that came from a real feed — they carry "contest")
+    for rid, old in (previous.get("items") or {}).items():
+        if rid not in items and old.get("contest"):
+            items[rid] = {**old, "stale": True}
+    return items, errors
+
+
+# --------------------------------------------------------------------------
+def load_json(path):
+    try:
+        with open(path, encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+
+def write_if_changed(path, data, volatile=("asOf", "checkedAt")):
+    old = load_json(path)
+    strip = lambda d: {k: v for k, v in d.items() if k not in volatile}
+    if strip(old) == strip(data):
+        print(f"  no change: {os.path.basename(path)}")
+        return False
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=1, ensure_ascii=False)
+        f.write("\n")
+    print(f"  wrote {os.path.basename(path)} ({len(data.get('items', {}))} items)")
+    return True
+
+
+def run_once():
+    now = datetime.now(timezone.utc)
+    prev_local, prev_nat = load_json(LOCAL_PATH), load_json(NAT_PATH)
+
+    state, settings, _ = clarity_summary(f"CO/{CO_ELECTION_ID}")
+    counties = settings["electiondetails"].get("participatingcounties") or []
+    updates = [parse_clarity_time(x.split("|")[3]) for x in counties if x.count("|") >= 3]
+    co_asof = max(updates).isoformat() if updates else now.isoformat()
+
+    arap = next((x.split("|") for x in counties if x.startswith(CO_COUNTY + "|")), None)
+    county, county_url, county_err = {}, CO_SOURCE_URL, None
+    if arap:
+        county_url = f"{CLARITY}/CO/{CO_COUNTY}/{arap[1]}/"
+        try:
+            county, _, _ = clarity_summary(f"CO/{CO_COUNTY}/{arap[1]}")
+        except Exception as e:
+            county_err = str(e)
+
+    local_items, missing = build_local(state, county, CO_SOURCE_URL, county_url)
+    for rid in missing:  # reuse last-known value if a contest temporarily vanished
+        if (prev_local.get("items") or {}).get(rid, {}).get("sourceUrl"):
+            local_items[rid] = {**prev_local["items"][rid], "stale": True}
+
+    local = {
+        "asOf": co_asof,
+        "status": "Unofficial results from official election offices (not yet certified)",
+        "source": "CO Secretary of State & Arapahoe County Clarity ENR",
+        "sourceUrl": CO_SOURCE_URL,
+        "items": dict(sorted(local_items.items())),
+    }
+    if missing:
+        local["missing"] = sorted(missing)
+    if county_err:
+        local["errors"] = {"Arapahoe": county_err[:200]}
+
+    nat_items, nat_errors = build_national(state, CO_SOURCE_URL, prev_nat)
+    nat = {
+        "asOf": now.isoformat(),
+        "status": "Unofficial results from each state's official election office",
+        "source": "State election offices (see each race)",
+        "items": dict(sorted(nat_items.items())),
+    }
+    if nat_errors:
+        nat["errors"] = dict(sorted(nat_errors.items()))
+
+    changed = write_if_changed(LOCAL_PATH, local)
+    changed |= write_if_changed(NAT_PATH, nat)
+    if missing:
+        print("  WARNING missing local contests:", ", ".join(missing))
+    for st, err in nat_errors.items():
+        print(f"  WARNING {st.upper()}: {err}")
+    return changed
+
+
+def main():
+    ap = argparse.ArgumentParser(description="Fetch official election results")
+    ap.add_argument("--loop", type=int, default=0, help="poll every N seconds (0 = once)")
+    args = ap.parse_args()
+    while True:
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] fetching official results…")
+        try:
+            run_once()
+        except Exception as e:
+            print(f"  ERROR: {type(e).__name__}: {e}")
+            if not args.loop:
+                sys.exit(1)
+        if not args.loop:
+            break
+        time.sleep(args.loop)
+
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Election Night Scraper for Ben's Ballot Tracker")
-    parser.add_argument("--stage", choices=["live", "early", "mid", "pre"], default="live", help="Simulation stage or live polling")
-    parser.add_argument("--loop", type=int, default=0, help="Loop interval in seconds (0 = run once)")
-    parser.add_argument("--output", default=DEFAULT_OUTPUT_PATH, help="Destination results.json path")
-    parser.add_argument("--nat-output", default=DEFAULT_NAT_OUTPUT_PATH, help="Destination national_results.json path")
-    args = parser.parse_args()
-    run_scraper(stage=args.stage, loop_seconds=args.loop, output_path=args.output, nat_output_path=args.nat_output)
+    main()
