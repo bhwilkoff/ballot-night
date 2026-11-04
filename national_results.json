@@ -1,20 +1,252 @@
 {
-  "asOf": "2026-11-03T15:29:16.289361-07:00",
-  "status": "Polls open nationwide. Pre-election state.",
+  "asOf": "2026-11-03T19:14:33.412153-07:00",
+  "status": "7:15 PM Initial Wave Simulation",
   "source": "AP / Decision Desk HQ / State SOS Feeds",
   "senateBalance": {
     "dem": 47,
     "gop": 53,
-    "calledDem": 0,
-    "calledGop": 0,
+    "calledDem": 1,
+    "calledGop": 1,
     "needed": 51
   },
   "houseBalance": {
-    "dem": 213,
+    "dem": 214,
     "gop": 220,
-    "calledDem": 0,
+    "calledDem": 1,
     "calledGop": 0,
     "needed": 218
   },
-  "items": {}
+  "items": {
+    "sen-me": {
+      "leader": "Susan Collins (R)",
+      "leaderPct": 51.4,
+      "reporting": "28% counted",
+      "final": false,
+      "source": "AP / ME SOS"
+    },
+    "sen-tx": {
+      "leader": "Ken Paxton (R)",
+      "leaderPct": 52.8,
+      "reporting": "42% counted",
+      "final": false,
+      "source": "AP / TX SOS"
+    },
+    "sen-ak": {
+      "leader": "Mary Peltola (D)",
+      "leaderPct": 50.8,
+      "reporting": "Polls close 8pm AKST",
+      "final": false,
+      "source": "AK Division of Elections"
+    },
+    "sen-mi": {
+      "leader": "Abdul El-Sayed (D)",
+      "leaderPct": 52.1,
+      "reporting": "31% counted",
+      "final": false,
+      "source": "AP / MI SOS"
+    },
+    "sen-nc": {
+      "leader": "Roy Cooper (D)",
+      "leaderPct": 51.9,
+      "reporting": "46% counted",
+      "final": false,
+      "source": "AP / NC SBE"
+    },
+    "sen-ga": {
+      "leader": "Jon Ossoff (D)",
+      "leaderPct": 53.2,
+      "reporting": "55% counted",
+      "final": false,
+      "source": "AP / GA SOS"
+    },
+    "sen-ia": {
+      "leader": "Ashley Hinson (R)",
+      "leaderPct": 53.5,
+      "reporting": "38% counted",
+      "final": false,
+      "source": "AP / IA SOS"
+    },
+    "sen-ks": {
+      "leader": "Roger Marshall (R)",
+      "leaderPct": 52.0,
+      "reporting": "25% counted",
+      "final": false,
+      "source": "AP / KS SOS"
+    },
+    "sen-oh": {
+      "leader": "Jon Husted (R)",
+      "leaderPct": 52.5,
+      "reporting": "48% counted",
+      "final": false,
+      "source": "AP / OH SOS"
+    },
+    "hse-co08": {
+      "leader": "Gabe Evans (R)",
+      "leaderPct": 50.8,
+      "reporting": "54% counted",
+      "final": false,
+      "source": "CO SOS"
+    },
+    "hse-az01": {
+      "leader": "Amish Shah (D)",
+      "leaderPct": 51.2,
+      "reporting": "32% counted",
+      "final": false,
+      "source": "AZ SOS"
+    },
+    "hse-az06": {
+      "leader": "Juan Ciscomani (R)",
+      "leaderPct": 50.6,
+      "reporting": "30% counted",
+      "final": false,
+      "source": "AZ SOS"
+    },
+    "hse-ca13": {
+      "leader": "Adam Gray (D)",
+      "leaderPct": 51.0,
+      "reporting": "Polls close 8pm PT",
+      "final": false,
+      "source": "CA SOS"
+    },
+    "hse-ca22": {
+      "leader": "David Valadao (R)",
+      "leaderPct": 52.2,
+      "reporting": "Polls close 8pm PT",
+      "final": false,
+      "source": "CA SOS"
+    },
+    "hse-ca45": {
+      "leader": "Derek Tran (D)",
+      "leaderPct": 50.4,
+      "reporting": "Polls close 8pm PT",
+      "final": false,
+      "source": "CA SOS"
+    },
+    "hse-ny17": {
+      "leader": "Mike Lawler (R)",
+      "leaderPct": 51.7,
+      "reporting": "44% counted",
+      "final": false,
+      "source": "NY BOE"
+    },
+    "hse-ny19": {
+      "leader": "Josh Riley (D)",
+      "leaderPct": 52.4,
+      "reporting": "41% counted",
+      "final": false,
+      "source": "NY BOE"
+    },
+    "hse-pa01": {
+      "leader": "Brian Fitzpatrick (R)",
+      "leaderPct": 54.1,
+      "reporting": "51% counted",
+      "final": false,
+      "source": "PA DOS"
+    },
+    "hse-oh09": {
+      "leader": "Marcy Kaptur (D)",
+      "leaderPct": 53.8,
+      "reporting": "58% counted",
+      "final": false,
+      "source": "OH SOS"
+    },
+    "hse-wa03": {
+      "leader": "Marie Perez (D)",
+      "leaderPct": 51.6,
+      "reporting": "Polls close 8pm PT",
+      "final": false,
+      "source": "WA SOS"
+    },
+    "meas-ca40": {
+      "outcome": "yes",
+      "pct": 54.2,
+      "reporting": "Polls close 8pm PT",
+      "final": false,
+      "source": "CA SOS"
+    },
+    "meas-wa2124": {
+      "outcome": "yes",
+      "pct": 56.1,
+      "reporting": "Polls close 8pm PT",
+      "final": false,
+      "source": "WA SOS"
+    },
+    "meas-co87": {
+      "outcome": "yes",
+      "pct": 56.4,
+      "reporting": "53% counted (needs 55%)",
+      "final": false,
+      "source": "CO SOS"
+    },
+    "meas-co136": {
+      "outcome": "no",
+      "pct": 46.5,
+      "reporting": "53% counted",
+      "final": false,
+      "source": "CO SOS"
+    },
+    "meas-co134": {
+      "outcome": "no",
+      "pct": 42.1,
+      "reporting": "53% counted",
+      "final": false,
+      "source": "CO SOS"
+    },
+    "meas-co135": {
+      "outcome": "no",
+      "pct": 40.8,
+      "reporting": "53% counted",
+      "final": false,
+      "source": "CO SOS"
+    },
+    "meas-walgw": {
+      "outcome": "no",
+      "pct": 47.9,
+      "reporting": "Polls close 8pm PT",
+      "final": false,
+      "source": "WA SOS"
+    },
+    "meas-mo-trans": {
+      "outcome": "no",
+      "pct": 48.2,
+      "reporting": "35% counted",
+      "final": false,
+      "source": "MO SOS"
+    },
+    "meas-ak2": {
+      "outcome": "no",
+      "pct": 46.8,
+      "reporting": "RCV Repeal Trailing (46.8% Yes)",
+      "final": false,
+      "source": "AK Division of Elections"
+    },
+    "meas-az144": {
+      "outcome": "yes",
+      "pct": 53.2,
+      "reporting": "31% counted",
+      "final": false,
+      "source": "AZ SOS"
+    },
+    "meas-co84": {
+      "outcome": "no",
+      "pct": 41.5,
+      "reporting": "53% counted (needs 55%)",
+      "final": false,
+      "source": "CO SOS"
+    },
+    "meas-co86": {
+      "outcome": "no",
+      "pct": 43.7,
+      "reporting": "53% counted (needs 55%)",
+      "final": false,
+      "source": "CO SOS"
+    },
+    "meas-nv7": {
+      "outcome": "yes",
+      "pct": 54.0,
+      "reporting": "Polls close 7pm PT",
+      "final": false,
+      "source": "NV SOS"
+    }
+  }
 }
