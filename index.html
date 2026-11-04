@@ -164,7 +164,9 @@ section.part > h2 small { font-family: var(--mono); font-size: 12px; letter-spac
 .tallyline { font-family: var(--mono); font-size: 12px; color: var(--ink); display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 2px; }
 .tallyline .metric { background: var(--pill-bg); padding: 2px 7px; border-radius: 4px; }
 .tallyline b { font-weight: 600; color: var(--accent); }
-.source-tag { font-size: 11px; padding: 2px 6px; border-radius: 4px; background: var(--wait-soft); border: 1px solid var(--wait-border); color: var(--muted); font-family: var(--mono); }
+.source-tag { font-size: 11px; padding: 2px 6px; border-radius: 4px; background: var(--wait-soft); border: 1px solid var(--wait-border); color: var(--muted); font-family: var(--mono); text-decoration: none; cursor: default; }
+a.source-tag { cursor: pointer; }
+a.source-tag:hover { background: var(--wait-border); color: var(--fg); text-decoration: none; }
 .category-badge { font-size: 11px; padding: 2px 6px; border-radius: 4px; background: var(--accent); color: #fff; font-family: var(--display); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
 
 .controls { display: grid; gap: 6px; justify-items: end; }
@@ -528,6 +530,49 @@ function allLocalItems() {
 }
 const LOCAL_ITEMS = allLocalItems();
 
+// Source URL lookup — keyed by the `source` string in results JSON
+const SOURCE_URLS = {
+  // Colorado / local
+  "CO SOS":                        "https://results.enr.clarityelections.com/CO/",
+  "Arapahoe Clerk":                "https://www.arapahoevotes.com/",
+  "Arapahoe Clerk Batch 1":        "https://www.arapahoevotes.com/",
+  // National SOS / election offices
+  "AK Division of Elections":      "https://www.elections.alaska.gov/results/",
+  "AZ SOS":                        "https://results.arizona.vote/",
+  "CA SOS":                        "https://electionresults.sos.ca.gov/",
+  "GA SOS":                        "https://results.enr.clarityelections.com/GA/",
+  "IA SOS":                        "https://sos.iowa.gov/elections/results/",
+  "KS SOS":                        "https://sos.ks.gov/elections/elections-results.html",
+  "ME SOS":                        "https://www.maine.gov/sos/cec/elec/results/",
+  "MI SOS":                        "https://mvic.sos.state.mi.us/ElectionResults",
+  "MO SOS":                        "https://www.sos.mo.gov/elections/resultsandstats/",
+  "NC SBE":                        "https://results.enr.clarityelections.com/NC/",
+  "NV SOS":                        "https://www.nvsos.gov/sos/elections/election-results",
+  "NY BOE":                        "https://www.elections.ny.gov/ElectionNightResults.html",
+  "OH SOS":                        "https://www.ohiosos.gov/elections/election-results-and-data/",
+  "PA DOS":                        "https://www.vote.pa.gov/About-Elections/Pages/Election-Results.aspx",
+  "TX SOS":                        "https://results.texas-election.com/",
+  "WA SOS":                        "https://results.vote.wa.gov/results/current/",
+  // AP wires with state SOS
+  "AP / ME SOS":                   "https://www.maine.gov/sos/cec/elec/results/",
+  "AP / TX SOS":                   "https://results.texas-election.com/",
+  "AP / MI SOS":                   "https://mvic.sos.state.mi.us/ElectionResults",
+  "AP / NC SBE":                   "https://results.enr.clarityelections.com/NC/",
+  "AP / GA SOS":                   "https://results.enr.clarityelections.com/GA/",
+  "AP / IA SOS":                   "https://sos.iowa.gov/elections/results/",
+  "AP / KS SOS":                   "https://sos.ks.gov/elections/elections-results.html",
+  "AP / OH SOS":                   "https://www.ohiosos.gov/elections/election-results-and-data/",
+};
+
+function sourceTag(src) {
+  if (!src) return "";
+  const url = SOURCE_URLS[src];
+  if (url) {
+    return `<a class="source-tag" href="${url}" target="_blank" rel="noopener" title="Official results source">${esc(src)} ↗</a>`;
+  }
+  return `<span class="source-tag">${esc(src)}</span>`;
+}
+
 // App State
 let activeTab = "local"; // 'local' or 'national'
 let manualOutcomes = {};
@@ -682,7 +727,7 @@ function renderLocalRow(it, kind) {
     if (typeof auto.pct === "number") tallyParts.push(`<span class="metric">${kind === "cand" ? "Your pick" : "Yes"}: <b>${auto.pct.toFixed(1)}%</b></span>`);
     if (auto.leader && kind === "cand" && auto.leader !== it.pick) tallyParts.push(`<span class="metric">Leader: ${esc(auto.leader)}${typeof auto.leaderPct === "number" ? " (" + auto.leaderPct.toFixed(1) + "%)" : ""}</span>`);
     if (auto.reporting) tallyParts.push(`<span class="metric">${esc(auto.reporting)}</span>`);
-    if (auto.source) tallyParts.push(`<span class="source-tag">${esc(auto.source)}</span>`);
+    if (auto.source) tallyParts.push(sourceTag(auto.source));
     tallyParts.push(auto.final ? "<b>Called</b>" : "Not yet called");
   }
 
@@ -801,7 +846,7 @@ function renderNationalRow(it, category) {
     }
 
     if (live.reporting) parts.push(`<span class="metric">${esc(live.reporting)}</span>`);
-    if (live.source) parts.push(`<span class="source-tag">${esc(live.source)}</span>`);
+    if (live.source) parts.push(sourceTag(live.source));
     parts.push(isCalled ? "<b>Called</b>" : "Counting");
 
     tallyLine = `<div class="tallyline">${parts.join(" · ")}</div><div class="note" style="margin-top:2px;">${esc(it.stakes)}</div>`;
