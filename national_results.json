@@ -1,8 +1,77 @@
 {
- "asOf": "2026-11-04T13:29:01.645888+00:00",
+ "asOf": "2026-11-04T13:33:11.897615+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
+  "hse-ca13": {
+   "source": "CA SOS",
+   "sourceUrl": "https://electionresults.sos.ca.gov/returns/us-rep/district/13",
+   "reporting": "100% (974 of 974) precincts reporting",
+   "contest": "U.S. House of Representatives District 13",
+   "leader": "Adam Gray (D)",
+   "leaderPct": 61.3,
+   "candidates": [
+    {
+     "name": "Adam Gray",
+     "party": "DEM",
+     "votes": 58217,
+     "pct": 61.3
+    },
+    {
+     "name": "Kevin Lincoln",
+     "party": "REP",
+     "votes": 36724,
+     "pct": 38.7
+    }
+   ],
+   "final": false
+  },
+  "hse-ca22": {
+   "source": "CA SOS",
+   "sourceUrl": "https://electionresults.sos.ca.gov/returns/us-rep/district/22",
+   "reporting": "100% (575 of 575) precincts reporting",
+   "contest": "U.S. House of Representatives District 22",
+   "leader": "Randy Villegas (D)",
+   "leaderPct": 66.4,
+   "candidates": [
+    {
+     "name": "Randy Villegas",
+     "party": "DEM",
+     "votes": 54337,
+     "pct": 66.4
+    },
+    {
+     "name": "David G. Valadao",
+     "party": "REP",
+     "votes": 27480,
+     "pct": 33.6
+    }
+   ],
+   "final": false
+  },
+  "hse-ca45": {
+   "source": "CA SOS",
+   "sourceUrl": "https://electionresults.sos.ca.gov/returns/us-rep/district/45",
+   "reporting": "100% (424 of 424) precincts reporting",
+   "contest": "U.S. House of Representatives District 45",
+   "leader": "Derek Tran (D)",
+   "leaderPct": 58.7,
+   "candidates": [
+    {
+     "name": "Derek Tran",
+     "party": "DEM",
+     "votes": 102552,
+     "pct": 58.7
+    },
+    {
+     "name": "Chuong V. Vo",
+     "party": "REP",
+     "votes": 72049,
+     "pct": 41.3
+    }
+   ],
+   "final": false
+  },
   "hse-co08": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
@@ -30,6 +99,55 @@
      "pct": 3.72
     }
    ],
+   "final": false
+  },
+  "hse-wa03": {
+   "source": "WA SOS",
+   "sourceUrl": "https://results.votewa.gov/results/public/washington/elections/20261103",
+   "reporting": "6 of 7 counties reporting (unofficial)",
+   "contest": "Congressional District 3 - U.S. Representative",
+   "leader": "Marie Gluesenkamp Perez (D)",
+   "leaderPct": 55.0,
+   "candidates": [
+    {
+     "name": "Marie Gluesenkamp Perez",
+     "party": "DEM",
+     "votes": 143417,
+     "pct": 55.0
+    },
+    {
+     "name": "John Braun",
+     "party": "REP",
+     "votes": 115271,
+     "pct": 44.2
+    },
+    {
+     "name": "Write-in",
+     "party": "W/I",
+     "votes": 2237,
+     "pct": 0.9
+    }
+   ],
+   "final": false
+  },
+  "meas-ak2": {
+   "source": "AK Division of Elections",
+   "sourceUrl": "https://www.elections.alaska.gov/enr/26GENR/",
+   "reporting": "393 of 402 precincts reporting (unofficial, updated 11/04/2026 2:42 AM AKT)",
+   "contest": "Ballot Measure No. 2 (24ESEG): Repeal the open primary and ranked choice general elections",
+   "outcome": "no",
+   "pct": 48.1,
+   "threshold": 50,
+   "final": false
+  },
+  "meas-ca40": {
+   "source": "CA SOS",
+   "sourceUrl": "https://electionresults.sos.ca.gov/returns/ballot-measures",
+   "reporting": "99.8% (23,801 of 23,860) precincts reporting",
+   "contest": "Proposition 40: Imposes One-Time Tax On Certain Taxpayers. Initiative Constitutional Amendment And Statute.",
+   "outcome": "no",
+   "pct": 44.4,
+   "threshold": 50,
    "final": false
   },
   "meas-co134": {
@@ -90,6 +208,154 @@
    "outcome": "no",
    "pct": 50.49,
    "threshold": 55,
+   "final": false
+  },
+  "meas-wa2124": {
+   "source": "WA SOS",
+   "sourceUrl": "https://results.votewa.gov/results/public/washington/elections/20261103",
+   "reporting": "33 of 39 counties reporting (unofficial)",
+   "contest": "Initiative Measure No. IP26-645 (state and local taxes)",
+   "outcome": "no",
+   "pct": 41.9,
+   "threshold": 50,
+   "final": false
+  },
+  "meas-walgw": {
+   "source": "WA SOS",
+   "sourceUrl": "https://results.votewa.gov/results/public/washington/elections/20261103",
+   "reporting": "33 of 39 counties reporting (unofficial)",
+   "contest": "Initiative Measure No. IL26-001 (parental rights relating to their children in public school)",
+   "outcome": "no",
+   "pct": 47.3,
+   "threshold": 50,
+   "final": false
+  },
+  "sen-ak": {
+   "source": "AK Division of Elections",
+   "sourceUrl": "https://www.elections.alaska.gov/enr/26GENR/",
+   "reporting": "394 of 403 precincts reporting (unofficial, updated 11/04/2026 2:42 AM AKT)",
+   "contest": "U.S. Senator (first-choice votes, ranked-choice round 1)",
+   "leader": "Mary Peltola (D)",
+   "leaderPct": 48.2,
+   "candidates": [
+    {
+     "name": "Mary Peltola",
+     "party": "DEM",
+     "votes": 102701,
+     "pct": 48.2
+    },
+    {
+     "name": "Dan S. Sullivan",
+     "party": "REP",
+     "votes": 102075,
+     "pct": 47.9
+    },
+    {
+     "name": "Gerald L. Heikes",
+     "party": "REP",
+     "votes": 4821,
+     "pct": 2.3
+    },
+    {
+     "name": "Daniel J. Sullivan Jr.",
+     "party": "",
+     "votes": 3583,
+     "pct": 1.7
+    }
+   ],
+   "final": false
+  },
+  "sen-ga": {
+   "source": "GA SOS",
+   "sourceUrl": "https://results.sos.ga.gov/results/public/Georgia/elections/11032026GeneralAndSpecialElection",
+   "reporting": "159 of 159 counties reporting (unofficial)",
+   "contest": "US Senate",
+   "leader": "Jon Ossoff (D)",
+   "leaderPct": 59.0,
+   "candidates": [
+    {
+     "name": "Jon Ossoff",
+     "party": "DEM",
+     "votes": 2463132,
+     "pct": 59.0
+    },
+    {
+     "name": "Mike Collins",
+     "party": "REP",
+     "votes": 1711322,
+     "pct": 41.0
+    }
+   ],
+   "final": false
+  },
+  "sen-ia": {
+   "source": "IA SOS (Clarity)",
+   "sourceUrl": "https://results.enr.clarityelections.com/IA/127077/",
+   "reporting": "95 of 99 counties reporting",
+   "contest": "United States Senator",
+   "leader": "Josh Turek (D)",
+   "leaderPct": 50.45,
+   "candidates": [
+    {
+     "name": "Josh Turek",
+     "party": "DEM",
+     "votes": 686486,
+     "pct": 50.45
+    },
+    {
+     "name": "Ashley Hinson",
+     "party": "REP",
+     "votes": 630615,
+     "pct": 46.34
+    },
+    {
+     "name": "Thomas Laehn",
+     "party": "LIB",
+     "votes": 42052,
+     "pct": 3.09
+    },
+    {
+     "name": "Write-in",
+     "party": null,
+     "votes": 1686,
+     "pct": 0.12
+    }
+   ],
+   "final": false
+  },
+  "sen-nc": {
+   "source": "NC SBE",
+   "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/03/2026&county_id=0&office=FED&contest=0",
+   "reporting": "2626 of 2626 precincts reporting",
+   "contest": "US SENATE",
+   "leader": "Roy Cooper (D)",
+   "leaderPct": 58.72,
+   "candidates": [
+    {
+     "name": "Roy Cooper",
+     "party": "DEM",
+     "votes": 2467963,
+     "pct": 58.72
+    },
+    {
+     "name": "Michael Whatley",
+     "party": "REP",
+     "votes": 1643088,
+     "pct": 39.09
+    },
+    {
+     "name": "Shannon W. Bray",
+     "party": "LIB",
+     "votes": 55726,
+     "pct": 1.33
+    },
+    {
+     "name": "Michael Dublin",
+     "party": "GRE",
+     "votes": 36404,
+     "pct": 0.87
+    }
+   ],
    "final": false
   }
  }

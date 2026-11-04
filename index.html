@@ -435,15 +435,15 @@ const NATIONAL_SECTIONS = [
     name: "U.S. Senate Battlegrounds",
     badge: "Chamber Deciders",
     items: [
-      { id: "sen-me", state: "Maine", title: "Susan Collins (R) vs. Troy Jackson (D)", stakes: "Top national toss-up in blue-leaning Maine.", d: "Troy Jackson", r: "Susan Collins" },
-      { id: "sen-tx", state: "Texas", title: "Ken Paxton (R) vs. James Talarico (D)", stakes: "Demographic battleground; open or contested seat.", d: "James Talarico", r: "Ken Paxton" },
-      { id: "sen-ak", state: "Alaska", title: "Dan Sullivan (R) vs. Mary Peltola (D)", stakes: "Top-4 open primary & Ranked Choice Voting general election.", d: "Mary Peltola", r: "Dan Sullivan" },
-      { id: "sen-mi", state: "Michigan", title: "Mike Rogers (R) vs. Abdul El-Sayed (D)", stakes: "Open Rust Belt seat critical to Democratic majority path.", d: "Abdul El-Sayed", r: "Mike Rogers" },
-      { id: "sen-nc", state: "North Carolina", title: "Thom Tillis (R) vs. Roy Cooper (D)", stakes: "High-stakes Southern battleground.", d: "Roy Cooper", r: "Thom Tillis" },
-      { id: "sen-ga", state: "Georgia", title: "Jon Ossoff (D) vs. Brian Kemp (R)", stakes: "Premier Democratic defense in the Sun Belt.", d: "Jon Ossoff", r: "Brian Kemp" },
-      { id: "sen-ia", state: "Iowa", title: "Ashley Hinson (R) vs. Josh Turek (D)", stakes: "Competitive open Midwestern battleground.", d: "Josh Turek", r: "Ashley Hinson" },
-      { id: "sen-ks", state: "Kansas", title: "Roger Marshall (R) vs. Adam Hamilton (D)", stakes: "Competitive sleeper race in the Plains.", d: "Adam Hamilton", r: "Roger Marshall" },
-      { id: "sen-oh", state: "Ohio", title: "Jon Husted (R) vs. Sherrod Brown (D)", stakes: "High-profile battleground clash in Ohio.", d: "Sherrod Brown", r: "Jon Husted" }
+      { id: "sen-me", link: "https://www.maine.gov/sos/cec/elec/results/", noFeed: "Maine posts no live statewide feed; towns report and the state publishes later.", state: "Maine", title: "U.S. Senate", stakes: "Top national toss-up in blue-leaning Maine." },
+      { id: "sen-tx", link: "https://results.texas-election.com/", noFeed: "This state's official results site blocks automated access, so open it directly.", state: "Texas", title: "U.S. Senate", stakes: "Demographic battleground; open or contested seat." },
+      { id: "sen-ak", state: "Alaska", title: "U.S. Senate", stakes: "Top-4 open primary & Ranked Choice Voting general election." },
+      { id: "sen-mi", link: "https://mielections.us/", noFeed: "This state's official results site blocks automated access, so open it directly.", state: "Michigan", title: "U.S. Senate", stakes: "Open Rust Belt seat critical to Democratic majority path." },
+      { id: "sen-nc", state: "North Carolina", title: "U.S. Senate", stakes: "High-stakes Southern battleground." },
+      { id: "sen-ga", state: "Georgia", title: "U.S. Senate", stakes: "Premier Democratic defense in the Sun Belt." },
+      { id: "sen-ia", state: "Iowa", title: "U.S. Senate", stakes: "Competitive open Midwestern battleground." },
+      { id: "sen-ks", link: "https://ent.sos.ks.gov/kssos_ent.html", noFeed: "This state's official results site blocks automated access, so open it directly.", state: "Kansas", title: "U.S. Senate", stakes: "Competitive sleeper race in the Plains." },
+      { id: "sen-oh", link: "https://liveresults.ohiosos.gov/", noFeed: "This state's official results site blocks automated access, so open it directly.", state: "Ohio", title: "U.S. Senate", stakes: "High-profile battleground clash in Ohio." }
     ]
   },
   {
@@ -451,17 +451,17 @@ const NATIONAL_SECTIONS = [
     name: "U.S. House Key Tossups",
     badge: "House Majority Frontline",
     items: [
-      { id: "hse-co08", state: "CO-08", title: "Gabe Evans (R) vs. Yadira Caraveo (D)", stakes: "Colorado's premier suburban/agriculture swing district.", d: "Yadira Caraveo", r: "Gabe Evans" },
-      { id: "hse-az01", state: "AZ-01", title: "David Schweikert (R) vs. Amish Shah (D)", stakes: "Phoenix suburban toss-up.", d: "Amish Shah", r: "David Schweikert" },
-      { id: "hse-az06", state: "AZ-06", title: "Juan Ciscomani (R) vs. Kirsten Engel (D)", stakes: "Tucson & border swing seat.", d: "Kirsten Engel", r: "Juan Ciscomani" },
-      { id: "hse-ca13", state: "CA-13", title: "John Duarte (R) vs. Adam Gray (D)", stakes: "Central Valley razor-thin rematch.", d: "Adam Gray", r: "John Duarte" },
-      { id: "hse-ca22", state: "CA-22", title: "David Valadao (R) vs. Rudy Salas (D)", stakes: "High-turnout Central Valley seat.", d: "Rudy Salas", r: "David Valadao" },
-      { id: "hse-ca45", state: "CA-45", title: "Michelle Steel (R) vs. Derek Tran (D)", stakes: "Orange County suburban frontline.", d: "Derek Tran", r: "Michelle Steel" },
-      { id: "hse-ny17", state: "NY-17", title: "Mike Lawler (R) vs. Mondaire Jones (D)", stakes: "Hudson Valley swing battle.", d: "Mondaire Jones", r: "Mike Lawler" },
-      { id: "hse-ny19", state: "NY-19", title: "Marc Molinaro (R) vs. Josh Riley (D)", stakes: "Upstate New York battleground.", d: "Josh Riley", r: "Marc Molinaro" },
-      { id: "hse-pa01", state: "PA-01", title: "Brian Fitzpatrick (R) vs. Ashley Ehasz (D)", stakes: "Bucks County suburban crossover target.", d: "Ashley Ehasz", r: "Brian Fitzpatrick" },
-      { id: "hse-oh09", state: "OH-09", title: "Marcy Kaptur (D) vs. Derek Merrin (R)", stakes: "Toledo & Lake Erie frontline defense.", d: "Marcy Kaptur", r: "Derek Merrin" },
-      { id: "hse-wa03", state: "WA-03", title: "Marie Perez (D) vs. Joe Kent (R)", stakes: "Southwest Washington swing district.", d: "Marie Perez", r: "Joe Kent" }
+      { id: "hse-co08", state: "CO-08", title: "U.S. House", stakes: "Colorado's premier suburban/agriculture swing district." },
+      { id: "hse-az01", link: "https://results.arizona.vote/", noFeed: "This state's official results site blocks automated access, so open it directly.", state: "AZ-01", title: "U.S. House", stakes: "Phoenix suburban toss-up." },
+      { id: "hse-az06", link: "https://results.arizona.vote/", noFeed: "This state's official results site blocks automated access, so open it directly.", state: "AZ-06", title: "U.S. House", stakes: "Tucson & border swing seat." },
+      { id: "hse-ca13", state: "CA-13", title: "U.S. House", stakes: "Central Valley razor-thin rematch." },
+      { id: "hse-ca22", state: "CA-22", title: "U.S. House", stakes: "High-turnout Central Valley seat." },
+      { id: "hse-ca45", state: "CA-45", title: "U.S. House", stakes: "Orange County suburban frontline." },
+      { id: "hse-ny17", link: "https://nyenr.elections.ny.gov/", noFeed: "This state's official results site blocks automated access, so open it directly.", state: "NY-17", title: "U.S. House", stakes: "Hudson Valley swing battle." },
+      { id: "hse-ny19", link: "https://nyenr.elections.ny.gov/", noFeed: "This state's official results site blocks automated access, so open it directly.", state: "NY-19", title: "U.S. House", stakes: "Upstate New York battleground." },
+      { id: "hse-pa01", link: "https://www.electionreturns.pa.gov/", noFeed: "This state's official results site blocks automated access, so open it directly.", state: "PA-01", title: "U.S. House", stakes: "Bucks County suburban crossover target." },
+      { id: "hse-oh09", link: "https://liveresults.ohiosos.gov/", noFeed: "This state's official results site blocks automated access, so open it directly.", state: "OH-09", title: "U.S. House", stakes: "Toledo & Lake Erie frontline defense." },
+      { id: "hse-wa03", state: "WA-03", title: "U.S. House", stakes: "Southwest Washington swing district." }
     ]
   },
   {
@@ -469,8 +469,8 @@ const NATIONAL_SECTIONS = [
     name: "Billionaire & Wealth Taxes",
     badge: "Fiscal Policy",
     items: [
-      { id: "meas-ca40", state: "California", title: "Proposition 40", desc: "5% One-Time Wealth Tax on Billionaires", stakes: "World's first 5% tax on worldwide assets of residents with >$1B to fund healthcare." },
-      { id: "meas-wa2124", state: "Washington", title: "Initiative 2124 Protection", desc: "Capital Gains & Wealth Earmarks", stakes: "Defense of high-earner taxes against statewide repeal initiatives." },
+      { id: "meas-ca40", state: "California", title: "Proposition 40", desc: "One-time tax on billionaires", stakes: "World's first 5% tax on worldwide assets of residents with >$1B to fund healthcare." },
+      { id: "meas-wa2124", state: "Washington", title: "Initiative IP26-645", desc: "Repeal 9.9% tax on income over $1M; ban income taxes", stakes: "A Yes vote repeals Washington's new millionaires' income tax." },
       { id: "meas-co87", state: "Colorado", title: "Amendment 87", desc: "Graduated High-Earner Income Tax", stakes: "Creates graduated income tax for K-12, universal healthcare, and childcare (Needs 55%)." },
       { id: "meas-co136", state: "Colorado", title: "Proposition 136", desc: "4.4% Flat Income Tax Cap", stakes: "Conservative measure directly competing with Amendment 87 to limit progressive taxes." }
     ]
@@ -482,8 +482,8 @@ const NATIONAL_SECTIONS = [
     items: [
       { id: "meas-co134", state: "Colorado", title: "Proposition 134", desc: "Biological Sex Restrictions in School Sports", stakes: "Bans transgender girls from participating on girls' athletic teams." },
       { id: "meas-co135", state: "Colorado", title: "Proposition 135", desc: "Gender Surgery & Care Prohibition for Minors", stakes: "Bans medical procedures and cuts public insurance/Medicaid coverage for minors." },
-      { id: "meas-walgw", state: "Washington", title: "Let's Go Washington Initiative", desc: "Parental Notification on Gender Identity", stakes: "Requires public schools to notify parents of confidential gender disclosures." },
-      { id: "meas-mo-trans", state: "Missouri", title: "Constitutional Amendment", desc: "Youth Gender Healthcare Prohibition", stakes: "Constitutional amendment prohibiting gender-affirming care and sports eligibility." }
+      { id: "meas-walgw", state: "Washington", title: "Initiative IL26-001", desc: "Parents' rights in public schools", stakes: "Re-enacts the parents' rights law (I-2081) as originally passed." },
+      { id: "meas-mo-trans", link: "https://enr.sos.mo.gov/", noFeed: "This state's official results site blocks automated access, so open it directly.", state: "Missouri", title: "Amendment 3", desc: "Repeal 2024 abortion-rights amendment; ban gender transition care for minors", stakes: "Legislature-referred amendment (HCS HJR 73). No sports provision." }
     ]
   },
   {
@@ -492,10 +492,10 @@ const NATIONAL_SECTIONS = [
     badge: "Voting Systems",
     items: [
       { id: "meas-ak2", state: "Alaska", title: "Ballot Measure 2", desc: "Repeal of Ranked Choice Voting & Open Primaries", stakes: "High-stakes push to revert Alaska back to partisan primaries and single-choice elections." },
-      { id: "meas-az144", state: "Arizona", title: "Proposition 144", desc: "Mandatory Photo ID & Citizenship Verification", stakes: "Strict constitutional proof-of-citizenship requirement to vote." },
+      { id: "meas-az144", link: "https://results.arizona.vote/", noFeed: "This state's official results site blocks automated access, so open it directly.", state: "Arizona", title: "Proposition 144", desc: "Photo ID & citizenship verification (measure number unverified)", stakes: "Strict constitutional proof-of-citizenship requirement to vote." },
       { id: "meas-co84", state: "Colorado", title: "Amendment 84", desc: "ID Number on Mail-In Ballots", stakes: "Mandates SSN or driver's license numbers inside mail ballot envelopes (Needs 55%)." },
       { id: "meas-co86", state: "Colorado", title: "Amendment 86", desc: "Anti-Mid-Decade Redistricting", stakes: "Protects independent commission boundaries against legislative redraws (Needs 55%)." },
-      { id: "meas-nv7", state: "Nevada", title: "Question 7", desc: "Voter ID Requirement & Electoral System", stakes: "Statewide constitutional amendment mandating government photo ID." }
+      { id: "meas-nv7", link: "https://silverstateelection.nv.gov/", noFeed: "This state's official results site blocks automated access, so open it directly.", state: "Nevada", title: "Question 7", desc: "Voter ID requirement (measure number unverified)", stakes: "Statewide constitutional amendment mandating government photo ID." }
     ]
   }
 ];

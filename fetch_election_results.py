@@ -38,8 +38,10 @@ CLARITY = "https://results.enr.clarityelections.com"
 CO_ELECTION_ID = "127407"          # CO 2026 General (linked from sos.state.co.us results page)
 CO_COUNTY = "Arapahoe"
 CO_SOURCE_URL = f"{CLARITY}/CO/{CO_ELECTION_ID}/"
-NATIONAL_STATES = ["tx", "az", "nv", "ca", "nc", "ga", "ia", "ks", "mo",
-                   "mi", "oh", "pa", "ny", "me", "ak", "wa"]
+# States whose official feeds are reachable by an automated client. TX, AZ, NV, KS, MO,
+# MI, OH, PA, NY and ME official sites sit behind bot challenges (or publish no live feed),
+# so those races link out to the official page instead.
+NATIONAL_STATES = ["ca", "nc", "ga", "ia", "ak", "wa"]
 ADAPTER_TIMEOUT = 75  # seconds per state
 
 PARTY_LETTER = {"DEM": "D", "REP": "R", "LBR": "L", "LIB": "L", "GRN": "G",
