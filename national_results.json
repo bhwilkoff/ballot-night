@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-05T01:04:33.326136+00:00",
+ "asOf": "2026-11-05T07:54:40.934451+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -55,19 +55,19 @@
    "reporting": "100% (424 of 424) precincts reporting",
    "contest": "U.S. House of Representatives District 45",
    "leader": "Derek Tran (D)",
-   "leaderPct": 58.7,
+   "leaderPct": 59.0,
    "candidates": [
     {
      "name": "Derek Tran",
      "party": "DEM",
-     "votes": 102552,
-     "pct": 58.7
+     "votes": 109254,
+     "pct": 59.0
     },
     {
      "name": "Chuong V. Vo",
      "party": "REP",
-     "votes": 72049,
-     "pct": 41.3
+     "votes": 75849,
+     "pct": 41.0
     }
    ],
    "final": false
@@ -105,27 +105,27 @@
   "hse-wa03": {
    "source": "WA SOS",
    "sourceUrl": "https://results.votewa.gov/results/public/washington/elections/20261103",
-   "reporting": "6 of 7 counties reporting (unofficial)",
+   "reporting": "7 of 7 counties reporting (unofficial)",
    "contest": "Congressional District 3 - U.S. Representative",
    "leader": "Marie Gluesenkamp Perez (D)",
-   "leaderPct": 54.7,
+   "leaderPct": 54.2,
    "candidates": [
     {
      "name": "Marie Gluesenkamp Perez",
      "party": "DEM",
-     "votes": 144986,
-     "pct": 54.7
+     "votes": 157272,
+     "pct": 54.2
     },
     {
      "name": "John Braun",
      "party": "REP",
-     "votes": 117788,
-     "pct": 44.4
+     "votes": 130192,
+     "pct": 44.9
     },
     {
      "name": "Write-in",
      "party": "W/I",
-     "votes": 2286,
+     "votes": 2554,
      "pct": 0.9
     }
    ],
@@ -147,7 +147,7 @@
    "reporting": "100.0% (23,860 of 23,860) precincts reporting",
    "contest": "Proposition 40: Imposes One-Time Tax On Certain Taxpayers. Initiative Constitutional Amendment And Statute.",
    "outcome": "no",
-   "pct": 44.4,
+   "pct": 44.7,
    "threshold": 50,
    "final": false
   },
@@ -220,20 +220,20 @@
   "meas-wa2124": {
    "source": "WA SOS",
    "sourceUrl": "https://results.votewa.gov/results/public/washington/elections/20261103",
-   "reporting": "34 of 39 counties reporting (unofficial)",
+   "reporting": "36 of 39 counties reporting (unofficial)",
    "contest": "Initiative Measure No. IP26-645 (state and local taxes)",
    "outcome": "no",
-   "pct": 41.9,
+   "pct": 42.1,
    "threshold": 50,
    "final": false
   },
   "meas-walgw": {
    "source": "WA SOS",
    "sourceUrl": "https://results.votewa.gov/results/public/washington/elections/20261103",
-   "reporting": "34 of 39 counties reporting (unofficial)",
+   "reporting": "36 of 39 counties reporting (unofficial)",
    "contest": "Initiative Measure No. IL26-001 (parental rights relating to their children in public school)",
    "outcome": "no",
-   "pct": 47.1,
+   "pct": 47.4,
    "threshold": 50,
    "final": false
   },
