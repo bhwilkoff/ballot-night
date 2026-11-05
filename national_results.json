@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-05T07:54:40.934451+00:00",
+ "asOf": "2026-11-05T16:00:39.000484+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -283,13 +283,13 @@
     {
      "name": "Jon Ossoff",
      "party": "DEM",
-     "votes": 2463134,
+     "votes": 2463160,
      "pct": 59.0
     },
     {
      "name": "Mike Collins",
      "party": "REP",
-     "votes": 1711327,
+     "votes": 1711635,
      "pct": 41.0
     }
    ],
