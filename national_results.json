@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-05T16:00:39.000484+00:00",
+ "asOf": "2026-11-05T21:58:31.571815+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -55,19 +55,19 @@
    "reporting": "100% (424 of 424) precincts reporting",
    "contest": "U.S. House of Representatives District 45",
    "leader": "Derek Tran (D)",
-   "leaderPct": 59.0,
+   "leaderPct": 59.2,
    "candidates": [
     {
      "name": "Derek Tran",
      "party": "DEM",
-     "votes": 109254,
-     "pct": 59.0
+     "votes": 111190,
+     "pct": 59.2
     },
     {
      "name": "Chuong V. Vo",
      "party": "REP",
-     "votes": 75849,
-     "pct": 41.0
+     "votes": 76487,
+     "pct": 40.8
     }
    ],
    "final": false
@@ -147,7 +147,7 @@
    "reporting": "100.0% (23,860 of 23,860) precincts reporting",
    "contest": "Proposition 40: Imposes One-Time Tax On Certain Taxpayers. Initiative Constitutional Amendment And Statute.",
    "outcome": "no",
-   "pct": 44.7,
+   "pct": 45.0,
    "threshold": 50,
    "final": false
   },
@@ -283,13 +283,13 @@
     {
      "name": "Jon Ossoff",
      "party": "DEM",
-     "votes": 2463160,
+     "votes": 2463162,
      "pct": 59.0
     },
     {
      "name": "Mike Collins",
      "party": "REP",
-     "votes": 1711635,
+     "votes": 1711636,
      "pct": 41.0
     }
    ],
