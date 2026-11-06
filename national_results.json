@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-05T21:58:31.571815+00:00",
+ "asOf": "2026-11-06T02:05:47.370985+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -9,19 +9,19 @@
    "reporting": "100% (974 of 974) precincts reporting",
    "contest": "U.S. House of Representatives District 13",
    "leader": "Adam Gray (D)",
-   "leaderPct": 61.3,
+   "leaderPct": 61.4,
    "candidates": [
     {
      "name": "Adam Gray",
      "party": "DEM",
-     "votes": 58217,
-     "pct": 61.3
+     "votes": 58378,
+     "pct": 61.4
     },
     {
      "name": "Kevin Lincoln",
      "party": "REP",
-     "votes": 36724,
-     "pct": 38.7
+     "votes": 36772,
+     "pct": 38.6
     }
    ],
    "final": false
@@ -32,19 +32,19 @@
    "reporting": "100% (575 of 575) precincts reporting",
    "contest": "U.S. House of Representatives District 22",
    "leader": "Randy Villegas (D)",
-   "leaderPct": 66.4,
+   "leaderPct": 66.6,
    "candidates": [
     {
      "name": "Randy Villegas",
      "party": "DEM",
-     "votes": 54337,
-     "pct": 66.4
+     "votes": 60361,
+     "pct": 66.6
     },
     {
      "name": "David G. Valadao",
      "party": "REP",
-     "votes": 27480,
-     "pct": 33.6
+     "votes": 30264,
+     "pct": 33.4
     }
    ],
    "final": false
@@ -55,19 +55,19 @@
    "reporting": "100% (424 of 424) precincts reporting",
    "contest": "U.S. House of Representatives District 45",
    "leader": "Derek Tran (D)",
-   "leaderPct": 59.2,
+   "leaderPct": 59.6,
    "candidates": [
     {
      "name": "Derek Tran",
      "party": "DEM",
-     "votes": 111190,
-     "pct": 59.2
+     "votes": 115937,
+     "pct": 59.6
     },
     {
      "name": "Chuong V. Vo",
      "party": "REP",
-     "votes": 76487,
-     "pct": 40.8
+     "votes": 78606,
+     "pct": 40.4
     }
    ],
    "final": false
@@ -108,24 +108,24 @@
    "reporting": "7 of 7 counties reporting (unofficial)",
    "contest": "Congressional District 3 - U.S. Representative",
    "leader": "Marie Gluesenkamp Perez (D)",
-   "leaderPct": 54.2,
+   "leaderPct": 53.6,
    "candidates": [
     {
      "name": "Marie Gluesenkamp Perez",
      "party": "DEM",
-     "votes": 157272,
-     "pct": 54.2
+     "votes": 176744,
+     "pct": 53.6
     },
     {
      "name": "John Braun",
      "party": "REP",
-     "votes": 130192,
-     "pct": 44.9
+     "votes": 149916,
+     "pct": 45.5
     },
     {
      "name": "Write-in",
      "party": "W/I",
-     "votes": 2554,
+     "votes": 2951,
      "pct": 0.9
     }
    ],
@@ -147,7 +147,7 @@
    "reporting": "100.0% (23,860 of 23,860) precincts reporting",
    "contest": "Proposition 40: Imposes One-Time Tax On Certain Taxpayers. Initiative Constitutional Amendment And Statute.",
    "outcome": "no",
-   "pct": 45.0,
+   "pct": 45.4,
    "threshold": 50,
    "final": false
   },
@@ -223,7 +223,7 @@
    "reporting": "36 of 39 counties reporting (unofficial)",
    "contest": "Initiative Measure No. IP26-645 (state and local taxes)",
    "outcome": "no",
-   "pct": 42.1,
+   "pct": 42.4,
    "threshold": 50,
    "final": false
   },
@@ -233,7 +233,7 @@
    "reporting": "36 of 39 counties reporting (unofficial)",
    "contest": "Initiative Measure No. IL26-001 (parental rights relating to their children in public school)",
    "outcome": "no",
-   "pct": 47.4,
+   "pct": 47.9,
    "threshold": 50,
    "final": false
   },
