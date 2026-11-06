@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-06T16:52:32.051337+00:00",
+ "asOf": "2026-11-06T21:54:49.291067+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -55,19 +55,19 @@
    "reporting": "100% (424 of 424) precincts reporting",
    "contest": "U.S. House of Representatives District 45",
    "leader": "Derek Tran (D)",
-   "leaderPct": 59.6,
+   "leaderPct": 59.7,
    "candidates": [
     {
      "name": "Derek Tran",
      "party": "DEM",
-     "votes": 115937,
-     "pct": 59.6
+     "votes": 117010,
+     "pct": 59.7
     },
     {
      "name": "Chuong V. Vo",
      "party": "REP",
-     "votes": 78606,
-     "pct": 40.4
+     "votes": 78942,
+     "pct": 40.3
     }
    ],
    "final": false
@@ -113,13 +113,13 @@
     {
      "name": "Marie Gluesenkamp Perez",
      "party": "DEM",
-     "votes": 176744,
+     "votes": 176796,
      "pct": 53.6
     },
     {
      "name": "John Braun",
      "party": "REP",
-     "votes": 149916,
+     "votes": 150022,
      "pct": 45.5
     },
     {
@@ -147,7 +147,7 @@
    "reporting": "100.0% (23,860 of 23,860) precincts reporting",
    "contest": "Proposition 40: Imposes One-Time Tax On Certain Taxpayers. Initiative Constitutional Amendment And Statute.",
    "outcome": "no",
-   "pct": 45.4,
+   "pct": 45.5,
    "threshold": 50,
    "final": false
   },
@@ -223,7 +223,7 @@
    "reporting": "36 of 39 counties reporting (unofficial)",
    "contest": "Initiative Measure No. IP26-645 (state and local taxes)",
    "outcome": "no",
-   "pct": 42.4,
+   "pct": 42.5,
    "threshold": 50,
    "final": false
   },
@@ -233,7 +233,7 @@
    "reporting": "36 of 39 counties reporting (unofficial)",
    "contest": "Initiative Measure No. IL26-001 (parental rights relating to their children in public school)",
    "outcome": "no",
-   "pct": 47.9,
+   "pct": 48.0,
    "threshold": 50,
    "final": false
   },
@@ -278,19 +278,19 @@
    "reporting": "159 of 159 counties reporting (unofficial)",
    "contest": "US Senate",
    "leader": "Jon Ossoff (D)",
-   "leaderPct": 59.0,
+   "leaderPct": 59.02,
    "candidates": [
     {
      "name": "Jon Ossoff",
      "party": "DEM",
-     "votes": 2463192,
-     "pct": 59.0
+     "votes": 2466354,
+     "pct": 59.02
     },
     {
      "name": "Mike Collins",
      "party": "REP",
-     "votes": 1711641,
-     "pct": 41.0
+     "votes": 1712427,
+     "pct": 40.98
     }
    ],
    "final": false
@@ -342,25 +342,25 @@
     {
      "name": "Roy Cooper",
      "party": "DEM",
-     "votes": 2467963,
+     "votes": 2467972,
      "pct": 58.72
     },
     {
      "name": "Michael Whatley",
      "party": "REP",
-     "votes": 1643088,
+     "votes": 1643114,
      "pct": 39.09
     },
     {
      "name": "Shannon W. Bray",
      "party": "LIB",
-     "votes": 55726,
+     "votes": 55727,
      "pct": 1.33
     },
     {
      "name": "Michael Dublin",
      "party": "GRE",
-     "votes": 36404,
+     "votes": 36405,
      "pct": 0.87
     }
    ],
