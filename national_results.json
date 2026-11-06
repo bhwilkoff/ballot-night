@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-06T02:05:47.370985+00:00",
+ "asOf": "2026-11-06T09:21:30.355321+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -9,19 +9,19 @@
    "reporting": "100% (974 of 974) precincts reporting",
    "contest": "U.S. House of Representatives District 13",
    "leader": "Adam Gray (D)",
-   "leaderPct": 61.4,
+   "leaderPct": 61.3,
    "candidates": [
     {
      "name": "Adam Gray",
      "party": "DEM",
-     "votes": 58378,
-     "pct": 61.4
+     "votes": 61503,
+     "pct": 61.3
     },
     {
      "name": "Kevin Lincoln",
      "party": "REP",
-     "votes": 36772,
-     "pct": 38.6
+     "votes": 38830,
+     "pct": 38.7
     }
    ],
    "final": false
@@ -37,13 +37,13 @@
     {
      "name": "Randy Villegas",
      "party": "DEM",
-     "votes": 60361,
+     "votes": 61492,
      "pct": 66.6
     },
     {
      "name": "David G. Valadao",
      "party": "REP",
-     "votes": 30264,
+     "votes": 30871,
      "pct": 33.4
     }
    ],
