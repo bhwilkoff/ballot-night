@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-07T01:32:27.138528+00:00",
+ "asOf": "2026-11-07T05:46:00.555244+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -108,24 +108,24 @@
    "reporting": "7 of 7 counties reporting (unofficial)",
    "contest": "Congressional District 3 - U.S. Representative",
    "leader": "Marie Gluesenkamp Perez (D)",
-   "leaderPct": 53.8,
+   "leaderPct": 53.6,
    "candidates": [
     {
      "name": "Marie Gluesenkamp Perez",
      "party": "DEM",
-     "votes": 185178,
-     "pct": 53.8
+     "votes": 186903,
+     "pct": 53.6
     },
     {
      "name": "John Braun",
      "party": "REP",
-     "votes": 156112,
-     "pct": 45.3
+     "votes": 158478,
+     "pct": 45.5
     },
     {
      "name": "Write-in",
      "party": "W/I",
-     "votes": 3178,
+     "votes": 3216,
      "pct": 0.9
     }
    ],
@@ -147,7 +147,7 @@
    "reporting": "100.0% (23,860 of 23,860) precincts reporting",
    "contest": "Proposition 40: Imposes One-Time Tax On Certain Taxpayers. Initiative Constitutional Amendment And Statute.",
    "outcome": "no",
-   "pct": 45.9,
+   "pct": 46.1,
    "threshold": 50,
    "final": false
   },
@@ -233,7 +233,7 @@
    "reporting": "37 of 39 counties reporting (unofficial)",
    "contest": "Initiative Measure No. IL26-001 (parental rights relating to their children in public school)",
    "outcome": "no",
-   "pct": 47.8,
+   "pct": 47.9,
    "threshold": 50,
    "final": false
   },
