@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-06T21:54:49.291067+00:00",
+ "asOf": "2026-11-07T01:32:27.138528+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -9,19 +9,19 @@
    "reporting": "100% (974 of 974) precincts reporting",
    "contest": "U.S. House of Representatives District 13",
    "leader": "Adam Gray (D)",
-   "leaderPct": 61.3,
+   "leaderPct": 61.7,
    "candidates": [
     {
      "name": "Adam Gray",
      "party": "DEM",
-     "votes": 61503,
-     "pct": 61.3
+     "votes": 70184,
+     "pct": 61.7
     },
     {
      "name": "Kevin Lincoln",
      "party": "REP",
-     "votes": 38830,
-     "pct": 38.7
+     "votes": 43640,
+     "pct": 38.3
     }
    ],
    "final": false
@@ -37,13 +37,13 @@
     {
      "name": "Randy Villegas",
      "party": "DEM",
-     "votes": 61492,
+     "votes": 62193,
      "pct": 66.6
     },
     {
      "name": "David G. Valadao",
      "party": "REP",
-     "votes": 30871,
+     "votes": 31179,
      "pct": 33.4
     }
    ],
@@ -55,19 +55,19 @@
    "reporting": "100% (424 of 424) precincts reporting",
    "contest": "U.S. House of Representatives District 45",
    "leader": "Derek Tran (D)",
-   "leaderPct": 59.7,
+   "leaderPct": 59.9,
    "candidates": [
     {
      "name": "Derek Tran",
      "party": "DEM",
-     "votes": 117010,
-     "pct": 59.7
+     "votes": 122492,
+     "pct": 59.9
     },
     {
      "name": "Chuong V. Vo",
      "party": "REP",
-     "votes": 78942,
-     "pct": 40.3
+     "votes": 82045,
+     "pct": 40.1
     }
    ],
    "final": false
@@ -108,24 +108,24 @@
    "reporting": "7 of 7 counties reporting (unofficial)",
    "contest": "Congressional District 3 - U.S. Representative",
    "leader": "Marie Gluesenkamp Perez (D)",
-   "leaderPct": 53.6,
+   "leaderPct": 53.8,
    "candidates": [
     {
      "name": "Marie Gluesenkamp Perez",
      "party": "DEM",
-     "votes": 176796,
-     "pct": 53.6
+     "votes": 185178,
+     "pct": 53.8
     },
     {
      "name": "John Braun",
      "party": "REP",
-     "votes": 150022,
-     "pct": 45.5
+     "votes": 156112,
+     "pct": 45.3
     },
     {
      "name": "Write-in",
      "party": "W/I",
-     "votes": 2951,
+     "votes": 3178,
      "pct": 0.9
     }
    ],
@@ -147,7 +147,7 @@
    "reporting": "100.0% (23,860 of 23,860) precincts reporting",
    "contest": "Proposition 40: Imposes One-Time Tax On Certain Taxpayers. Initiative Constitutional Amendment And Statute.",
    "outcome": "no",
-   "pct": 45.5,
+   "pct": 45.9,
    "threshold": 50,
    "final": false
   },
@@ -220,20 +220,20 @@
   "meas-wa2124": {
    "source": "WA SOS",
    "sourceUrl": "https://results.votewa.gov/results/public/washington/elections/20261103",
-   "reporting": "36 of 39 counties reporting (unofficial)",
+   "reporting": "37 of 39 counties reporting (unofficial)",
    "contest": "Initiative Measure No. IP26-645 (state and local taxes)",
    "outcome": "no",
-   "pct": 42.5,
+   "pct": 42.3,
    "threshold": 50,
    "final": false
   },
   "meas-walgw": {
    "source": "WA SOS",
    "sourceUrl": "https://results.votewa.gov/results/public/washington/elections/20261103",
-   "reporting": "36 of 39 counties reporting (unofficial)",
+   "reporting": "37 of 39 counties reporting (unofficial)",
    "contest": "Initiative Measure No. IL26-001 (parental rights relating to their children in public school)",
    "outcome": "no",
-   "pct": 48.0,
+   "pct": 47.8,
    "threshold": 50,
    "final": false
   },
@@ -283,13 +283,13 @@
     {
      "name": "Jon Ossoff",
      "party": "DEM",
-     "votes": 2466354,
+     "votes": 2466695,
      "pct": 59.02
     },
     {
      "name": "Mike Collins",
      "party": "REP",
-     "votes": 1712427,
+     "votes": 1712586,
      "pct": 40.98
     }
    ],
