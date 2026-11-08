@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-08T01:16:32.897470+00:00",
+ "asOf": "2026-11-08T08:52:45.069923+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -60,13 +60,13 @@
     {
      "name": "Derek Tran",
      "party": "DEM",
-     "votes": 125387,
+     "votes": 131261,
      "pct": 60.2
     },
     {
      "name": "Chuong V. Vo",
      "party": "REP",
-     "votes": 82989,
+     "votes": 86632,
      "pct": 39.8
     }
    ],
