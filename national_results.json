@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-07T12:50:59.701416+00:00",
+ "asOf": "2026-11-08T01:16:32.897470+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -55,19 +55,19 @@
    "reporting": "100% (424 of 424) precincts reporting",
    "contest": "U.S. House of Representatives District 45",
    "leader": "Derek Tran (D)",
-   "leaderPct": 60.0,
+   "leaderPct": 60.2,
    "candidates": [
     {
      "name": "Derek Tran",
      "party": "DEM",
-     "votes": 123666,
-     "pct": 60.0
+     "votes": 125387,
+     "pct": 60.2
     },
     {
      "name": "Chuong V. Vo",
      "party": "REP",
-     "votes": 82407,
-     "pct": 40.0
+     "votes": 82989,
+     "pct": 39.8
     }
    ],
    "final": false
@@ -113,19 +113,19 @@
     {
      "name": "Marie Gluesenkamp Perez",
      "party": "DEM",
-     "votes": 186903,
+     "votes": 187232,
      "pct": 53.6
     },
     {
      "name": "John Braun",
      "party": "REP",
-     "votes": 158478,
+     "votes": 158922,
      "pct": 45.5
     },
     {
      "name": "Write-in",
      "party": "W/I",
-     "votes": 3216,
+     "votes": 3227,
      "pct": 0.9
     }
    ],
@@ -147,7 +147,7 @@
    "reporting": "100.0% (23,860 of 23,860) precincts reporting",
    "contest": "Proposition 40: Imposes One-Time Tax On Certain Taxpayers. Initiative Constitutional Amendment And Statute.",
    "outcome": "no",
-   "pct": 46.3,
+   "pct": 46.6,
    "threshold": 50,
    "final": false
   },
@@ -223,7 +223,7 @@
    "reporting": "37 of 39 counties reporting (unofficial)",
    "contest": "Initiative Measure No. IP26-645 (state and local taxes)",
    "outcome": "no",
-   "pct": 42.3,
+   "pct": 42.0,
    "threshold": 50,
    "final": false
   },
@@ -233,7 +233,7 @@
    "reporting": "37 of 39 counties reporting (unofficial)",
    "contest": "Initiative Measure No. IL26-001 (parental rights relating to their children in public school)",
    "outcome": "no",
-   "pct": 47.9,
+   "pct": 47.5,
    "threshold": 50,
    "final": false
   },
@@ -289,7 +289,7 @@
     {
      "name": "Mike Collins",
      "party": "REP",
-     "votes": 1712586,
+     "votes": 1712587,
      "pct": 40.98
     }
    ],
