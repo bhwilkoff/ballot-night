@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-09T00:44:04.745425+00:00",
+ "asOf": "2026-11-09T18:40:25.140986+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -283,13 +283,13 @@
     {
      "name": "Jon Ossoff",
      "party": "DEM",
-     "votes": 2466695,
+     "votes": 2467390,
      "pct": 59.02
     },
     {
      "name": "Mike Collins",
      "party": "REP",
-     "votes": 1712587,
+     "votes": 1713289,
      "pct": 40.98
     }
    ],
@@ -342,25 +342,25 @@
     {
      "name": "Roy Cooper",
      "party": "DEM",
-     "votes": 2467972,
+     "votes": 2467962,
      "pct": 58.72
     },
     {
      "name": "Michael Whatley",
      "party": "REP",
-     "votes": 1643114,
+     "votes": 1643094,
      "pct": 39.09
     },
     {
      "name": "Shannon W. Bray",
      "party": "LIB",
-     "votes": 55727,
+     "votes": 55712,
      "pct": 1.33
     },
     {
      "name": "Michael Dublin",
      "party": "GRE",
-     "votes": 36405,
+     "votes": 36400,
      "pct": 0.87
     }
    ],
