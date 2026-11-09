@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-08T08:52:45.069923+00:00",
+ "asOf": "2026-11-09T00:44:04.745425+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -55,19 +55,19 @@
    "reporting": "100% (424 of 424) precincts reporting",
    "contest": "U.S. House of Representatives District 45",
    "leader": "Derek Tran (D)",
-   "leaderPct": 60.2,
+   "leaderPct": 60.3,
    "candidates": [
     {
      "name": "Derek Tran",
      "party": "DEM",
-     "votes": 131261,
-     "pct": 60.2
+     "votes": 132043,
+     "pct": 60.3
     },
     {
      "name": "Chuong V. Vo",
      "party": "REP",
-     "votes": 86632,
-     "pct": 39.8
+     "votes": 86913,
+     "pct": 39.7
     }
    ],
    "final": false
@@ -147,7 +147,7 @@
    "reporting": "100.0% (23,860 of 23,860) precincts reporting",
    "contest": "Proposition 40: Imposes One-Time Tax On Certain Taxpayers. Initiative Constitutional Amendment And Statute.",
    "outcome": "no",
-   "pct": 46.6,
+   "pct": 46.8,
    "threshold": 50,
    "final": false
   },
