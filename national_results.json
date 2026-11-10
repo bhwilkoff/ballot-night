@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-10T01:58:46.766386+00:00",
+ "asOf": "2026-11-10T09:38:27.641677+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -9,19 +9,19 @@
    "reporting": "100% (974 of 974) precincts reporting",
    "contest": "U.S. House of Representatives District 13",
    "leader": "Adam Gray (D)",
-   "leaderPct": 62.2,
+   "leaderPct": 62.3,
    "candidates": [
     {
      "name": "Adam Gray",
      "party": "DEM",
-     "votes": 74564,
-     "pct": 62.2
+     "votes": 80249,
+     "pct": 62.3
     },
     {
      "name": "Kevin Lincoln",
      "party": "REP",
-     "votes": 45363,
-     "pct": 37.8
+     "votes": 48632,
+     "pct": 37.7
     }
    ],
    "final": false
@@ -37,13 +37,13 @@
     {
      "name": "Randy Villegas",
      "party": "DEM",
-     "votes": 80690,
+     "votes": 81446,
      "pct": 68.1
     },
     {
      "name": "David G. Valadao",
      "party": "REP",
-     "votes": 37780,
+     "votes": 38069,
      "pct": 31.9
     }
    ],
@@ -147,7 +147,7 @@
    "reporting": "100.0% (23,860 of 23,860) precincts reporting",
    "contest": "Proposition 40: Imposes One-Time Tax On Certain Taxpayers. Initiative Constitutional Amendment And Statute.",
    "outcome": "no",
-   "pct": 47.1,
+   "pct": 47.2,
    "threshold": 50,
    "final": false
   },
