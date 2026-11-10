@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-09T18:40:25.140986+00:00",
+ "asOf": "2026-11-10T01:58:46.766386+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -9,19 +9,19 @@
    "reporting": "100% (974 of 974) precincts reporting",
    "contest": "U.S. House of Representatives District 13",
    "leader": "Adam Gray (D)",
-   "leaderPct": 61.7,
+   "leaderPct": 62.2,
    "candidates": [
     {
      "name": "Adam Gray",
      "party": "DEM",
-     "votes": 70184,
-     "pct": 61.7
+     "votes": 74564,
+     "pct": 62.2
     },
     {
      "name": "Kevin Lincoln",
      "party": "REP",
-     "votes": 43640,
-     "pct": 38.3
+     "votes": 45363,
+     "pct": 37.8
     }
    ],
    "final": false
@@ -32,19 +32,19 @@
    "reporting": "100% (575 of 575) precincts reporting",
    "contest": "U.S. House of Representatives District 22",
    "leader": "Randy Villegas (D)",
-   "leaderPct": 66.6,
+   "leaderPct": 68.1,
    "candidates": [
     {
      "name": "Randy Villegas",
      "party": "DEM",
-     "votes": 62193,
-     "pct": 66.6
+     "votes": 80690,
+     "pct": 68.1
     },
     {
      "name": "David G. Valadao",
      "party": "REP",
-     "votes": 31179,
-     "pct": 33.4
+     "votes": 37780,
+     "pct": 31.9
     }
    ],
    "final": false
@@ -55,19 +55,19 @@
    "reporting": "100% (424 of 424) precincts reporting",
    "contest": "U.S. House of Representatives District 45",
    "leader": "Derek Tran (D)",
-   "leaderPct": 60.3,
+   "leaderPct": 60.4,
    "candidates": [
     {
      "name": "Derek Tran",
      "party": "DEM",
-     "votes": 132043,
-     "pct": 60.3
+     "votes": 138514,
+     "pct": 60.4
     },
     {
      "name": "Chuong V. Vo",
      "party": "REP",
-     "votes": 86913,
-     "pct": 39.7
+     "votes": 90849,
+     "pct": 39.6
     }
    ],
    "final": false
@@ -113,19 +113,19 @@
     {
      "name": "Marie Gluesenkamp Perez",
      "party": "DEM",
-     "votes": 187232,
+     "votes": 188073,
      "pct": 53.6
     },
     {
      "name": "John Braun",
      "party": "REP",
-     "votes": 158922,
+     "votes": 159505,
      "pct": 45.5
     },
     {
      "name": "Write-in",
      "party": "W/I",
-     "votes": 3227,
+     "votes": 3249,
      "pct": 0.9
     }
    ],
@@ -134,10 +134,10 @@
   "meas-ak2": {
    "source": "AK Division of Elections",
    "sourceUrl": "https://www.elections.alaska.gov/enr/26GENR/",
-   "reporting": "399 of 402 precincts reporting (unofficial, updated 11/04/2026 2:11 PM AKT)",
+   "reporting": "400 of 402 precincts reporting (unofficial, updated 11/09/2026 3:25 PM AKT)",
    "contest": "Ballot Measure No. 2 (24ESEG): Repeal the open primary and ranked choice general elections",
    "outcome": "no",
-   "pct": 48.1,
+   "pct": 47.7,
    "threshold": 50,
    "final": false
   },
@@ -147,7 +147,7 @@
    "reporting": "100.0% (23,860 of 23,860) precincts reporting",
    "contest": "Proposition 40: Imposes One-Time Tax On Certain Taxpayers. Initiative Constitutional Amendment And Statute.",
    "outcome": "no",
-   "pct": 46.8,
+   "pct": 47.1,
    "threshold": 50,
    "final": false
   },
@@ -240,33 +240,33 @@
   "sen-ak": {
    "source": "AK Division of Elections",
    "sourceUrl": "https://www.elections.alaska.gov/enr/26GENR/",
-   "reporting": "400 of 403 precincts reporting (unofficial, updated 11/04/2026 2:11 PM AKT)",
+   "reporting": "401 of 403 precincts reporting (unofficial, updated 11/09/2026 3:25 PM AKT)",
    "contest": "U.S. Senator (first-choice votes, ranked-choice round 1)",
    "leader": "Mary Peltola (D)",
-   "leaderPct": 48.2,
+   "leaderPct": 48.6,
    "candidates": [
     {
      "name": "Mary Peltola",
      "party": "DEM",
-     "votes": 102962,
-     "pct": 48.2
+     "votes": 106321,
+     "pct": 48.6
     },
     {
      "name": "Dan S. Sullivan",
      "party": "REP",
-     "votes": 102325,
-     "pct": 47.9
+     "votes": 103804,
+     "pct": 47.5
     },
     {
      "name": "Gerald L. Heikes",
      "party": "REP",
-     "votes": 4846,
-     "pct": 2.3
+     "votes": 4865,
+     "pct": 2.2
     },
     {
      "name": "Daniel J. Sullivan Jr.",
      "party": "",
-     "votes": 3600,
+     "votes": 3651,
      "pct": 1.7
     }
    ],
@@ -278,19 +278,19 @@
    "reporting": "159 of 159 counties reporting (unofficial)",
    "contest": "US Senate",
    "leader": "Jon Ossoff (D)",
-   "leaderPct": 59.02,
+   "leaderPct": 59.03,
    "candidates": [
     {
      "name": "Jon Ossoff",
      "party": "DEM",
-     "votes": 2467390,
-     "pct": 59.02
+     "votes": 2468985,
+     "pct": 59.03
     },
     {
      "name": "Mike Collins",
      "party": "REP",
-     "votes": 1713289,
-     "pct": 40.98
+     "votes": 1713656,
+     "pct": 40.97
     }
    ],
    "final": false
