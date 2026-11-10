@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-10T09:38:27.641677+00:00",
+ "asOf": "2026-11-10T17:39:27.075031+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -220,7 +220,7 @@
   "meas-wa2124": {
    "source": "WA SOS",
    "sourceUrl": "https://results.votewa.gov/results/public/washington/elections/20261103",
-   "reporting": "37 of 39 counties reporting (unofficial)",
+   "reporting": "39 of 39 counties reporting (unofficial)",
    "contest": "Initiative Measure No. IP26-645 (state and local taxes)",
    "outcome": "no",
    "pct": 42.0,
@@ -230,7 +230,7 @@
   "meas-walgw": {
    "source": "WA SOS",
    "sourceUrl": "https://results.votewa.gov/results/public/washington/elections/20261103",
-   "reporting": "37 of 39 counties reporting (unofficial)",
+   "reporting": "39 of 39 counties reporting (unofficial)",
    "contest": "Initiative Measure No. IL26-001 (parental rights relating to their children in public school)",
    "outcome": "no",
    "pct": 47.5,
@@ -342,25 +342,25 @@
     {
      "name": "Roy Cooper",
      "party": "DEM",
-     "votes": 2467962,
+     "votes": 2468052,
      "pct": 58.72
     },
     {
      "name": "Michael Whatley",
      "party": "REP",
-     "votes": 1643094,
+     "votes": 1643150,
      "pct": 39.09
     },
     {
      "name": "Shannon W. Bray",
      "party": "LIB",
-     "votes": 55712,
+     "votes": 55719,
      "pct": 1.33
     },
     {
      "name": "Michael Dublin",
      "party": "GRE",
-     "votes": 36400,
+     "votes": 36402,
      "pct": 0.87
     }
    ],
