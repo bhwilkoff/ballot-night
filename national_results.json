@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-11T14:02:04.553902+00:00",
+ "asOf": "2026-11-11T21:14:47.775999+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -337,30 +337,30 @@
    "reporting": "2626 of 2626 precincts reporting",
    "contest": "US SENATE",
    "leader": "Roy Cooper (D)",
-   "leaderPct": 58.76,
+   "leaderPct": 58.75,
    "candidates": [
     {
      "name": "Roy Cooper",
      "party": "DEM",
-     "votes": 2480707,
-     "pct": 58.76
+     "votes": 2481017,
+     "pct": 58.75
     },
     {
      "name": "Michael Whatley",
      "party": "REP",
-     "votes": 1648593,
+     "votes": 1648945,
      "pct": 39.05
     },
     {
      "name": "Shannon W. Bray",
      "party": "LIB",
-     "votes": 56074,
+     "votes": 56091,
      "pct": 1.33
     },
     {
      "name": "Michael Dublin",
      "party": "GRE",
-     "votes": 36710,
+     "votes": 36716,
      "pct": 0.87
     }
    ],
