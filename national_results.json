@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-11T21:14:47.775999+00:00",
+ "asOf": "2026-11-12T02:49:27.309176+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -37,13 +37,13 @@
     {
      "name": "Randy Villegas",
      "party": "DEM",
-     "votes": 91305,
+     "votes": 93110,
      "pct": 67.9
     },
     {
      "name": "David G. Valadao",
      "party": "REP",
-     "votes": 43153,
+     "votes": 44013,
      "pct": 32.1
     }
    ],
@@ -55,19 +55,19 @@
    "reporting": "100% (424 of 424) precincts reporting",
    "contest": "U.S. House of Representatives District 45",
    "leader": "Derek Tran (D)",
-   "leaderPct": 60.8,
+   "leaderPct": 60.9,
    "candidates": [
     {
      "name": "Derek Tran",
      "party": "DEM",
-     "votes": 147168,
-     "pct": 60.8
+     "votes": 150077,
+     "pct": 60.9
     },
     {
      "name": "Chuong V. Vo",
      "party": "REP",
-     "votes": 95045,
-     "pct": 39.2
+     "votes": 96299,
+     "pct": 39.1
     }
    ],
    "final": false
@@ -147,7 +147,7 @@
    "reporting": "100.0% (23,860 of 23,860) precincts reporting",
    "contest": "Proposition 40: Imposes One-Time Tax On Certain Taxpayers. Initiative Constitutional Amendment And Statute.",
    "outcome": "no",
-   "pct": 47.4,
+   "pct": 47.5,
    "threshold": 50,
    "final": false
   },
