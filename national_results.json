@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-13T15:17:02.529899+00:00",
+ "asOf": "2026-11-13T21:54:21.826557+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -342,25 +342,25 @@
     {
      "name": "Roy Cooper",
      "party": "DEM",
-     "votes": 2481046,
+     "votes": 2480674,
      "pct": 58.75
     },
     {
      "name": "Michael Whatley",
      "party": "REP",
-     "votes": 1648963,
+     "votes": 1648873,
      "pct": 39.05
     },
     {
      "name": "Shannon W. Bray",
      "party": "LIB",
-     "votes": 56094,
+     "votes": 56084,
      "pct": 1.33
     },
     {
      "name": "Michael Dublin",
      "party": "GRE",
-     "votes": 36717,
+     "votes": 36710,
      "pct": 0.87
     }
    ],
