@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-12T18:48:15.388333+00:00",
+ "asOf": "2026-11-13T00:06:50.145060+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -108,24 +108,24 @@
    "reporting": "7 of 7 counties reporting (unofficial)",
    "contest": "Congressional District 3 - U.S. Representative",
    "leader": "Marie Gluesenkamp Perez (D)",
-   "leaderPct": 53.6,
+   "leaderPct": 53.7,
    "candidates": [
     {
      "name": "Marie Gluesenkamp Perez",
      "party": "DEM",
-     "votes": 189105,
-     "pct": 53.6
+     "votes": 189491,
+     "pct": 53.7
     },
     {
      "name": "John Braun",
      "party": "REP",
-     "votes": 160174,
+     "votes": 160306,
      "pct": 45.4
     },
     {
      "name": "Write-in",
      "party": "W/I",
-     "votes": 3284,
+     "votes": 3289,
      "pct": 0.9
     }
    ],
@@ -342,19 +342,19 @@
     {
      "name": "Roy Cooper",
      "party": "DEM",
-     "votes": 2481018,
+     "votes": 2481056,
      "pct": 58.75
     },
     {
      "name": "Michael Whatley",
      "party": "REP",
-     "votes": 1648946,
+     "votes": 1648965,
      "pct": 39.05
     },
     {
      "name": "Shannon W. Bray",
      "party": "LIB",
-     "votes": 56090,
+     "votes": 56092,
      "pct": 1.33
     },
     {
