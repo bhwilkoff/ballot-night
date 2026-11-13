@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-13T00:06:50.145060+00:00",
+ "asOf": "2026-11-13T06:31:25.740100+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -9,19 +9,19 @@
    "reporting": "100% (974 of 974) precincts reporting",
    "contest": "U.S. House of Representatives District 13",
    "leader": "Adam Gray (D)",
-   "leaderPct": 62.0,
+   "leaderPct": 62.2,
    "candidates": [
     {
      "name": "Adam Gray",
      "party": "DEM",
-     "votes": 96169,
-     "pct": 62.0
+     "votes": 104376,
+     "pct": 62.2
     },
     {
      "name": "Kevin Lincoln",
      "party": "REP",
-     "votes": 58900,
-     "pct": 38.0
+     "votes": 63458,
+     "pct": 37.8
     }
    ],
    "final": false
@@ -37,13 +37,13 @@
     {
      "name": "Randy Villegas",
      "party": "DEM",
-     "votes": 93110,
+     "votes": 97959,
      "pct": 67.9
     },
     {
      "name": "David G. Valadao",
      "party": "REP",
-     "votes": 44013,
+     "votes": 46329,
      "pct": 32.1
     }
    ],
@@ -55,19 +55,19 @@
    "reporting": "100% (424 of 424) precincts reporting",
    "contest": "U.S. House of Representatives District 45",
    "leader": "Derek Tran (D)",
-   "leaderPct": 60.9,
+   "leaderPct": 61.0,
    "candidates": [
     {
      "name": "Derek Tran",
      "party": "DEM",
-     "votes": 150077,
-     "pct": 60.9
+     "votes": 150774,
+     "pct": 61.0
     },
     {
      "name": "Chuong V. Vo",
      "party": "REP",
-     "votes": 96299,
-     "pct": 39.1
+     "votes": 96569,
+     "pct": 39.0
     }
    ],
    "final": false
@@ -75,32 +75,31 @@
   "hse-co08": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "1 of 3 counties fully reported · 224,699 votes",
+   "reporting": "1 of 3 counties fully reported · 286,502 votes",
    "contest": "Representative to the 120th United States Congress - District 8",
    "leader": "Manny Rutinel (D)",
-   "leaderPct": 55.47,
+   "leaderPct": 55.42,
    "candidates": [
     {
      "name": "Manny Rutinel",
      "party": "DEM",
-     "votes": 124631,
-     "pct": 55.47
+     "votes": 158784,
+     "pct": 55.42
     },
     {
      "name": "Gabe Evans",
      "party": "REP",
-     "votes": 91712,
-     "pct": 40.82
+     "votes": 116602,
+     "pct": 40.7
     },
     {
      "name": "Dave Wood",
      "party": "LBR",
-     "votes": 8356,
-     "pct": 3.72
+     "votes": 11116,
+     "pct": 3.88
     }
    ],
-   "final": false,
-   "stale": true
+   "final": false
   },
   "hse-wa03": {
    "source": "WA SOS",
@@ -113,13 +112,13 @@
     {
      "name": "Marie Gluesenkamp Perez",
      "party": "DEM",
-     "votes": 189491,
+     "votes": 189565,
      "pct": 53.7
     },
     {
      "name": "John Braun",
      "party": "REP",
-     "votes": 160306,
+     "votes": 160383,
      "pct": 45.4
     },
     {
@@ -134,10 +133,10 @@
   "meas-ak2": {
    "source": "AK Division of Elections",
    "sourceUrl": "https://www.elections.alaska.gov/enr/26GENR/",
-   "reporting": "400 of 402 precincts reporting (unofficial, updated 11/11/2026 6:10 PM AKT)",
+   "reporting": "400 of 402 precincts reporting (unofficial, updated 11/12/2026 6:59 PM AKT)",
    "contest": "Ballot Measure No. 2 (24ESEG): Repeal the open primary and ranked choice general elections",
    "outcome": "no",
-   "pct": 47.5,
+   "pct": 47.2,
    "threshold": 50,
    "final": false
   },
@@ -154,68 +153,62 @@
   "meas-co134": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "25 of 64 counties fully reported · 2,134,843 votes",
+   "reporting": "26 of 64 counties fully reported · 2,620,983 votes",
    "contest": "Proposition 134 (STATUTORY)",
    "outcome": "yes",
-   "pct": 52.37,
+   "pct": 52.2,
    "threshold": 50,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-co135": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "25 of 64 counties fully reported · 2,137,396 votes",
+   "reporting": "26 of 64 counties fully reported · 2,624,283 votes",
    "contest": "Proposition 135 (STATUTORY)",
    "outcome": "yes",
-   "pct": 51.87,
+   "pct": 51.93,
    "threshold": 50,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-co136": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "25 of 64 counties fully reported · 2,110,684 votes",
+   "reporting": "26 of 64 counties fully reported · 2,587,335 votes",
    "contest": "Proposition 136 (STATUTORY)",
    "outcome": "no",
-   "pct": 47.34,
+   "pct": 47.19,
    "threshold": 50,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-co84": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "25 of 64 counties fully reported · 2,153,170 votes · needs 55% Yes",
+   "reporting": "26 of 64 counties fully reported · 2,642,486 votes · needs 55% Yes",
    "contest": "Amendment 84 (CONSTITUTIONAL)",
    "outcome": "no",
    "pct": 36.64,
    "threshold": 55,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-co86": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "25 of 64 counties fully reported · 2,100,450 votes · needs 55% Yes",
+   "reporting": "26 of 64 counties fully reported · 2,569,046 votes · needs 55% Yes",
    "contest": "Amendment 86 (CONSTITUTIONAL)",
    "outcome": "no",
-   "pct": 46.61,
+   "pct": 46.87,
    "threshold": 55,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-co87": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "25 of 64 counties fully reported · 2,142,640 votes · needs 55% Yes",
+   "reporting": "26 of 64 counties fully reported · 2,630,730 votes · needs 55% Yes",
    "contest": "Amendment 87 (CONSTITUTIONAL)",
    "outcome": "no",
-   "pct": 50.49,
+   "pct": 51.64,
    "threshold": 55,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-wa2124": {
    "source": "WA SOS",
@@ -223,7 +216,7 @@
    "reporting": "39 of 39 counties reporting (unofficial)",
    "contest": "Initiative Measure No. IP26-645 (state and local taxes)",
    "outcome": "no",
-   "pct": 42.0,
+   "pct": 42.1,
    "threshold": 50,
    "final": false
   },
@@ -240,34 +233,34 @@
   "sen-ak": {
    "source": "AK Division of Elections",
    "sourceUrl": "https://www.elections.alaska.gov/enr/26GENR/",
-   "reporting": "401 of 403 precincts reporting (unofficial, updated 11/11/2026 6:10 PM AKT)",
+   "reporting": "401 of 403 precincts reporting (unofficial, updated 11/12/2026 6:59 PM AKT)",
    "contest": "U.S. Senator (first-choice votes, ranked-choice round 1)",
    "leader": "Mary Peltola (D)",
-   "leaderPct": 48.9,
+   "leaderPct": 49.2,
    "candidates": [
     {
      "name": "Mary Peltola",
      "party": "DEM",
-     "votes": 121487,
-     "pct": 48.9
+     "votes": 125157,
+     "pct": 49.2
     },
     {
      "name": "Dan S. Sullivan",
      "party": "REP",
-     "votes": 117512,
-     "pct": 47.3
+     "votes": 119357,
+     "pct": 47.0
     },
     {
      "name": "Gerald L. Heikes",
      "party": "REP",
-     "votes": 5426,
+     "votes": 5490,
      "pct": 2.2
     },
     {
      "name": "Daniel J. Sullivan Jr.",
      "party": "",
-     "votes": 4100,
-     "pct": 1.6
+     "votes": 4199,
+     "pct": 1.7
     }
    ],
    "final": false
@@ -298,38 +291,37 @@
   "sen-ia": {
    "source": "IA SOS (Clarity)",
    "sourceUrl": "https://results.enr.clarityelections.com/IA/127077/",
-   "reporting": "95 of 99 counties reporting",
+   "reporting": "96 of 99 counties reporting",
    "contest": "United States Senator",
    "leader": "Josh Turek (D)",
-   "leaderPct": 50.45,
+   "leaderPct": 50.51,
    "candidates": [
     {
      "name": "Josh Turek",
      "party": "DEM",
-     "votes": 686486,
-     "pct": 50.45
+     "votes": 688486,
+     "pct": 50.51
     },
     {
      "name": "Ashley Hinson",
      "party": "REP",
-     "votes": 630615,
-     "pct": 46.34
+     "votes": 631236,
+     "pct": 46.31
     },
     {
      "name": "Thomas Laehn",
      "party": "LIB",
-     "votes": 42052,
-     "pct": 3.09
+     "votes": 41821,
+     "pct": 3.07
     },
     {
      "name": "Write-in",
      "party": null,
-     "votes": 1686,
+     "votes": 1653,
      "pct": 0.12
     }
    ],
-   "final": false,
-   "stale": true
+   "final": false
   },
   "sen-nc": {
    "source": "NC SBE",
@@ -366,8 +358,5 @@
    ],
    "final": false
   }
- },
- "errors": {
-  "ia": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
  }
 }
