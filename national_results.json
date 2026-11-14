@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-14T02:14:02.882054+00:00",
+ "asOf": "2026-11-14T10:05:25.124927+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -134,10 +134,10 @@
   "meas-ak2": {
    "source": "AK Division of Elections",
    "sourceUrl": "https://www.elections.alaska.gov/enr/26GENR/",
-   "reporting": "400 of 402 precincts reporting (unofficial, updated 11/12/2026 6:59 PM AKT)",
+   "reporting": "400 of 402 precincts reporting (unofficial, updated 11/13/2026 7:40 PM AKT)",
    "contest": "Ballot Measure No. 2 (24ESEG): Repeal the open primary and ranked choice general elections",
    "outcome": "no",
-   "pct": 47.2,
+   "pct": 46.5,
    "threshold": 50,
    "final": false
   },
@@ -147,7 +147,7 @@
    "reporting": "100.0% (23,860 of 23,860) precincts reporting",
    "contest": "Proposition 40: Imposes One-Time Tax On Certain Taxpayers. Initiative Constitutional Amendment And Statute.",
    "outcome": "no",
-   "pct": 47.7,
+   "pct": 47.8,
    "threshold": 50,
    "final": false
   },
@@ -240,34 +240,34 @@
   "sen-ak": {
    "source": "AK Division of Elections",
    "sourceUrl": "https://www.elections.alaska.gov/enr/26GENR/",
-   "reporting": "401 of 403 precincts reporting (unofficial, updated 11/12/2026 6:59 PM AKT)",
+   "reporting": "401 of 403 precincts reporting (unofficial, updated 11/13/2026 7:40 PM AKT)",
    "contest": "U.S. Senator (first-choice votes, ranked-choice round 1)",
    "leader": "Mary Peltola (D)",
-   "leaderPct": 49.2,
+   "leaderPct": 50.0,
    "candidates": [
     {
      "name": "Mary Peltola",
      "party": "DEM",
-     "votes": 125157,
-     "pct": 49.2
+     "votes": 138240,
+     "pct": 50.0
     },
     {
      "name": "Dan S. Sullivan",
      "party": "REP",
-     "votes": 119357,
-     "pct": 47.0
+     "votes": 127828,
+     "pct": 46.2
     },
     {
      "name": "Gerald L. Heikes",
      "party": "REP",
-     "votes": 5490,
-     "pct": 2.2
+     "votes": 5885,
+     "pct": 2.1
     },
     {
      "name": "Daniel J. Sullivan Jr.",
      "party": "",
-     "votes": 4199,
-     "pct": 1.7
+     "votes": 4560,
+     "pct": 1.6
     }
    ],
    "final": false
