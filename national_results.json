@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-13T21:54:21.826557+00:00",
+ "asOf": "2026-11-14T02:14:02.882054+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -9,19 +9,19 @@
    "reporting": "100% (974 of 974) precincts reporting",
    "contest": "U.S. House of Representatives District 13",
    "leader": "Adam Gray (D)",
-   "leaderPct": 62.2,
+   "leaderPct": 62.4,
    "candidates": [
     {
      "name": "Adam Gray",
      "party": "DEM",
-     "votes": 104376,
-     "pct": 62.2
+     "votes": 106405,
+     "pct": 62.4
     },
     {
      "name": "Kevin Lincoln",
      "party": "REP",
-     "votes": 63458,
-     "pct": 37.8
+     "votes": 64158,
+     "pct": 37.6
     }
    ],
    "final": false
@@ -32,19 +32,19 @@
    "reporting": "100% (575 of 575) precincts reporting",
    "contest": "U.S. House of Representatives District 22",
    "leader": "Randy Villegas (D)",
-   "leaderPct": 67.9,
+   "leaderPct": 67.8,
    "candidates": [
     {
      "name": "Randy Villegas",
      "party": "DEM",
-     "votes": 97959,
-     "pct": 67.9
+     "votes": 99696,
+     "pct": 67.8
     },
     {
      "name": "David G. Valadao",
      "party": "REP",
-     "votes": 46329,
-     "pct": 32.1
+     "votes": 47355,
+     "pct": 32.2
     }
    ],
    "final": false
@@ -60,13 +60,13 @@
     {
      "name": "Derek Tran",
      "party": "DEM",
-     "votes": 150774,
+     "votes": 151434,
      "pct": 61.0
     },
     {
      "name": "Chuong V. Vo",
      "party": "REP",
-     "votes": 96569,
+     "votes": 96826,
      "pct": 39.0
     }
    ],
@@ -113,19 +113,19 @@
     {
      "name": "Marie Gluesenkamp Perez",
      "party": "DEM",
-     "votes": 189565,
+     "votes": 189802,
      "pct": 53.7
     },
     {
      "name": "John Braun",
      "party": "REP",
-     "votes": 160383,
+     "votes": 160595,
      "pct": 45.4
     },
     {
      "name": "Write-in",
      "party": "W/I",
-     "votes": 3289,
+     "votes": 3291,
      "pct": 0.9
     }
    ],
@@ -147,7 +147,7 @@
    "reporting": "100.0% (23,860 of 23,860) precincts reporting",
    "contest": "Proposition 40: Imposes One-Time Tax On Certain Taxpayers. Initiative Constitutional Amendment And Statute.",
    "outcome": "no",
-   "pct": 47.6,
+   "pct": 47.7,
    "threshold": 50,
    "final": false
   },
@@ -223,7 +223,7 @@
    "reporting": "39 of 39 counties reporting (unofficial)",
    "contest": "Initiative Measure No. IP26-645 (state and local taxes)",
    "outcome": "no",
-   "pct": 42.1,
+   "pct": 42.0,
    "threshold": 50,
    "final": false
   },
@@ -342,13 +342,13 @@
     {
      "name": "Roy Cooper",
      "party": "DEM",
-     "votes": 2480674,
+     "votes": 2480640,
      "pct": 58.75
     },
     {
      "name": "Michael Whatley",
      "party": "REP",
-     "votes": 1648873,
+     "votes": 1648870,
      "pct": 39.05
     },
     {
