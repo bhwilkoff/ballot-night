@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-17T03:41:13.891354+00:00",
+ "asOf": "2026-11-17T13:05:43.031901+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -14,13 +14,13 @@
     {
      "name": "Adam Gray",
      "party": "DEM",
-     "votes": 107532,
+     "votes": 108005,
      "pct": 62.5
     },
     {
      "name": "Kevin Lincoln",
      "party": "REP",
-     "votes": 64606,
+     "votes": 64685,
      "pct": 37.5
     }
    ],
@@ -75,32 +75,31 @@
   "hse-co08": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "1 of 3 counties fully reported · 286,502 votes",
+   "reporting": "1 of 3 counties fully reported · 289,931 votes",
    "contest": "Representative to the 120th United States Congress - District 8",
    "leader": "Manny Rutinel (D)",
-   "leaderPct": 55.42,
+   "leaderPct": 55.51,
    "candidates": [
     {
      "name": "Manny Rutinel",
      "party": "DEM",
-     "votes": 158784,
-     "pct": 55.42
+     "votes": 160954,
+     "pct": 55.51
     },
     {
      "name": "Gabe Evans",
      "party": "REP",
-     "votes": 116602,
-     "pct": 40.7
+     "votes": 117709,
+     "pct": 40.6
     },
     {
      "name": "Dave Wood",
      "party": "LBR",
-     "votes": 11116,
-     "pct": 3.88
+     "votes": 11268,
+     "pct": 3.89
     }
    ],
-   "final": false,
-   "stale": true
+   "final": false
   },
   "hse-wa03": {
    "source": "WA SOS",
@@ -154,68 +153,62 @@
   "meas-co134": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "26 of 64 counties fully reported · 2,620,983 votes",
+   "reporting": "28 of 64 counties fully reported · 2,644,440 votes",
    "contest": "Proposition 134 (STATUTORY)",
    "outcome": "yes",
-   "pct": 52.2,
+   "pct": 52.16,
    "threshold": 50,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-co135": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "26 of 64 counties fully reported · 2,624,283 votes",
+   "reporting": "28 of 64 counties fully reported · 2,647,540 votes",
    "contest": "Proposition 135 (STATUTORY)",
    "outcome": "yes",
-   "pct": 51.93,
+   "pct": 51.9,
    "threshold": 50,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-co136": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "26 of 64 counties fully reported · 2,587,335 votes",
+   "reporting": "28 of 64 counties fully reported · 2,610,103 votes",
    "contest": "Proposition 136 (STATUTORY)",
    "outcome": "no",
-   "pct": 47.19,
+   "pct": 47.16,
    "threshold": 50,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-co84": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "26 of 64 counties fully reported · 2,642,486 votes · needs 55% Yes",
+   "reporting": "28 of 64 counties fully reported · 2,666,219 votes · needs 55% Yes",
    "contest": "Amendment 84 (CONSTITUTIONAL)",
    "outcome": "no",
-   "pct": 36.64,
+   "pct": 36.62,
    "threshold": 55,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-co86": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "26 of 64 counties fully reported · 2,569,046 votes · needs 55% Yes",
+   "reporting": "28 of 64 counties fully reported · 2,591,846 votes · needs 55% Yes",
    "contest": "Amendment 86 (CONSTITUTIONAL)",
    "outcome": "no",
-   "pct": 46.87,
+   "pct": 46.88,
    "threshold": 55,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-co87": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "26 of 64 counties fully reported · 2,630,730 votes · needs 55% Yes",
+   "reporting": "28 of 64 counties fully reported · 2,654,294 votes · needs 55% Yes",
    "contest": "Amendment 87 (CONSTITUTIONAL)",
    "outcome": "no",
-   "pct": 51.64,
+   "pct": 51.72,
    "threshold": 55,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-wa2124": {
    "source": "WA SOS",
@@ -306,19 +299,19 @@
     {
      "name": "Josh Turek",
      "party": "DEM",
-     "votes": 688486,
+     "votes": 688613,
      "pct": 50.51
     },
     {
      "name": "Ashley Hinson",
      "party": "REP",
-     "votes": 631236,
-     "pct": 46.31
+     "votes": 631275,
+     "pct": 46.3
     },
     {
      "name": "Thomas Laehn",
      "party": "LIB",
-     "votes": 41821,
+     "votes": 41829,
      "pct": 3.07
     },
     {
@@ -328,8 +321,7 @@
      "pct": 0.12
     }
    ],
-   "final": false,
-   "stale": true
+   "final": false
   },
   "sen-nc": {
    "source": "NC SBE",
@@ -366,8 +358,5 @@
    ],
    "final": false
   }
- },
- "errors": {
-  "ia": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
  }
 }
