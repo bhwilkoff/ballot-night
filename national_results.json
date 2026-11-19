@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-19T03:10:16.925509+00:00",
+ "asOf": "2026-11-19T21:22:16.761711+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -14,7 +14,7 @@
     {
      "name": "Adam Gray",
      "party": "DEM",
-     "votes": 109031,
+     "votes": 109035,
      "pct": 62.7
     },
     {
@@ -113,19 +113,19 @@
     {
      "name": "Marie Gluesenkamp Perez",
      "party": "DEM",
-     "votes": 190134,
+     "votes": 190344,
      "pct": 53.7
     },
     {
      "name": "John Braun",
      "party": "REP",
-     "votes": 160818,
+     "votes": 160940,
      "pct": 45.4
     },
     {
      "name": "Write-in",
      "party": "W/I",
-     "votes": 3296,
+     "votes": 3298,
      "pct": 0.9
     }
    ],
@@ -289,7 +289,7 @@
     {
      "name": "Mike Collins",
      "party": "REP",
-     "votes": 1713671,
+     "votes": 1713673,
      "pct": 40.97
     }
    ],
