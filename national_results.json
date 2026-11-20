@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-19T21:22:16.761711+00:00",
+ "asOf": "2026-11-20T02:58:28.744412+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -9,19 +9,19 @@
    "reporting": "100% (974 of 974) precincts reporting",
    "contest": "U.S. House of Representatives District 13",
    "leader": "Adam Gray (D)",
-   "leaderPct": 62.7,
+   "leaderPct": 62.8,
    "candidates": [
     {
      "name": "Adam Gray",
      "party": "DEM",
-     "votes": 109035,
-     "pct": 62.7
+     "votes": 109509,
+     "pct": 62.8
     },
     {
      "name": "Kevin Lincoln",
      "party": "REP",
-     "votes": 64900,
-     "pct": 37.3
+     "votes": 64981,
+     "pct": 37.2
     }
    ],
    "final": false
@@ -32,19 +32,19 @@
    "reporting": "100% (575 of 575) precincts reporting",
    "contest": "U.S. House of Representatives District 22",
    "leader": "Randy Villegas (D)",
-   "leaderPct": 67.8,
+   "leaderPct": 68.1,
    "candidates": [
     {
      "name": "Randy Villegas",
      "party": "DEM",
-     "votes": 101088,
-     "pct": 67.8
+     "votes": 102592,
+     "pct": 68.1
     },
     {
      "name": "David G. Valadao",
      "party": "REP",
-     "votes": 47922,
-     "pct": 32.2
+     "votes": 48112,
+     "pct": 31.9
     }
    ],
    "final": false
@@ -60,13 +60,13 @@
     {
      "name": "Derek Tran",
      "party": "DEM",
-     "votes": 151903,
+     "votes": 151922,
      "pct": 61.0
     },
     {
      "name": "Chuong V. Vo",
      "party": "REP",
-     "votes": 97037,
+     "votes": 97045,
      "pct": 39.0
     }
    ],
@@ -113,19 +113,19 @@
     {
      "name": "Marie Gluesenkamp Perez",
      "party": "DEM",
-     "votes": 190344,
+     "votes": 190386,
      "pct": 53.7
     },
     {
      "name": "John Braun",
      "party": "REP",
-     "votes": 160940,
+     "votes": 160969,
      "pct": 45.4
     },
     {
      "name": "Write-in",
      "party": "W/I",
-     "votes": 3298,
+     "votes": 3299,
      "pct": 0.9
     }
    ],
@@ -283,7 +283,7 @@
     {
      "name": "Jon Ossoff",
      "party": "DEM",
-     "votes": 2469055,
+     "votes": 2469059,
      "pct": 59.03
     },
     {
