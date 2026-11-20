@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-20T02:58:28.744412+00:00",
+ "asOf": "2026-11-20T11:18:22.081457+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -14,13 +14,13 @@
     {
      "name": "Adam Gray",
      "party": "DEM",
-     "votes": 109509,
+     "votes": 109626,
      "pct": 62.8
     },
     {
      "name": "Kevin Lincoln",
      "party": "REP",
-     "votes": 64981,
+     "votes": 65003,
      "pct": 37.2
     }
    ],
@@ -37,13 +37,13 @@
     {
      "name": "Randy Villegas",
      "party": "DEM",
-     "votes": 102592,
+     "votes": 103143,
      "pct": 68.1
     },
     {
      "name": "David G. Valadao",
      "party": "REP",
-     "votes": 48112,
+     "votes": 48250,
      "pct": 31.9
     }
    ],
