@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-20T11:18:22.081457+00:00",
+ "asOf": "2026-11-20T19:57:50.596165+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -14,13 +14,13 @@
     {
      "name": "Adam Gray",
      "party": "DEM",
-     "votes": 109626,
+     "votes": 110083,
      "pct": 62.8
     },
     {
      "name": "Kevin Lincoln",
      "party": "REP",
-     "votes": 65003,
+     "votes": 65097,
      "pct": 37.2
     }
    ],
@@ -275,7 +275,7 @@
   "sen-ga": {
    "source": "GA SOS",
    "sourceUrl": "https://results.sos.ga.gov/results/public/Georgia/elections/11032026GeneralAndSpecialElection",
-   "reporting": "159 of 159 counties reporting (unofficial)",
+   "reporting": "159 of 159 counties reporting (official)",
    "contest": "US Senate",
    "leader": "Jon Ossoff (D)",
    "leaderPct": 59.03,
@@ -342,7 +342,7 @@
     {
      "name": "Roy Cooper",
      "party": "DEM",
-     "votes": 2480636,
+     "votes": 2480632,
      "pct": 58.75
     },
     {
@@ -360,7 +360,7 @@
     {
      "name": "Michael Dublin",
      "party": "GRE",
-     "votes": 36710,
+     "votes": 36711,
      "pct": 0.87
     }
    ],
