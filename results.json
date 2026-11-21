@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-13T16:45:41-07:00",
+ "asOf": "2026-11-20T16:12:40-07:00",
  "status": "Unofficial results from official election offices (not yet certified)",
  "source": "CO Secretary of State & Arapahoe County Clarity ENR",
  "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
@@ -8,71 +8,71 @@
    "outcome": "no",
    "final": false,
    "pct": 44.67,
-   "reporting": "28 of 64 counties fully reported · 2,663,290 votes · needs 55% Yes",
+   "reporting": "28 of 64 counties fully reported · 2,663,310 votes · needs 55% Yes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "yesVotes": 1189572,
-   "noVotes": 1473718
+   "yesVotes": 1189581,
+   "noVotes": 1473729
   },
   "a82": {
    "outcome": "no",
    "final": false,
    "pct": 46.27,
-   "reporting": "28 of 64 counties fully reported · 2,636,357 votes · needs 55% Yes",
+   "reporting": "28 of 64 counties fully reported · 2,636,376 votes · needs 55% Yes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "yesVotes": 1219827,
-   "noVotes": 1416530
+   "yesVotes": 1219835,
+   "noVotes": 1416541
   },
   "a83": {
    "outcome": "no",
    "final": false,
    "pct": 45.14,
-   "reporting": "28 of 64 counties fully reported · 2,639,928 votes · needs 55% Yes",
+   "reporting": "28 of 64 counties fully reported · 2,639,948 votes · needs 55% Yes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "yesVotes": 1191670,
-   "noVotes": 1448258
+   "yesVotes": 1191682,
+   "noVotes": 1448266
   },
   "a84": {
    "outcome": "no",
    "final": false,
    "pct": 36.62,
-   "reporting": "28 of 64 counties fully reported · 2,666,219 votes · needs 55% Yes",
+   "reporting": "28 of 64 counties fully reported · 2,666,239 votes · needs 55% Yes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "yesVotes": 976240,
-   "noVotes": 1689979
+   "yesVotes": 976251,
+   "noVotes": 1689988
   },
   "a85": {
    "outcome": "no",
    "final": false,
    "pct": 51.15,
-   "reporting": "28 of 64 counties fully reported · 2,645,610 votes · needs 55% Yes",
+   "reporting": "28 of 64 counties fully reported · 2,645,629 votes · needs 55% Yes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "yesVotes": 1353204,
-   "noVotes": 1292406
+   "yesVotes": 1353215,
+   "noVotes": 1292414
   },
   "a86": {
    "outcome": "no",
    "final": false,
    "pct": 46.88,
-   "reporting": "28 of 64 counties fully reported · 2,591,846 votes · needs 55% Yes",
+   "reporting": "28 of 64 counties fully reported · 2,591,864 votes · needs 55% Yes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "yesVotes": 1214967,
-   "noVotes": 1376879
+   "yesVotes": 1214977,
+   "noVotes": 1376887
   },
   "a87": {
    "outcome": "no",
    "final": false,
    "pct": 51.72,
-   "reporting": "28 of 64 counties fully reported · 2,654,294 votes · needs 55% Yes",
+   "reporting": "28 of 64 counties fully reported · 2,654,314 votes · needs 55% Yes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "yesVotes": 1372796,
-   "noVotes": 1281498
+   "yesVotes": 1372806,
+   "noVotes": 1281508
   },
   "ag": {
    "outcome": "yes",
@@ -80,20 +80,20 @@
    "pct": 59.03,
    "leader": "Jena Griswold (D)",
    "leaderPct": 59.03,
-   "reporting": "28 of 64 counties fully reported · 2,645,347 votes",
+   "reporting": "28 of 64 counties fully reported · 2,645,365 votes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
    "candidates": [
     {
      "name": "Jena Griswold",
      "party": "DEM",
-     "votes": 1561616,
+     "votes": 1561629,
      "pct": 59.03
     },
     {
      "name": "Michael J. Allen",
      "party": "REP",
-     "votes": 1083731,
+     "votes": 1083736,
      "pct": 40.97
     }
    ]
@@ -236,20 +236,20 @@
    "pct": 61.13,
    "leader": "Phil Weiser / Lesley Dahlkemper (D)",
    "leaderPct": 61.13,
-   "reporting": "28 of 64 counties fully reported · 2,681,244 votes",
+   "reporting": "28 of 64 counties fully reported · 2,681,264 votes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
    "candidates": [
     {
      "name": "Phil Weiser / Lesley Dahlkemper",
      "party": "DEM",
-     "votes": 1639109,
+     "votes": 1639123,
      "pct": 61.13
     },
     {
      "name": "Victor Marx / George Washington Markert",
      "party": "REP",
-     "votes": 890472,
+     "votes": 890478,
      "pct": 33.21
     },
     {
@@ -262,7 +262,7 @@
      "name": "Eric Mulder / Wayne Harlos",
      "party": "LBR",
      "votes": 44643,
-     "pct": 1.67
+     "pct": 1.66
     }
    ]
   },
@@ -316,11 +316,11 @@
    "outcome": "yes",
    "final": false,
    "pct": 57.08,
-   "reporting": "5 of 10 counties fully reported · 1,006,126 votes",
+   "reporting": "5 of 10 counties fully reported · 1,006,132 votes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "yesVotes": 574321,
-   "noVotes": 431805
+   "yesVotes": 574323,
+   "noVotes": 431809
   },
   "j-amico": {
    "outcome": "yes",
@@ -376,21 +376,21 @@
    "outcome": "yes",
    "final": false,
    "pct": 68.71,
-   "reporting": "28 of 64 counties fully reported · 2,081,064 votes",
+   "reporting": "28 of 64 counties fully reported · 2,081,077 votes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "yesVotes": 1429856,
-   "noVotes": 651208
+   "yesVotes": 1429863,
+   "noVotes": 651214
   },
   "j-harris": {
    "outcome": "yes",
    "final": false,
    "pct": 67.13,
-   "reporting": "28 of 64 counties fully reported · 2,071,660 votes",
+   "reporting": "28 of 64 counties fully reported · 2,071,673 votes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "yesVotes": 1390794,
-   "noVotes": 680866
+   "yesVotes": 1390801,
+   "noVotes": 680872
   },
   "j-henderson": {
    "outcome": "yes",
@@ -406,11 +406,11 @@
    "outcome": "yes",
    "final": false,
    "pct": 65.88,
-   "reporting": "28 of 64 counties fully reported · 2,116,726 votes",
+   "reporting": "28 of 64 counties fully reported · 2,116,741 votes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "yesVotes": 1394528,
-   "noVotes": 722198
+   "yesVotes": 1394536,
+   "noVotes": 722205
   },
   "j-jones": {
    "outcome": "yes",
@@ -436,21 +436,21 @@
    "outcome": "yes",
    "final": false,
    "pct": 68.51,
-   "reporting": "28 of 64 counties fully reported · 2,068,562 votes",
+   "reporting": "28 of 64 counties fully reported · 2,068,575 votes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "yesVotes": 1417153,
-   "noVotes": 651409
+   "yesVotes": 1417160,
+   "noVotes": 651415
   },
   "j-moultrie": {
    "outcome": "yes",
    "final": false,
    "pct": 67.73,
-   "reporting": "28 of 64 counties fully reported · 2,062,044 votes",
+   "reporting": "28 of 64 counties fully reported · 2,062,057 votes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "yesVotes": 1396712,
-   "noVotes": 665332
+   "yesVotes": 1396719,
+   "noVotes": 665338
   },
   "j-rowles": {
    "outcome": "yes",
@@ -466,11 +466,11 @@
    "outcome": "yes",
    "final": false,
    "pct": 67.41,
-   "reporting": "28 of 64 counties fully reported · 2,058,218 votes",
+   "reporting": "28 of 64 counties fully reported · 2,058,231 votes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "yesVotes": 1387447,
-   "noVotes": 670771
+   "yesVotes": 1387455,
+   "noVotes": 670776
   },
   "j-stricklin": {
    "outcome": "yes",
@@ -486,11 +486,11 @@
    "outcome": "yes",
    "final": false,
    "pct": 66.57,
-   "reporting": "28 of 64 counties fully reported · 2,056,476 votes",
+   "reporting": "28 of 64 counties fully reported · 2,056,489 votes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "yesVotes": 1369092,
-   "noVotes": 687384
+   "yesVotes": 1369100,
+   "noVotes": 687389
   },
   "j-vahle": {
    "outcome": "yes",
@@ -516,71 +516,71 @@
    "outcome": "yes",
    "final": false,
    "pct": 52.64,
-   "reporting": "28 of 64 counties fully reported · 2,643,121 votes",
+   "reporting": "28 of 64 counties fully reported · 2,643,143 votes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "yesVotes": 1391309,
-   "noVotes": 1251812
+   "yesVotes": 1391321,
+   "noVotes": 1251822
   },
   "p133": {
    "outcome": "yes",
    "final": false,
    "pct": 62.13,
-   "reporting": "28 of 64 counties fully reported · 2,642,463 votes",
+   "reporting": "28 of 64 counties fully reported · 2,642,484 votes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "yesVotes": 1641770,
-   "noVotes": 1000693
+   "yesVotes": 1641784,
+   "noVotes": 1000700
   },
   "p134": {
    "outcome": "yes",
    "final": false,
    "pct": 52.16,
-   "reporting": "28 of 64 counties fully reported · 2,644,440 votes",
+   "reporting": "28 of 64 counties fully reported · 2,644,461 votes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "yesVotes": 1379283,
-   "noVotes": 1265157
+   "yesVotes": 1379292,
+   "noVotes": 1265169
   },
   "p135": {
    "outcome": "yes",
    "final": false,
    "pct": 51.9,
-   "reporting": "28 of 64 counties fully reported · 2,647,540 votes",
+   "reporting": "28 of 64 counties fully reported · 2,647,559 votes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "yesVotes": 1373942,
-   "noVotes": 1273598
+   "yesVotes": 1373951,
+   "noVotes": 1273608
   },
   "p136": {
    "outcome": "no",
    "final": false,
    "pct": 47.16,
-   "reporting": "28 of 64 counties fully reported · 2,610,103 votes",
+   "reporting": "28 of 64 counties fully reported · 2,610,124 votes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "yesVotes": 1230911,
-   "noVotes": 1379192
+   "yesVotes": 1230920,
+   "noVotes": 1379204
   },
   "p137": {
    "outcome": "yes",
    "final": false,
    "pct": 52.0,
-   "reporting": "28 of 64 counties fully reported · 2,627,063 votes",
+   "reporting": "28 of 64 counties fully reported · 2,627,085 votes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "yesVotes": 1366060,
-   "noVotes": 1261003
+   "yesVotes": 1366075,
+   "noVotes": 1261010
   },
   "pnn": {
    "outcome": "yes",
    "final": false,
    "pct": 57.07,
-   "reporting": "28 of 64 counties fully reported · 2,653,573 votes",
+   "reporting": "28 of 64 counties fully reported · 2,653,593 votes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "yesVotes": 1514360,
-   "noVotes": 1139213
+   "yesVotes": 1514375,
+   "noVotes": 1139218
   },
   "regent": {
    "outcome": "yes",
@@ -618,20 +618,20 @@
    "pct": 60.5,
    "leader": "John Hickenlooper (D)",
    "leaderPct": 60.5,
-   "reporting": "28 of 64 counties fully reported · 2,693,511 votes",
+   "reporting": "28 of 64 counties fully reported · 2,693,531 votes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
    "candidates": [
     {
      "name": "John Hickenlooper",
      "party": "DEM",
-     "votes": 1629507,
+     "votes": 1629521,
      "pct": 60.5
     },
     {
      "name": "Mark Baisley",
      "party": "REP",
-     "votes": 942089,
+     "votes": 942095,
      "pct": 34.98
     },
     {
@@ -678,20 +678,20 @@
    "pct": 60.21,
    "leader": "Amanda Gonzalez (D)",
    "leaderPct": 60.21,
-   "reporting": "28 of 64 counties fully reported · 2,657,723 votes",
+   "reporting": "28 of 64 counties fully reported · 2,657,742 votes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
    "candidates": [
     {
      "name": "Amanda Gonzalez",
      "party": "DEM",
-     "votes": 1600220,
+     "votes": 1600232,
      "pct": 60.21
     },
     {
      "name": "James Wiley",
      "party": "REP",
-     "votes": 975472,
+     "votes": 975478,
      "pct": 36.7
     },
     {
@@ -703,7 +703,7 @@
     {
      "name": "Amanda Campbell",
      "party": "ACN",
-     "votes": 21683,
+     "votes": 21684,
      "pct": 0.82
     }
    ]
@@ -714,26 +714,26 @@
    "pct": 58.85,
    "leader": "Jeff Bridges (D)",
    "leaderPct": 58.85,
-   "reporting": "28 of 64 counties fully reported · 2,639,235 votes",
+   "reporting": "28 of 64 counties fully reported · 2,639,253 votes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
    "candidates": [
     {
      "name": "Jeff Bridges",
      "party": "DEM",
-     "votes": 1553219,
+     "votes": 1553230,
      "pct": 58.85
     },
     {
      "name": "Kevin Grantham",
      "party": "REP",
-     "votes": 1016578,
+     "votes": 1016584,
      "pct": 38.52
     },
     {
      "name": "Jodie Barr",
      "party": "LBR",
-     "votes": 59183,
+     "votes": 59184,
      "pct": 2.24
     },
     {

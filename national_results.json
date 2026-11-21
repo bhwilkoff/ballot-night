@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-20T19:57:50.596165+00:00",
+ "asOf": "2026-11-21T01:21:39.573222+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -14,13 +14,13 @@
     {
      "name": "Adam Gray",
      "party": "DEM",
-     "votes": 110083,
+     "votes": 110085,
      "pct": 62.8
     },
     {
      "name": "Kevin Lincoln",
      "party": "REP",
-     "votes": 65097,
+     "votes": 65098,
      "pct": 37.2
     }
    ],
@@ -37,13 +37,13 @@
     {
      "name": "Randy Villegas",
      "party": "DEM",
-     "votes": 103143,
+     "votes": 103271,
      "pct": 68.1
     },
     {
      "name": "David G. Valadao",
      "party": "REP",
-     "votes": 48250,
+     "votes": 48267,
      "pct": 31.9
     }
    ],
@@ -75,7 +75,7 @@
   "hse-co08": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "1 of 3 counties fully reported · 289,931 votes",
+   "reporting": "1 of 3 counties fully reported · 289,932 votes",
    "contest": "Representative to the 120th United States Congress - District 8",
    "leader": "Manny Rutinel (D)",
    "leaderPct": 55.51,
@@ -83,7 +83,7 @@
     {
      "name": "Manny Rutinel",
      "party": "DEM",
-     "votes": 160954,
+     "votes": 160955,
      "pct": 55.51
     },
     {
@@ -99,8 +99,7 @@
      "pct": 3.89
     }
    ],
-   "final": false,
-   "stale": true
+   "final": false
   },
   "hse-wa03": {
    "source": "WA SOS",
@@ -154,68 +153,62 @@
   "meas-co134": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "28 of 64 counties fully reported · 2,644,440 votes",
+   "reporting": "28 of 64 counties fully reported · 2,644,461 votes",
    "contest": "Proposition 134 (STATUTORY)",
    "outcome": "yes",
    "pct": 52.16,
    "threshold": 50,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-co135": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "28 of 64 counties fully reported · 2,647,540 votes",
+   "reporting": "28 of 64 counties fully reported · 2,647,559 votes",
    "contest": "Proposition 135 (STATUTORY)",
    "outcome": "yes",
    "pct": 51.9,
    "threshold": 50,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-co136": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "28 of 64 counties fully reported · 2,610,103 votes",
+   "reporting": "28 of 64 counties fully reported · 2,610,124 votes",
    "contest": "Proposition 136 (STATUTORY)",
    "outcome": "no",
    "pct": 47.16,
    "threshold": 50,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-co84": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "28 of 64 counties fully reported · 2,666,219 votes · needs 55% Yes",
+   "reporting": "28 of 64 counties fully reported · 2,666,239 votes · needs 55% Yes",
    "contest": "Amendment 84 (CONSTITUTIONAL)",
    "outcome": "no",
    "pct": 36.62,
    "threshold": 55,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-co86": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "28 of 64 counties fully reported · 2,591,846 votes · needs 55% Yes",
+   "reporting": "28 of 64 counties fully reported · 2,591,864 votes · needs 55% Yes",
    "contest": "Amendment 86 (CONSTITUTIONAL)",
    "outcome": "no",
    "pct": 46.88,
    "threshold": 55,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-co87": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "28 of 64 counties fully reported · 2,654,294 votes · needs 55% Yes",
+   "reporting": "28 of 64 counties fully reported · 2,654,314 votes · needs 55% Yes",
    "contest": "Amendment 87 (CONSTITUTIONAL)",
    "outcome": "no",
    "pct": 51.72,
    "threshold": 55,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-wa2124": {
    "source": "WA SOS",
@@ -312,7 +305,7 @@
     {
      "name": "Ashley Hinson",
      "party": "REP",
-     "votes": 631275,
+     "votes": 631276,
      "pct": 46.3
     },
     {
@@ -328,8 +321,7 @@
      "pct": 0.12
     }
    ],
-   "final": false,
-   "stale": true
+   "final": true
   },
   "sen-nc": {
    "source": "NC SBE",
@@ -366,8 +358,5 @@
    ],
    "final": false
   }
- },
- "errors": {
-  "ia": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
  }
 }
