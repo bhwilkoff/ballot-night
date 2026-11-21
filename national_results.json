@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-21T01:21:39.573222+00:00",
+ "asOf": "2026-11-21T09:36:05.972283+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -60,13 +60,13 @@
     {
      "name": "Derek Tran",
      "party": "DEM",
-     "votes": 151922,
+     "votes": 151949,
      "pct": 61.0
     },
     {
      "name": "Chuong V. Vo",
      "party": "REP",
-     "votes": 97045,
+     "votes": 97060,
      "pct": 39.0
     }
    ],
@@ -99,7 +99,8 @@
      "pct": 3.89
     }
    ],
-   "final": false
+   "final": false,
+   "stale": true
   },
   "hse-wa03": {
    "source": "WA SOS",
@@ -158,7 +159,8 @@
    "outcome": "yes",
    "pct": 52.16,
    "threshold": 50,
-   "final": false
+   "final": false,
+   "stale": true
   },
   "meas-co135": {
    "source": "CO SOS",
@@ -168,7 +170,8 @@
    "outcome": "yes",
    "pct": 51.9,
    "threshold": 50,
-   "final": false
+   "final": false,
+   "stale": true
   },
   "meas-co136": {
    "source": "CO SOS",
@@ -178,7 +181,8 @@
    "outcome": "no",
    "pct": 47.16,
    "threshold": 50,
-   "final": false
+   "final": false,
+   "stale": true
   },
   "meas-co84": {
    "source": "CO SOS",
@@ -188,7 +192,8 @@
    "outcome": "no",
    "pct": 36.62,
    "threshold": 55,
-   "final": false
+   "final": false,
+   "stale": true
   },
   "meas-co86": {
    "source": "CO SOS",
@@ -198,7 +203,8 @@
    "outcome": "no",
    "pct": 46.88,
    "threshold": 55,
-   "final": false
+   "final": false,
+   "stale": true
   },
   "meas-co87": {
    "source": "CO SOS",
@@ -208,7 +214,8 @@
    "outcome": "no",
    "pct": 51.72,
    "threshold": 55,
-   "final": false
+   "final": false,
+   "stale": true
   },
   "meas-wa2124": {
    "source": "WA SOS",
@@ -321,7 +328,8 @@
      "pct": 0.12
     }
    ],
-   "final": true
+   "final": true,
+   "stale": true
   },
   "sen-nc": {
    "source": "NC SBE",
@@ -358,5 +366,8 @@
    ],
    "final": false
   }
+ },
+ "errors": {
+  "ia": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
  }
 }
