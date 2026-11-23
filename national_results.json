@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-21T09:36:05.972283+00:00",
+ "asOf": "2026-11-23T00:10:41.182333+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -99,8 +99,7 @@
      "pct": 3.89
     }
    ],
-   "final": false,
-   "stale": true
+   "final": false
   },
   "hse-wa03": {
    "source": "WA SOS",
@@ -159,8 +158,7 @@
    "outcome": "yes",
    "pct": 52.16,
    "threshold": 50,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-co135": {
    "source": "CO SOS",
@@ -170,8 +168,7 @@
    "outcome": "yes",
    "pct": 51.9,
    "threshold": 50,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-co136": {
    "source": "CO SOS",
@@ -181,8 +178,7 @@
    "outcome": "no",
    "pct": 47.16,
    "threshold": 50,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-co84": {
    "source": "CO SOS",
@@ -192,8 +188,7 @@
    "outcome": "no",
    "pct": 36.62,
    "threshold": 55,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-co86": {
    "source": "CO SOS",
@@ -203,8 +198,7 @@
    "outcome": "no",
    "pct": 46.88,
    "threshold": 55,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-co87": {
    "source": "CO SOS",
@@ -214,8 +208,7 @@
    "outcome": "no",
    "pct": 51.72,
    "threshold": 55,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-wa2124": {
    "source": "WA SOS",
@@ -328,8 +321,7 @@
      "pct": 0.12
     }
    ],
-   "final": true,
-   "stale": true
+   "final": true
   },
   "sen-nc": {
    "source": "NC SBE",
@@ -348,13 +340,13 @@
     {
      "name": "Michael Whatley",
      "party": "REP",
-     "votes": 1648858,
+     "votes": 1648859,
      "pct": 39.05
     },
     {
      "name": "Shannon W. Bray",
      "party": "LIB",
-     "votes": 56084,
+     "votes": 56085,
      "pct": 1.33
     },
     {
@@ -366,8 +358,5 @@
    ],
    "final": false
   }
- },
- "errors": {
-  "ia": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
  }
 }
