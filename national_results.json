@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-23T00:10:41.182333+00:00",
+ "asOf": "2026-11-23T21:11:48.290480+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -99,7 +99,8 @@
      "pct": 3.89
     }
    ],
-   "final": false
+   "final": false,
+   "stale": true
   },
   "hse-wa03": {
    "source": "WA SOS",
@@ -133,7 +134,7 @@
   "meas-ak2": {
    "source": "AK Division of Elections",
    "sourceUrl": "https://www.elections.alaska.gov/enr/26GENR/",
-   "reporting": "400 of 402 precincts reporting (unofficial, updated 11/18/2026 5:56 PM AKT)",
+   "reporting": "400 of 402 precincts reporting (certified)",
    "contest": "Ballot Measure No. 2 (24ESEG): Repeal the open primary and ranked choice general elections",
    "outcome": "no",
    "pct": 46.2,
@@ -158,7 +159,8 @@
    "outcome": "yes",
    "pct": 52.16,
    "threshold": 50,
-   "final": false
+   "final": false,
+   "stale": true
   },
   "meas-co135": {
    "source": "CO SOS",
@@ -168,7 +170,8 @@
    "outcome": "yes",
    "pct": 51.9,
    "threshold": 50,
-   "final": false
+   "final": false,
+   "stale": true
   },
   "meas-co136": {
    "source": "CO SOS",
@@ -178,7 +181,8 @@
    "outcome": "no",
    "pct": 47.16,
    "threshold": 50,
-   "final": false
+   "final": false,
+   "stale": true
   },
   "meas-co84": {
    "source": "CO SOS",
@@ -188,7 +192,8 @@
    "outcome": "no",
    "pct": 36.62,
    "threshold": 55,
-   "final": false
+   "final": false,
+   "stale": true
   },
   "meas-co86": {
    "source": "CO SOS",
@@ -198,7 +203,8 @@
    "outcome": "no",
    "pct": 46.88,
    "threshold": 55,
-   "final": false
+   "final": false,
+   "stale": true
   },
   "meas-co87": {
    "source": "CO SOS",
@@ -208,7 +214,8 @@
    "outcome": "no",
    "pct": 51.72,
    "threshold": 55,
-   "final": false
+   "final": false,
+   "stale": true
   },
   "meas-wa2124": {
    "source": "WA SOS",
@@ -233,7 +240,7 @@
   "sen-ak": {
    "source": "AK Division of Elections",
    "sourceUrl": "https://www.elections.alaska.gov/enr/26GENR/",
-   "reporting": "401 of 403 precincts reporting (unofficial, updated 11/18/2026 5:56 PM AKT)",
+   "reporting": "401 of 403 precincts reporting (certified)",
    "contest": "U.S. Senator (first-choice votes, ranked-choice round 1)",
    "leader": "Mary Peltola (D)",
    "leaderPct": 50.3,
@@ -241,25 +248,25 @@
     {
      "name": "Mary Peltola",
      "party": "DEM",
-     "votes": 144486,
+     "votes": 144583,
      "pct": 50.3
     },
     {
      "name": "Dan S. Sullivan",
      "party": "REP",
-     "votes": 131965,
+     "votes": 132022,
      "pct": 45.9
     },
     {
      "name": "Gerald L. Heikes",
      "party": "REP",
-     "votes": 6105,
+     "votes": 6107,
      "pct": 2.1
     },
     {
      "name": "Daniel J. Sullivan Jr.",
      "party": "",
-     "votes": 4765,
+     "votes": 4767,
      "pct": 1.7
     }
    ],
@@ -321,7 +328,8 @@
      "pct": 0.12
     }
    ],
-   "final": true
+   "final": true,
+   "stale": true
   },
   "sen-nc": {
    "source": "NC SBE",
@@ -334,13 +342,13 @@
     {
      "name": "Roy Cooper",
      "party": "DEM",
-     "votes": 2480632,
+     "votes": 2480645,
      "pct": 58.75
     },
     {
      "name": "Michael Whatley",
      "party": "REP",
-     "votes": 1648859,
+     "votes": 1648862,
      "pct": 39.05
     },
     {
@@ -352,11 +360,14 @@
     {
      "name": "Michael Dublin",
      "party": "GRE",
-     "votes": 36711,
+     "votes": 36713,
      "pct": 0.87
     }
    ],
    "final": false
   }
+ },
+ "errors": {
+  "ia": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
  }
 }
