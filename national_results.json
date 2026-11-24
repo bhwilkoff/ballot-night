@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-24T05:53:54.770294+00:00",
+ "asOf": "2026-11-24T17:28:33.922160+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -342,13 +342,13 @@
     {
      "name": "Roy Cooper",
      "party": "DEM",
-     "votes": 2480648,
+     "votes": 2480649,
      "pct": 58.75
     },
     {
      "name": "Michael Whatley",
      "party": "REP",
-     "votes": 1648865,
+     "votes": 1648867,
      "pct": 39.05
     },
     {
