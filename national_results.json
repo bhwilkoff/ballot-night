@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-23T21:11:48.290480+00:00",
+ "asOf": "2026-11-24T05:53:54.770294+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -14,13 +14,13 @@
     {
      "name": "Adam Gray",
      "party": "DEM",
-     "votes": 110085,
+     "votes": 110098,
      "pct": 62.8
     },
     {
      "name": "Kevin Lincoln",
      "party": "REP",
-     "votes": 65098,
+     "votes": 65103,
      "pct": 37.2
     }
    ],
@@ -32,19 +32,19 @@
    "reporting": "100% (575 of 575) precincts reporting",
    "contest": "U.S. House of Representatives District 22",
    "leader": "Randy Villegas (D)",
-   "leaderPct": 68.1,
+   "leaderPct": 68.2,
    "candidates": [
     {
      "name": "Randy Villegas",
      "party": "DEM",
-     "votes": 103271,
-     "pct": 68.1
+     "votes": 103534,
+     "pct": 68.2
     },
     {
      "name": "David G. Valadao",
      "party": "REP",
-     "votes": 48267,
-     "pct": 31.9
+     "votes": 48343,
+     "pct": 31.8
     }
    ],
    "final": false
@@ -60,13 +60,13 @@
     {
      "name": "Derek Tran",
      "party": "DEM",
-     "votes": 151949,
+     "votes": 151971,
      "pct": 61.0
     },
     {
      "name": "Chuong V. Vo",
      "party": "REP",
-     "votes": 97060,
+     "votes": 97070,
      "pct": 39.0
     }
    ],
@@ -113,19 +113,19 @@
     {
      "name": "Marie Gluesenkamp Perez",
      "party": "DEM",
-     "votes": 190386,
+     "votes": 190639,
      "pct": 53.7
     },
     {
      "name": "John Braun",
      "party": "REP",
-     "votes": 160969,
+     "votes": 161162,
      "pct": 45.4
     },
     {
      "name": "Write-in",
      "party": "W/I",
-     "votes": 3299,
+     "votes": 3308,
      "pct": 0.9
     }
    ],
@@ -243,19 +243,19 @@
    "reporting": "401 of 403 precincts reporting (certified)",
    "contest": "U.S. Senator (first-choice votes, ranked-choice round 1)",
    "leader": "Mary Peltola (D)",
-   "leaderPct": 50.3,
+   "leaderPct": 50.1,
    "candidates": [
     {
      "name": "Mary Peltola",
      "party": "DEM",
      "votes": 144583,
-     "pct": 50.3
+     "pct": 50.1
     },
     {
      "name": "Dan S. Sullivan",
      "party": "REP",
      "votes": 132022,
-     "pct": 45.9
+     "pct": 45.8
     },
     {
      "name": "Gerald L. Heikes",
@@ -342,13 +342,13 @@
     {
      "name": "Roy Cooper",
      "party": "DEM",
-     "votes": 2480645,
+     "votes": 2480648,
      "pct": 58.75
     },
     {
      "name": "Michael Whatley",
      "party": "REP",
-     "votes": 1648862,
+     "votes": 1648865,
      "pct": 39.05
     },
     {
