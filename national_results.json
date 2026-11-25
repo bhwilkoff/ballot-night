@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-24T17:28:33.922160+00:00",
+ "asOf": "2026-11-25T02:14:46.720411+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -37,13 +37,13 @@
     {
      "name": "Randy Villegas",
      "party": "DEM",
-     "votes": 103534,
+     "votes": 103553,
      "pct": 68.2
     },
     {
      "name": "David G. Valadao",
      "party": "REP",
-     "votes": 48343,
+     "votes": 48348,
      "pct": 31.8
     }
    ],
@@ -60,13 +60,13 @@
     {
      "name": "Derek Tran",
      "party": "DEM",
-     "votes": 151971,
+     "votes": 151980,
      "pct": 61.0
     },
     {
      "name": "Chuong V. Vo",
      "party": "REP",
-     "votes": 97070,
+     "votes": 97082,
      "pct": 39.0
     }
    ],
@@ -99,8 +99,7 @@
      "pct": 3.89
     }
    ],
-   "final": false,
-   "stale": true
+   "final": false
   },
   "hse-wa03": {
    "source": "WA SOS",
@@ -113,19 +112,19 @@
     {
      "name": "Marie Gluesenkamp Perez",
      "party": "DEM",
-     "votes": 190639,
+     "votes": 190680,
      "pct": 53.7
     },
     {
      "name": "John Braun",
      "party": "REP",
-     "votes": 161162,
+     "votes": 161207,
      "pct": 45.4
     },
     {
      "name": "Write-in",
      "party": "W/I",
-     "votes": 3308,
+     "votes": 3311,
      "pct": 0.9
     }
    ],
@@ -147,75 +146,69 @@
    "reporting": "100.0% (23,860 of 23,860) precincts reporting",
    "contest": "Proposition 40: Imposes One-Time Tax On Certain Taxpayers. Initiative Constitutional Amendment And Statute.",
    "outcome": "no",
-   "pct": 47.9,
+   "pct": 48.0,
    "threshold": 50,
    "final": false
   },
   "meas-co134": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "28 of 64 counties fully reported · 2,644,461 votes",
+   "reporting": "28 of 64 counties fully reported · 2,644,619 votes",
    "contest": "Proposition 134 (STATUTORY)",
    "outcome": "yes",
    "pct": 52.16,
    "threshold": 50,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-co135": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "28 of 64 counties fully reported · 2,647,559 votes",
+   "reporting": "28 of 64 counties fully reported · 2,647,719 votes",
    "contest": "Proposition 135 (STATUTORY)",
    "outcome": "yes",
    "pct": 51.9,
    "threshold": 50,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-co136": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "28 of 64 counties fully reported · 2,610,124 votes",
+   "reporting": "28 of 64 counties fully reported · 2,610,283 votes",
    "contest": "Proposition 136 (STATUTORY)",
    "outcome": "no",
    "pct": 47.16,
    "threshold": 50,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-co84": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "28 of 64 counties fully reported · 2,666,239 votes · needs 55% Yes",
+   "reporting": "28 of 64 counties fully reported · 2,666,401 votes · needs 55% Yes",
    "contest": "Amendment 84 (CONSTITUTIONAL)",
    "outcome": "no",
    "pct": 36.62,
    "threshold": 55,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-co86": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "28 of 64 counties fully reported · 2,591,864 votes · needs 55% Yes",
+   "reporting": "28 of 64 counties fully reported · 2,592,022 votes · needs 55% Yes",
    "contest": "Amendment 86 (CONSTITUTIONAL)",
    "outcome": "no",
    "pct": 46.88,
    "threshold": 55,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-co87": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "28 of 64 counties fully reported · 2,654,314 votes · needs 55% Yes",
+   "reporting": "28 of 64 counties fully reported · 2,654,474 votes · needs 55% Yes",
    "contest": "Amendment 87 (CONSTITUTIONAL)",
    "outcome": "no",
    "pct": 51.72,
    "threshold": 55,
-   "final": false,
-   "stale": true
+   "final": false
   },
   "meas-wa2124": {
    "source": "WA SOS",
@@ -328,8 +321,7 @@
      "pct": 0.12
     }
    ],
-   "final": true,
-   "stale": true
+   "final": true
   },
   "sen-nc": {
    "source": "NC SBE",
@@ -366,8 +358,5 @@
    ],
    "final": false
   }
- },
- "errors": {
-  "ia": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
  }
 }
