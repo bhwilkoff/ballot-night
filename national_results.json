@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-25T02:14:46.720411+00:00",
+ "asOf": "2026-11-25T22:23:44.996019+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -153,7 +153,7 @@
   "meas-co134": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "28 of 64 counties fully reported · 2,644,619 votes",
+   "reporting": "28 of 64 counties fully reported · 2,644,618 votes",
    "contest": "Proposition 134 (STATUTORY)",
    "outcome": "yes",
    "pct": 52.16,
@@ -163,7 +163,7 @@
   "meas-co135": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "28 of 64 counties fully reported · 2,647,719 votes",
+   "reporting": "28 of 64 counties fully reported · 2,647,672 votes",
    "contest": "Proposition 135 (STATUTORY)",
    "outcome": "yes",
    "pct": 51.9,
@@ -173,7 +173,7 @@
   "meas-co136": {
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "reporting": "28 of 64 counties fully reported · 2,610,283 votes",
+   "reporting": "28 of 64 counties fully reported · 2,610,237 votes",
    "contest": "Proposition 136 (STATUTORY)",
    "outcome": "no",
    "pct": 47.16,

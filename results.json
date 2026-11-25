@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-24T15:27:16-07:00",
+ "asOf": "2026-11-25T11:44:18-07:00",
  "status": "Unofficial results from official election offices (not yet certified)",
  "source": "CO Secretary of State & Arapahoe County Clarity ENR",
  "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
@@ -536,41 +536,41 @@
    "outcome": "yes",
    "final": false,
    "pct": 52.16,
-   "reporting": "28 of 64 counties fully reported · 2,644,619 votes",
+   "reporting": "28 of 64 counties fully reported · 2,644,618 votes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
    "yesVotes": 1379381,
-   "noVotes": 1265238
+   "noVotes": 1265237
   },
   "p135": {
    "outcome": "yes",
    "final": false,
    "pct": 51.9,
-   "reporting": "28 of 64 counties fully reported · 2,647,719 votes",
+   "reporting": "28 of 64 counties fully reported · 2,647,672 votes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "yesVotes": 1374043,
-   "noVotes": 1273676
+   "yesVotes": 1374010,
+   "noVotes": 1273662
   },
   "p136": {
    "outcome": "no",
    "final": false,
    "pct": 47.16,
-   "reporting": "28 of 64 counties fully reported · 2,610,283 votes",
+   "reporting": "28 of 64 counties fully reported · 2,610,237 votes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "yesVotes": 1230998,
-   "noVotes": 1379285
+   "yesVotes": 1230966,
+   "noVotes": 1379271
   },
   "p137": {
    "outcome": "yes",
    "final": false,
    "pct": 52.0,
-   "reporting": "28 of 64 counties fully reported · 2,627,244 votes",
+   "reporting": "28 of 64 counties fully reported · 2,627,199 votes",
    "source": "CO SOS",
    "sourceUrl": "https://results.enr.clarityelections.com/CO/127407/",
-   "yesVotes": 1366165,
-   "noVotes": 1261079
+   "yesVotes": 1366147,
+   "noVotes": 1261052
   },
   "pnn": {
    "outcome": "yes",
