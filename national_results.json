@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-26T04:54:26.753614+00:00",
+ "asOf": "2026-11-28T01:24:31.164096+00:00",
  "status": "Unofficial results from each state's official election office",
  "source": "State election offices (see each race)",
  "items": {
@@ -60,7 +60,7 @@
     {
      "name": "Derek Tran",
      "party": "DEM",
-     "votes": 152012,
+     "votes": 152017,
      "pct": 61.0
     },
     {
